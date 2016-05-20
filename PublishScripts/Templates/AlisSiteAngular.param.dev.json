@@ -1,0 +1,29 @@
+{
+  "siteName": {
+    "value": "AlisSiteA1"
+  },
+  "hostingPlanName": {
+    "value": "ALiSPortal"
+  },
+  "siteLocation": {
+    "value": "West Europe"
+  },
+  "sku": {
+    "value": "Free"
+  },
+  "workerSize": {
+    "value": "0"
+  },
+  "siteMode": {
+    "value": "Limited"
+  },
+  "computeMode": {
+    "value": "0"
+  },
+  "subscriptionId": {
+    "value": "4d68c9e1-3e37-487f-a696-a2e446fe6c4c"
+  },
+  "resourceGroup": {
+    "value": "WebSiteAlpha"
+  }
+}
