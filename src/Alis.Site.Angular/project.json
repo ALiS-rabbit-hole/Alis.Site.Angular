@@ -3,6 +3,8 @@
   "compilationOptions": {
     "emitEntryPoint": true
   },
+  "webroot": "wwwroot",
+  "siteResources": "SiteResources",
 
   "dependencies": {
     "Microsoft.AspNet.IISPlatformHandler": "1.0.0-rc1-final",
