@@ -7,6 +7,7 @@ var gulp = require("gulp"),
     uglify = require("gulp-uglify"),
     inject = require("gulp-inject"),
     project = require("./project.json");
+    htmlmin = require('gulp-htmlmin');
 
 var paths = {
     webroot: "./" + project.webroot + "/",
@@ -93,4 +94,10 @@ gulp.task("clean:angularJs", function (cb) {
 
 gulp.task('copyAngular', ['clean:angularJs'], function () {
     gulp.src(paths.angularJs + '/**/*').pipe(gulp.dest(paths.webroot + "angularJs"));
+});
+
+gulp.task('angularMinify', function () {
+    return gulp.src(paths.webroot + "angularJs/**/*.html")
+        .pipe(htmlmin({ collapseWhitespace: true }))
+        .pipe(gulp.dest("angularJs/"));
 });
