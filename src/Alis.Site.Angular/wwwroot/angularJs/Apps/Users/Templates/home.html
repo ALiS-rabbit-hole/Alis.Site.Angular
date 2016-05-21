@@ -1,0 +1,12 @@
+<table class="table">
+    <thead>
+    <tr></tr>
+    </thead>
+    <tr ng-repeat="user in users track by $index">
+        <td>{{::user.Username}}</td>
+        <td>{{::user.Forename}}</td>
+        <td>{{::user.Surname}}</td>
+        <td>{{::user.Email}}</td>
+        <td><button class="btn btn-default">Edit</button></td>
+    </tr>
+</table>
