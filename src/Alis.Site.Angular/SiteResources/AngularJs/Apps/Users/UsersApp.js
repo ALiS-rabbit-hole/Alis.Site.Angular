@@ -1,7 +1,8 @@
 ﻿var usersApp = angular.module('usersApp', ['ngRoute', 'userServices']);
 
-usersApp.config(function ($routeProvider, $sceProvider) {
+usersApp.config(function ($routeProvider, $sceProvider, $compileProvider) {
 
+    $compileProvider.debugInfoEnabled(false);
 
     //var dir = "http://alissitea1.azurewebsites.net/AngularJs/Apps/Users/Templates/";
     var dir = config.angularRoot + "/Apps/Users/Templates/";
@@ -11,15 +12,17 @@ usersApp.config(function ($routeProvider, $sceProvider) {
 
     $routeProvider.when('/Home', {
         controller: 'HomeController',
+        controllerAs: "vm",
         templateUrl: dir + 'Home.html'
     }).otherwise({
         redirectTo: '/Home'
     });
 });
 
-usersApp.controller("HomeController", function($scope, $userServices) {
+usersApp.controller("HomeController", function($userServices) {
+    var vm = this;
 
     $userServices.getAllUsers().then(function(data) {
-        $scope.users= data.Results;
+        vm.users= data.Results;
     });
 });

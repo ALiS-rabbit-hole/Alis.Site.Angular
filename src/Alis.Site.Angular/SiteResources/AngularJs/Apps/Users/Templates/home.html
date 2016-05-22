@@ -3,7 +3,7 @@
     <tr></tr>
 
     </thead>
-    <tr ng-repeat="user in users track by $index">
+    <tr ng-repeat="user in ::vm.users track by $index">
         <td>{{::user.Username}}</td>
         <td>{{::user.Forename}}</td>
         <td>{{::user.Surname}}</td>

@@ -2,8 +2,8 @@
     <thead>
     <tr></tr>
     </thead>
-    <tr ng-repeat="role in roles track by $index">
+    <tr ng-repeat="role in vm.roles track by $index">
         <td>{{::role.Name}}</td>
-        <td><button class="btn btn-default">Edit</button></td>
+        <td><a href="#/Edit?id={{::role.ID}}" class="btn btn-default">Edit</a></td>
     </tr>
 </table>
