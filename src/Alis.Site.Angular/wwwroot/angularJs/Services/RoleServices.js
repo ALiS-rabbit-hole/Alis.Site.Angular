@@ -13,8 +13,9 @@ angular.module('roleServices', [])
                 return result.data;
             });
         },
-        update: function(role) {
-            return $http.put(serviceRoot + "Update/", { Role: role }).then(function (result) {
+        update: function (role) {
+            console.log(role);
+            return $http.put(serviceRoot + "Update/",  role).then(function (result) {
                 return result.data;
             });
         },
