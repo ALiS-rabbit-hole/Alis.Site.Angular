@@ -52,6 +52,7 @@ rolesApp.controller("EditController", function ($location, $roleServices, $scope
                             });
                         }
                     }
+                    //set previous errors to null?
                 }
                 $scope.$broadcast('show-errors-reset');
             

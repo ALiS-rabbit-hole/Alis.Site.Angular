@@ -55,15 +55,19 @@
                       el.removeClass('has-error');
                       el.removeClass('has-success');
 
-                      
+                      console.log(formCtrl);
 
-                      /*for (var att in formCtrl.$error) {
+                      angular.forEach(formCtrl.$error, function (item) {
+                          console.log(item);
+                      });
+
+                      for (var att in formCtrl.$error) {
                           console.log(att);
                           if (formCtrl.$error.hasOwnProperty(att)) {
                               formCtrl.$setValidity(att, true);
                           }
                       }
-                      */
+                      
                       // reset validation's state
                       formCtrl.$setPristine(true);
 
