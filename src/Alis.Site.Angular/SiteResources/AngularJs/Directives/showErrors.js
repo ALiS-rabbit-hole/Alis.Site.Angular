@@ -1,11 +1,13 @@
 ﻿(function () {
-    var showErrorsModule;
+    var showErrorsModule = angular.module('ui.bootstrap.showErrors', []);
 
-    showErrorsModule = angular.module('ui.bootstrap.showErrors', []);
+    showErrorsModule.config(function ($httpProvider) {
+        $httpProvider.interceptors.push('fieldValInterceptor');
+    });
 
     showErrorsModule.directive('showErrors', [
       '$timeout', 'showErrorsConfig', '$interpolate', function ($timeout, showErrorsConfig, $interpolate) {
-          var getShowSuccess, getTrigger, linkFn;
+            var getShowSuccess, getTrigger, linkFn, previousErrors;
           getTrigger = function (options) {
               var trigger;
               trigger = showErrorsConfig.trigger;
@@ -46,30 +48,52 @@
                   }
                   return toggleClasses(invalid);
               });
+              scope.$on('_ERROR_FIELDS_', function (event, args) {
+
+                  console.log("here");
+                  console.log(args.ErrorFields);
+                  //we flag up fields as invalid and add the message against as returned by the server
+                  var serverValidations = previousErrors = args.ErrorFields;
+                  var prop;
+                  for (prop in serverValidations) {
+                      if (serverValidations.hasOwnProperty(prop)) {
+                          if (formCtrl[serverValidations[prop].Key]) {
+                                  formCtrl[serverValidations[prop].Key].$setValidity(serverValidations[prop].Key, false);
+                                  formCtrl[serverValidations[prop].Key].$errorText = serverValidations[prop].Value;
+                          }
+                      }
+                  };
+
+              });
               scope.$on('show-errors-check-validity', function () {
                   return toggleClasses(formCtrl[inputName].$invalid);
               });
-              scope.$on('show-errors-reset', function () {
+              scope.$on('show-errors-reset', function (event, args) {
 
                   return $timeout(function () {
                       el.removeClass('has-error');
                       el.removeClass('has-success');
+    
 
-                      console.log(formCtrl);
-
-                      angular.forEach(formCtrl.$error, function (item) {
-                          console.log(item);
-                      });
-
-                      for (var att in formCtrl.$error) {
-                          console.log(att);
-                          if (formCtrl.$error.hasOwnProperty(att)) {
-                              formCtrl.$setValidity(att, true);
+                      if (previousErrors != null) {
+                          var prop;
+                          for (prop in previousErrors) {
+                              if (previousErrors.hasOwnProperty(prop)) {
+                                  if (formCtrl[previousErrors[prop].Key]) {
+                                      formCtrl[previousErrors[prop].Key].$setValidity(previousErrors[prop].Key, true);
+                                  }
+                              }
                           }
+                          // reset validation's state
+                          formCtrl.$setPristine();
+                          formCtrl.$setUntouched();
+                          formCtrl.$setValidity();
+                          previousErrors = null;
+
+                          //we have to call apply else the fields are still show as invalid on the form.
+                          //info here on apply: http://jimhoskins.com/2012/12/17/angularjs-and-apply.html
+                          scope.$apply();
                       }
-                      
-                      // reset validation's state
-                      formCtrl.$setPristine(true);
 
                       return blurred = false;
 
@@ -115,4 +139,26 @@
         };
     });
 
+    showErrorsModule.factory('fieldValInterceptor', function ($q, $rootScope) {
+        return {
+            response: function (response) {
+                if (response.headers()['content-type'] === "application/json; charset=utf-8") {
+                    var data = response.data;
+
+                    if (!data)
+                        return $q.reject(response);
+
+                    if (data.ErrorFields && data.ErrorFields.length > 0) {
+
+                        $rootScope.$broadcast("_ERROR_FIELDS_", { ErrorFields: data.ErrorFields });
+                    }
+
+                }
+                return response;
+            },
+            responseError: function (response) {
+                return $q.reject(response);
+            }
+        };
+    });
 }).call(this);

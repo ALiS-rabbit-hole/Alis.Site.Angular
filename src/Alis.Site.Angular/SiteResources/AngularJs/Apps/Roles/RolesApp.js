@@ -34,8 +34,6 @@ rolesApp.controller("HomeController", function ($roleServices) {
 rolesApp.controller("EditController", function ($location, $roleServices, $scope) {
     var vm = this;
 
-    var previousErrors;
-
     $roleServices.get($location.search()["id"]).then(function (data) {
         vm.role = data.Results;
     });
@@ -44,31 +42,9 @@ rolesApp.controller("EditController", function ($location, $roleServices, $scope
         
         $roleServices.update(vm.role).then(function (data) {
             if (data.Success) {
-                if (previousErrors != null) {
-                    for (prop in previousErrors) {
-                        if (myForm[previousErrors[prop].Key]) {
-                            angular.forEach(previousErrors[prop], function (validation) {
-                                $scope.editRoleForm[previousErrors[prop].Key].$setValidity(previousErrors[prop].Key, true);
-                            });
-                        }
-                    }
-                    //set previous errors to null?
-                }
+
+                //we can call this here to reset all errors and the form. if you redirect out on success, no need to call this.
                 $scope.$broadcast('show-errors-reset');
-            
-            } else {
-
-                var serverValidations =previousErrors = data.ErrorFields;
-       
-               for (prop in serverValidations) {
-                   if (myForm[serverValidations[prop].Key]) {
-                        angular.forEach(serverValidations[prop], function (validation) {
-                            $scope.editRoleForm[serverValidations[prop].Key].$setValidity(serverValidations[prop].Key, false);
-                            $scope.editRoleForm[serverValidations[prop].Key].$errorText = serverValidations[prop].Value;
-                        });
-                    }
-                }
-
             }
         });
     };
