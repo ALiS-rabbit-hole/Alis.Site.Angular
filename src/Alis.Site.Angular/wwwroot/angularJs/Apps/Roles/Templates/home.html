@@ -1,3 +1,4 @@
+<a href="#/Create" class="btn btn-default">Create Role</a>
 <table class="table">
     <thead>
     <tr></tr>
@@ -5,5 +6,6 @@
     <tr ng-repeat="role in vm.roles track by $index">
         <td>{{::role.Name}}</td>
         <td><a href="#/Edit?id={{::role.ID}}" class="btn btn-default">Edit</a></td>
+        <td><button ng-click="vm.delete(role)" class="btn btn-danger">Delete</button></td>
     </tr>
 </table>

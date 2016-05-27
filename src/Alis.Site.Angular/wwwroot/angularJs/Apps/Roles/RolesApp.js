@@ -3,7 +3,7 @@ var rolesApp = angular.module('rolesApp', ['ngRoute', 'roleServices', 'ui.bootst
 rolesApp.config(function ($routeProvider, $sceProvider, $compileProvider, showErrorsConfigProvider) {
 
     $compileProvider.debugInfoEnabled(false);
-    showErrorsConfigProvider.showSuccess(true);
+   // showErrorsConfigProvider.showSuccess(true);
 
     var dir = config.angularRoot + "/Apps/Roles/Templates/";
     $sceProvider.enabled(false);
@@ -18,6 +18,10 @@ rolesApp.config(function ($routeProvider, $sceProvider, $compileProvider, showEr
         controller: 'EditController',
         controllerAs: 'vm',
         templateUrl: dir + 'Edit.html'
+    }).when('/Create', {
+        controller: 'CreateController',
+        controllerAs: 'vm',
+        templateUrl: dir + 'Create.html'
     }).otherwise({
         redirectTo: '/Home'
     });
@@ -26,9 +30,20 @@ rolesApp.config(function ($routeProvider, $sceProvider, $compileProvider, showEr
 rolesApp.controller("HomeController", function ($roleServices) {
     var vm = this;
 
-    $roleServices.getAllRoles().then(function(data) {
+    $roleServices.getAll().then(function (data) {
         vm.roles = data.Results;
     });
+
+    vm.delete = function(role) {
+        $roleServices.remove(role).then(function (data) {
+            if (data.Success) {
+                vm.roles.splice(vm.roles.indexOf(role), 1);
+            } else {
+                alert("error!");
+            }
+        });
+    };
+
 });
 
 rolesApp.controller("EditController", function ($location, $roleServices, $scope) {
@@ -38,11 +53,28 @@ rolesApp.controller("EditController", function ($location, $roleServices, $scope
         vm.role = data.Results;
     });
 
-    vm.Save = function (myForm) {
+    vm.Save = function () {
         
         $roleServices.update(vm.role).then(function (data) {
             if (data.Success) {
 
+                //we can call this here to reset all errors and the form. if you redirect out on success, no need to call this.
+                $scope.$broadcast('show-errors-reset');
+            }
+        });
+    };
+});
+
+rolesApp.controller("CreateController", function ($location, $roleServices, $scope) {
+    var vm = this;
+
+    vm.role = {};
+
+    vm.Create = function () {
+        console.log(vm.role);
+        $roleServices.create(vm.role).then(function (data) {
+            if (data.Success) {
+                vm.role = data.Results;
                 $scope.$broadcast('show-errors-reset');
             }
         });

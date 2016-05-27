@@ -49,20 +49,38 @@
                   return toggleClasses(invalid);
               });
               scope.$on('_ERROR_FIELDS_', function (event, args) {
-
-                  console.log("here");
-                  console.log(args.ErrorFields);
-                  //we flag up fields as invalid and add the message against as returned by the server
-                  var serverValidations = previousErrors = args.ErrorFields;
-                  var prop;
-                  for (prop in serverValidations) {
-                      if (serverValidations.hasOwnProperty(prop)) {
-                          if (formCtrl[serverValidations[prop].Key]) {
+                  $timeout(function () {
+                      //we flag up fields as invalid and add the message against as returned by the server
+                      var serverValidations = previousErrors = args.ErrorFields;
+                      var prop;
+                      var mainErrors = [];
+                      scope.main_errors = null;
+                      for (prop in serverValidations) {
+                          if (serverValidations.hasOwnProperty(prop)) {
+                              if (formCtrl[serverValidations[prop].Key]) {
+                                  //      console.log(formCtrl[serverValidations[prop].Key]);
                                   formCtrl[serverValidations[prop].Key].$setValidity(serverValidations[prop].Key, false);
                                   formCtrl[serverValidations[prop].Key].$errorText = serverValidations[prop].Value;
+
+                                  toggleClasses(formCtrl[serverValidations[prop].Key].$invalid);
+                              }
+
+                              if (!formCtrl.hasOwnProperty(serverValidations[prop].Key)) {
+                                  //we've detected a field which doesn't relate to a form field,
+                                  //lets display it as a main error!
+                                  mainErrors.push(serverValidations[prop].Value);
+                              }
+
                           }
+                      };
+
+                      if (mainErrors.length > 0) {
+
+                          scope.main_errors = { invalid: true, errors: mainErrors };
+                        
                       }
-                  };
+                       scope.$apply();
+                  }, 0, false);
 
               });
               scope.$on('show-errors-check-validity', function () {
@@ -73,7 +91,7 @@
                   return $timeout(function () {
                       el.removeClass('has-error');
                       el.removeClass('has-success');
-    
+
 
                       if (previousErrors != null) {
                           var prop;
@@ -153,6 +171,14 @@
                         $rootScope.$broadcast("_ERROR_FIELDS_", { ErrorFields: data.ErrorFields });
                     }
 
+                    /*  if (data.Errors && data.Errors.length > 0) {
+                          var mainErrors = [];
+  
+                      
+                          if (mainErrors.length > 0) {
+                              $rootScope.$broadcast("_ERRORS_", { Errors: mainErrors });
+                          }
+                      }*/
                 }
                 return response;
             },

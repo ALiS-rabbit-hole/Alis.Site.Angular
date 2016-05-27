@@ -3,7 +3,7 @@ angular.module('roleServices', [])
         var serviceRoot = config.serviceRoot + "/Roles/";
 
     return {
-        getAllRoles: function () {
+        getAll: function () {
             return $http.get(serviceRoot + "GetAll").then(function (result) {
                 return result.data;
             });
@@ -20,7 +20,12 @@ angular.module('roleServices', [])
             });
         },
         create: function(role) {
-            return $http.post(serviceRoot + "Create/", { Role: role }).then(function (result) {
+            return $http.post(serviceRoot + "Create/", role).then(function (result) {
+                return result.data;
+            });
+        },
+        remove: function(role) {
+            return $http.delete(serviceRoot + "Delete/", { params: { ID: role.ID } }).then(function(result) {
                 return result.data;
             });
         }
