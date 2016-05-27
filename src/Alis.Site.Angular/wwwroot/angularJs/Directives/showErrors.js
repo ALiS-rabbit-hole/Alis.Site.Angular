@@ -56,9 +56,9 @@
                       var mainErrors = [];
                       scope.main_errors = null;
                       for (prop in serverValidations) {
-                          if (serverValidations.hasOwnProperty(prop)) {
+
                               if (formCtrl[serverValidations[prop].Key]) {
-                                  //      console.log(formCtrl[serverValidations[prop].Key]);
+        
                                   formCtrl[serverValidations[prop].Key].$setValidity(serverValidations[prop].Key, false);
                                   formCtrl[serverValidations[prop].Key].$errorText = serverValidations[prop].Value;
 
@@ -71,7 +71,7 @@
                                   mainErrors.push(serverValidations[prop].Value);
                               }
 
-                          }
+                          
                       };
 
                       if (mainErrors.length > 0) {
@@ -96,11 +96,11 @@
                       if (previousErrors != null) {
                           var prop;
                           for (prop in previousErrors) {
-                              if (previousErrors.hasOwnProperty(prop)) {
+                          
                                   if (formCtrl[previousErrors[prop].Key]) {
                                       formCtrl[previousErrors[prop].Key].$setValidity(previousErrors[prop].Key, true);
                                   }
-                              }
+                              
                           }
                           // reset validation's state
                           formCtrl.$setPristine();
@@ -170,15 +170,6 @@
 
                         $rootScope.$broadcast("_ERROR_FIELDS_", { ErrorFields: data.ErrorFields });
                     }
-
-                    /*  if (data.Errors && data.Errors.length > 0) {
-                          var mainErrors = [];
-  
-                      
-                          if (mainErrors.length > 0) {
-                              $rootScope.$broadcast("_ERRORS_", { Errors: mainErrors });
-                          }
-                      }*/
                 }
                 return response;
             },

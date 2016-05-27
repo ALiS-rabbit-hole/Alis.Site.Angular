@@ -99,5 +99,5 @@ gulp.task('copyAngular', ['clean:angularJs'], function () {
 gulp.task('angularMinify', function () {
     return gulp.src(paths.webroot + "angularJs/**/*.html")
         .pipe(htmlmin({ collapseWhitespace: true }))
-        .pipe(gulp.dest("angularJs/"));
+        .pipe(gulp.dest(paths.webroot + "angularJs"));
 });

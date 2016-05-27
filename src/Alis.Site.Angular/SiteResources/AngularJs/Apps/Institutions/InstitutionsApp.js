@@ -1,11 +1,11 @@
-var rolesApp = angular.module('rolesApp', ['ngRoute', 'roleServices', 'ui.bootstrap.showErrors']);
+﻿var institutionsApp = angular.module('institutionsApp', ['ngRoute', 'institutionServices', 'ui.bootstrap.showErrors']);
 
-rolesApp.config(function ($routeProvider, $sceProvider, $compileProvider, showErrorsConfigProvider) {
+institutionsApp.config(function ($routeProvider, $sceProvider, $compileProvider) {
 
     $compileProvider.debugInfoEnabled(false);
    // showErrorsConfigProvider.showSuccess(true);
 
-    var dir = config.angularRoot + "/Apps/Roles/Templates/";
+    var dir = config.angularRoot + "/Apps/Institutions/Templates/";
     $sceProvider.enabled(false);
 
 
@@ -27,17 +27,17 @@ rolesApp.config(function ($routeProvider, $sceProvider, $compileProvider, showEr
     });
 });
 
-rolesApp.controller("HomeController", function ($roleServices) {
+institutionsApp.controller("HomeController", function ($institutionServices) {
     var vm = this;
 
-    $roleServices.getAll().then(function (data) {
-        vm.roles = data.Results;
+    $institutionServices.getAll().then(function (data) {
+        vm.institutions = data.Results;
     });
 
-    vm.delete = function(role) {
-        $roleServices.remove(role).then(function (data) {
+    vm.delete = function(institution) {
+        $institutionServices.remove(institution).then(function (data) {
             if (data.Success) {
-                vm.roles.splice(vm.roles.indexOf(role), 1);
+                vm.institutions.splice(vm.institutions.indexOf(institution), 1);
             } else {
                 alert("error!");
             }
@@ -46,16 +46,16 @@ rolesApp.controller("HomeController", function ($roleServices) {
 
 });
 
-rolesApp.controller("EditController", function ($location, $roleServices, $scope) {
+institutionsApp.controller("EditController", function ($location, $institutionServices, $scope) {
     var vm = this;
 
-    $roleServices.get($location.search()["id"]).then(function (data) {
-        vm.role = data.Results;
+    $institutionServices.get($location.search()["id"]).then(function (data) {
+        vm.institutions = data.Results;
     });
 
     vm.Save = function () {
         
-        $roleServices.update(vm.role).then(function (data) {
+        $institutionServices.update(vm.institutions).then(function (data) {
             if (data.Success) {
 
                 //we can call this here to reset all errors and the form. if you redirect out on success, no need to call this.
@@ -65,15 +65,16 @@ rolesApp.controller("EditController", function ($location, $roleServices, $scope
     };
 });
 
-rolesApp.controller("CreateController", function ($location, $roleServices, $scope) {
+institutionsApp.controller("CreateController", function ($location, $institutionServices, $scope) {
     var vm = this;
 
-    vm.role = {};
+    vm.institution = {};
 
     vm.Create = function () {
-        $roleServices.create(vm.role).then(function (data) {
+        $institutionServices.create(vm.institution).then(function (data) {
+            console.log(vm.institution);
             if (data.Success) {
-                vm.role = data.Results;
+                vm.institution = data.Results;
                 $scope.$broadcast('show-errors-reset');
             }
         });

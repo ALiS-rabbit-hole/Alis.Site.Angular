@@ -1,0 +1,7 @@
+<div class="alert alert-danger fade in" ng-show="main_errors.invalid">
+    <a class="close" data-dismiss="alert">&times;</a>
+    <strong>Error!</strong>
+    <ul>
+        <li ng-repeat="error in main_errors.errors track by $index">{{error}}</li>
+    </ul>
+</div>
