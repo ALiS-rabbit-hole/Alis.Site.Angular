@@ -34,10 +34,12 @@ rolesApp.controller("HomeController", function ($roleServices) {
         vm.roles = data.Results;
     });
 
-    vm.delete = function(role) {
+    vm.delete = function (role) {
+
         $roleServices.remove(role).then(function (data) {
             if (data.Success) {
-                vm.roles.splice(vm.roles.indexOf(role), 1);
+                console.log(role);
+                vm.roles.splice(role, 1);
             } else {
                 alert("error!");
             }

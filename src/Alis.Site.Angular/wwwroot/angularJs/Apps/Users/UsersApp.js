@@ -24,5 +24,7 @@ usersApp.controller("HomeController", function($userServices) {
 
     $userServices.getAllUsers().then(function(data) {
         vm.users= data.Results;
+    }).catch(function(error) {
+        console.log(error);
     });
 });
