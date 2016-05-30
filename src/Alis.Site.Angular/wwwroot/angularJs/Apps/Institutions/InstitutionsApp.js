@@ -1,4 +1,4 @@
-var institutionsApp = angular.module('institutionsApp', ['ngRoute', 'institutionServices', 'ui.bootstrap.showErrors', 'Api.DuplicateRequestsFilter.Decorator']);
+var institutionsApp = angular.module('institutionsApp', ['ngRoute', 'institutionServices', 'ui.bootstrap.showErrors']);
 
 institutionsApp.config(function ($routeProvider, $sceProvider, $compileProvider) {
 
@@ -37,6 +37,7 @@ institutionsApp.controller("HomeController", function ($institutionServices) {
     vm.delete = function(institution) {
         $institutionServices.remove(institution).then(function (data) {
             if (data.Success) {
+                console.log(vm.institutions.indexOf(institution));
                 vm.institutions.splice(vm.institutions.indexOf(institution), 1);
             } else {
                 alert("error!");
@@ -50,12 +51,12 @@ institutionsApp.controller("EditController", function ($location, $institutionSe
     var vm = this;
 
     $institutionServices.get($location.search()["id"]).then(function (data) {
-        vm.institution = data.Results;
+        vm.institutions = data.Results;
     });
 
     vm.Save = function () {
         
-        $institutionServices.update(vm.institution).then(function (data) {
+        $institutionServices.update(vm.institutions).then(function (data) {
             if (data.Success) {
 
                 //we can call this here to reset all errors and the form. if you redirect out on success, no need to call this.

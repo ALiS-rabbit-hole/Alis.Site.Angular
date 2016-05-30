@@ -3,8 +3,8 @@
     <thead>
     <tr></tr>
     </thead>
-    <tr ng-repeat="institution in vm.institutions track by $index">
-        <td>{{::institution.Name}}</td>
+    <tr ng-repeat="institution in vm.institutions">
+        <td>{{$index}}{{::institution.Name}}</td>
         <td><a href="#/Edit?id={{::institution.ID}}" class="btn btn-default">Edit</a></td>
         <td><button ng-click="vm.delete(institution)" class="btn btn-danger">Delete</button></td>
     </tr>

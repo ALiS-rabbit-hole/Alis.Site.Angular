@@ -1,10 +1,4 @@
-﻿<div class="alert alert-danger fade in" ng-show="main_errors.invalid">
-    <a class="close" data-dismiss="alert">&times;</a>
-    <strong>Error!</strong>
-    <ul>
-        <li ng-repeat="error in main_errors.errors track by $index">{{error}}</li>
-    </ul>
-</div>
+﻿<div ng-include src="angularJs/Templates/_generalError.html"></div>
 <form name="createRoleForm" class="form-horizontal">
     <div class="form-group" show-errors>
         <label for="name" class="col-sm-2 control-label">Create Role</label>
