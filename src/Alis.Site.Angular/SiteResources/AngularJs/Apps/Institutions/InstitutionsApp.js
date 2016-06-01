@@ -1,4 +1,4 @@
-﻿var institutionsApp = angular.module('institutionsApp', ['ngRoute', 'institutionServices', 'ui.bootstrap.showErrors']);
+﻿var institutionsApp = angular.module('institutionsApp', ['ngRoute', 'institutionServices', 'ui.bootstrap.showErrors', 'helpers']);
 
 institutionsApp.config(function ($routeProvider, $sceProvider, $compileProvider) {
 
@@ -39,8 +39,6 @@ institutionsApp.controller("HomeController", function ($institutionServices) {
             if (data.Success) {
                 console.log(vm.institutions.indexOf(institution));
                 vm.institutions.splice(vm.institutions.indexOf(institution), 1);
-            } else {
-                alert("error!");
             }
         });
     };
@@ -51,14 +49,16 @@ institutionsApp.controller("EditController", function ($location, $institutionSe
     var vm = this;
 
     $institutionServices.get($location.search()["id"]).then(function (data) {
-        vm.institutions = data.Results;
+        vm.institution = data.Results;
     });
 
     vm.Save = function () {
         
-        $institutionServices.update(vm.institutions).then(function (data) {
+        $institutionServices.update(vm.institution).then(function (data) {
             if (data.Success) {
 
+                vm.notifications.success.valid = true;
+                vm.notifications.success.descriptions = ["sdsadasasdsa"];
                 //we can call this here to reset all errors and the form. if you redirect out on success, no need to call this.
                 $scope.$broadcast('show-errors-reset');
             }
@@ -76,6 +76,10 @@ institutionsApp.controller("CreateController", function ($location, $institution
             console.log(vm.institution);
             if (data.Success) {
                 vm.institution = data.Results;
+
+                $scope.notifications.success.valid = true;
+                $scope.notifications.success.descriptions = ["sdsadasasdsa"];
+
                 $scope.$broadcast('show-errors-reset');
             }
         });

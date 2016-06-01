@@ -54,7 +54,7 @@
                       var serverValidations = previousErrors = args.ErrorFields;
                       var prop;
                       var mainErrors = [];
-                      scope.main_errors = null;
+                      scope.notifications = null;
                       for (prop in serverValidations) {
 
                               if (formCtrl[serverValidations[prop].Key]) {
@@ -75,8 +75,8 @@
                       };
 
                       if (mainErrors.length > 0) {
-
-                          scope.main_errors = { invalid: true, errors: mainErrors };
+                          scope.notifications = {};
+                          scope.notifications.errors = { invalid: true, descriptions: mainErrors };
                         
                       }
                        scope.$apply();

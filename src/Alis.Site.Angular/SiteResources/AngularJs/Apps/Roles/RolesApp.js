@@ -38,10 +38,8 @@ rolesApp.controller("HomeController", function ($roleServices) {
 
         $roleServices.remove(role).then(function (data) {
             if (data.Success) {
-                console.log(role);
-                vm.roles.splice(role, 1);
-            } else {
-                alert("error!");
+
+                vm.roles.splice(vm.roles.indexOf(role), 1);
             }
         });
     };

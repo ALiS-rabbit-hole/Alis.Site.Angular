@@ -1,4 +1,4 @@
-<div ng-include src="angularJs/Templates/_generalError.html"></div>
+<notifications></notifications>
 <form name="createInstitutionForm" class="form-horizontal">
     <div class="form-group" show-errors>
         <label for="name" class="col-sm-2 control-label">Create Institution</label>
@@ -7,6 +7,7 @@
             <span  class="help-block" ng-show="createInstitutionForm.Name.$invalid">{{createInstitutionForm.Name.$errorText}}</span>
         </div>
     </div>
+  
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
             <button class="btn btn-default" ng-click="vm.Create()">Create</button> <a href="#/Home" class="btn btn-warning">Cancel</a>

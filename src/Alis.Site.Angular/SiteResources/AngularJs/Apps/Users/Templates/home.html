@@ -1,9 +1,10 @@
-﻿<table class="table">
+﻿<notifications></notifications>
+<table class="table">
     <thead>
     <tr></tr>
 
     </thead>
-    <tr ng-repeat="user in ::vm.users track by $index">
+    <tr ng-repeat="user in ::vm.users track by user.Username">
         <td>{{::user.Username}}</td>
         <td>{{::user.Forename}}</td>
         <td>{{::user.Surname}}</td>
