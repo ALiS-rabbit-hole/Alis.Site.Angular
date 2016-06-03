@@ -1,0 +1,21 @@
+<h1>{{::vm.application.Name}}</h1>
+
+<table class="table">
+    <thead>
+    <tr></tr>
+    </thead>
+    <tr ng-repeat="event in vm.application.Events track by event.ID">
+        <td>{{::event.Name}}</td>
+        <td>
+            <ul ng-repeat="tag in event.Tags track by tag.ID">
+                {{::tag.Name}}
+            </ul>
+        </td>
+    </tr>
+</table>
+
+<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+        <a href="#/Home" class="btn btn-default">Back</a>
+    </div>
+</div>

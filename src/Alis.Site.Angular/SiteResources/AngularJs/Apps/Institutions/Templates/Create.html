@@ -10,7 +10,7 @@
   
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
-            <button class="btn btn-default" ng-click="vm.Create()">Create</button> <a href="#/Home" class="btn btn-warning">Cancel</a>
+            <button class="btn btn-default" ng-click="vm.Create()" ng-hide="vm.institution.ID">Create</button> <a href="#/Home" class="btn btn-warning" ng-hide="vm.institution.ID">Cancel</a> <a href="#/Home" class="btn btn-default" ng-show="vm.institution.ID">Back</a> 
         </div>
     </div>
 </form>
