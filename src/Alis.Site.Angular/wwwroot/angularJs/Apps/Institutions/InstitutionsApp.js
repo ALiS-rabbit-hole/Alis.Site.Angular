@@ -49,16 +49,16 @@ institutionsApp.controller("EditController", function ($location, $institutionSe
     var vm = this;
 
     $institutionServices.get($location.search()["id"]).then(function (data) {
-        vm.institution = data.Results;
+        vm.institutionConfig = data.Results;
     });
 
     vm.Save = function () {
         
-        $institutionServices.update(vm.institution).then(function (data) {
+        $institutionServices.update(vm.institutionConfig).then(function (data) {
             if (data.Success) {
 
-                vm.notifications.success.valid = true;
-                vm.notifications.success.descriptions = ["sdsadasasdsa"];
+                $scope.notifications.success.valid = true;
+                $scope.notifications.success.descriptions = ["sdsadasasdsa"];
                 //we can call this here to reset all errors and the form. if you redirect out on success, no need to call this.
                 $scope.$broadcast('show-errors-reset');
             }
@@ -69,13 +69,14 @@ institutionsApp.controller("EditController", function ($location, $institutionSe
 institutionsApp.controller("CreateController", function ($location, $institutionServices, $scope) {
     var vm = this;
 
-    vm.institution = {};
+    vm.institutionConfig = {};
+    vm.institutionConfig.Institution = {};
 
     vm.Create = function () {
-        $institutionServices.create(vm.institution).then(function (data) {
-            console.log(vm.institution);
+        $institutionServices.create(vm.institutionConfig).then(function (data) {
+
             if (data.Success) {
-                vm.institution = data.Results;
+                vm.institutionConfig = data.Results;
 
                 $scope.notifications.success.valid = true;
                 $scope.notifications.success.descriptions = ["sdsadasasdsa"];

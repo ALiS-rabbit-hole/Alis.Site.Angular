@@ -45,8 +45,8 @@
         });
 
     mod.controller("successMessageController", function ($scope) {
-     
-        $scope.$parent.notifications = {};
-        $scope.$parent.notifications.success = {};
+    
+        $scope.notifications = {};
+        $scope.notifications.success = {};
     });
 }());

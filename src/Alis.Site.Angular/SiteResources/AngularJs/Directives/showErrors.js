@@ -54,9 +54,10 @@
                       var serverValidations = previousErrors = args.ErrorFields;
                       var prop;
                       var mainErrors = [];
-                      scope.notifications = null;
+                      scope.notifications = {};
+                      scope.notifications.success = { valid: false };
                       for (prop in serverValidations) {
-
+                          
                               if (formCtrl[serverValidations[prop].Key]) {
         
                                   formCtrl[serverValidations[prop].Key].$setValidity(serverValidations[prop].Key, false);
@@ -69,6 +70,8 @@
                                   //we've detected a field which doesn't relate to a form field,
                                   //lets display it as a main error!
                                   mainErrors.push(serverValidations[prop].Value);
+
+                                  //console.log(serverValidations[prop].Key);
                               }
 
                           
@@ -89,6 +92,9 @@
               scope.$on('show-errors-reset', function (event, args) {
 
                   return $timeout(function () {
+
+
+
                       el.removeClass('has-error');
                       el.removeClass('has-success');
 
@@ -160,11 +166,12 @@
     showErrorsModule.factory('fieldValInterceptor', function ($q, $rootScope) {
         return {
             response: function (response) {
+              
                 if (response.headers()['content-type'] === "application/json; charset=utf-8") {
                     var data = response.data;
 
                     if (!data)
-                        return $q.reject(response);
+                        return $q.reject(response);  
 
                     if (data.ErrorFields && data.ErrorFields.length > 0) {
 

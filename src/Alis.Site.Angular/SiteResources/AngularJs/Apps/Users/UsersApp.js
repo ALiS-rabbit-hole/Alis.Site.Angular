@@ -1,4 +1,4 @@
-﻿var usersApp = angular.module('usersApp', ['ngRoute', 'userServices', 'roleServices', 'institutionServices', 'customFilters']);
+﻿var usersApp = angular.module('usersApp', ['ngRoute', 'userServices', 'roleServices', 'institutionServices', 'ui.bootstrap.showErrors', 'customFilters']);
 
 usersApp.config(function ($routeProvider, $sceProvider, $compileProvider) {
 

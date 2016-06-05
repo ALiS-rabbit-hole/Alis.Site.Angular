@@ -1,4 +1,4 @@
-﻿var rolesApp = angular.module('rolesApp', ['ngRoute', 'roleServices', 'ui.bootstrap.showErrors']);
+﻿var rolesApp = angular.module('rolesApp', ['ngRoute', 'roleServices', 'helpers', 'ui.bootstrap.showErrors']);
 
 rolesApp.config(function ($routeProvider, $sceProvider, $compileProvider, showErrorsConfigProvider) {
 
@@ -57,7 +57,8 @@ rolesApp.controller("EditController", function ($location, $roleServices, $scope
         
         $roleServices.update(vm.role).then(function (data) {
             if (data.Success) {
-
+                $scope.notifications.success.valid = true;
+                $scope.notifications.success.descriptions = ["The role was successfully created."];
                 //we can call this here to reset all errors and the form. if you redirect out on success, no need to call this.
                 $scope.$broadcast('show-errors-reset');
             }

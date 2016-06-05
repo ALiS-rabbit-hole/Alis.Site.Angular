@@ -1,15 +1,48 @@
+<ol class="breadcrumb">
+    <li><a href="/">Home</a></li>
+    <li><a href="#">Institutions</a></li>
+    <li class="active">Edit</li>
+</ol>
 <notifications></notifications>
+
+<ul class="nav nav-tabs">
+    <li role="presentation" class="active"><a data-target="#details" data-toggle="tab">Details</a></li>
+    <li role="presentation"><a data-target="#configuration" data-toggle="tab">Configuration</a></li>
+</ul>
+
 <form name="editInstitutionForm" class="form-horizontal">
-    <div class="form-group" show-errors>
-        <label for="name" class="col-sm-2 control-label">Edit Institution</label>
-        <div class="col-sm-10">
-            <input type="text" class="form-control" id="name" name="Name" placeholder="Institution Name" ng-required ng-model="vm.institution.Name">
-            <span  class="help-block" ng-show="editInstitutionForm.Name.$invalid">{{editInstitutionForm.Name.$errorText}}</span>
+    <div class="tab-content">
+        <div class="tab-pane active" id="details">
+            <h4>Details</h4>
+            <div class="form-group" show-errors>
+                <label for="name" class="col-sm-2 control-label">Edit Institution</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="name" name="Name" placeholder="Institution Name" ng-required ng-model="vm.institutionConfig.Institution.Name">
+                    <span class="help-block" ng-show="editInstitutionForm.Name.$invalid">{{editInstitutionForm.Name.$errorText}}</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button class="btn btn-default" ng-click="vm.Save()">Save</button> <a href="#/Home" class="btn btn-warning">Cancel</a>
+                </div>
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-            <button class="btn btn-default"  ng-click="vm.Save()">Save</button> <a href="#/Home" class="btn btn-warning">Cancel</a>
+        <div class="tab-pane" id="configuration">
+            <h4>Configuration</h4>
+            <div class="form-group" show-errors>
+                <label for="UploadName" class="col-sm-2 control-label">Name</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="UploadName" name="UploadName" placeholder="Upload Location Name" ng-required ng-model="vm.institutionConfig.UploadLocation.Name">
+                    <span class="help-block" ng-show="editInstitutionForm.UploadName.$invalid">{{editInstitutionForm.UploadName.$errorText}}</span>
+                </div>
+            </div>
+            <div class="form-group" show-errors>
+                <label for="UploadLocation" class="col-sm-2 control-label">Upload Location</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="UploadLocation" name="UploadLocation" placeholder="Upload Location" ng-required ng-model="vm.institutionConfig.UploadLocation.Location">
+                    <span class="help-block" ng-show="editInstitutionForm.UploadLocation.$invalid">{{editInstitutionForm.UploadLocation.$errorText}}</span>
+                </div>
+            </div>
         </div>
     </div>
 </form>
