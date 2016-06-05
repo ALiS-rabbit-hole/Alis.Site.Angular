@@ -1,4 +1,8 @@
-﻿<notifications></notifications>
+﻿<ol class="breadcrumb">
+    <li><a href="/">Home</a></li>
+    <li class="active">Users</li>
+</ol>
+<notifications></notifications>
 <table class="table">
     <thead>
     <tr></tr>
@@ -9,6 +13,6 @@
         <td>{{::user.Forename}}</td>
         <td>{{::user.Surname}}</td>
         <td>{{::user.Email}}</td>
-        <td><button class="btn btn-default">Edit</button></td>
+        <td><a href="#/Edit?id={{::user.ID}}" class="btn btn-default">Edit</a></td>
     </tr>
 </table>
