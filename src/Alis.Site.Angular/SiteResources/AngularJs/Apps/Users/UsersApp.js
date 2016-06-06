@@ -1,4 +1,4 @@
-﻿var usersApp = angular.module('usersApp', ['ngRoute', 'userServices', 'roleServices', 'institutionServices', 'ui.bootstrap.showErrors', 'customFilters']);
+﻿var usersApp = angular.module('usersApp', ['ngRoute', 'userServices', 'roleServices', 'institutionServices', 'ui.bootstrap.showErrors', 'helpers', 'customFilters']);
 
 usersApp.config(function ($routeProvider, $sceProvider, $compileProvider) {
 
@@ -33,7 +33,7 @@ usersApp.controller("HomeController", function($userServices) {
     });
 });
 
-usersApp.controller("EditController", function ($userServices, $roleServices, $institutionServices, $location, $scope, $timeout) {
+usersApp.controller("EditController", function ($userServices, $roleServices, $institutionServices, $location, $scope) {
     var vm = this;
 
     $userServices.get($location.search()["id"]).then(function (data) {
@@ -73,12 +73,15 @@ usersApp.controller("EditController", function ($userServices, $roleServices, $i
     };
 
     vm.Save = function () {
-
+        $scope.$broadcast('show-errors-reset');
         $userServices.update(vm.user).then(function (data) {
+     
             if (data.Success) {
 
-                //we can call this here to reset all errors and the form. if you redirect out on success, no need to call this.
-                $scope.$broadcast('show-errors-reset');
+                $scope.notifications.success.valid = true;
+                $scope.notifications.success.descriptions = ["The user '" + vm.user.Username + "' was successfully updated."];
+
+             
             }
         });
     };

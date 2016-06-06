@@ -32,7 +32,11 @@
               trigger = getTrigger(options);
               inputEl = el[0].querySelector('.form-control[name]');
               inputNgEl = angular.element(inputEl);
+
+      
+
               inputName = $interpolate(inputNgEl.attr('name') || '')(scope);
+
               if (!inputName) {
                   throw "show-errors element has no child input elements with a 'name' attribute and a 'form-control' class";
               }
@@ -50,31 +54,38 @@
               });
               scope.$on('_ERROR_FIELDS_', function (event, args) {
                   $timeout(function () {
+                   
                       //we flag up fields as invalid and add the message against as returned by the server
-                      var serverValidations = previousErrors = args.ErrorFields;
+                      previousErrors = args.ErrorFields;
                       var prop;
                       var mainErrors = [];
                       scope.notifications = {};
                       scope.notifications.success = { valid: false };
-                      for (prop in serverValidations) {
-                          
-                              if (formCtrl[serverValidations[prop].Key]) {
-        
-                                  formCtrl[serverValidations[prop].Key].$setValidity(serverValidations[prop].Key, false);
-                                  formCtrl[serverValidations[prop].Key].$errorText = serverValidations[prop].Value;
 
-                                  toggleClasses(formCtrl[serverValidations[prop].Key].$invalid);
-                              }
+                      for (prop in args.ErrorFields) {
+                         
+                          if (args.ErrorFields[prop].Key == inputName && formCtrl[args.ErrorFields[prop].Key]) {
+                             
+                              formCtrl[args.ErrorFields[prop].Key].$setValidity(args.ErrorFields[prop].Key, false);
+                              formCtrl[args.ErrorFields[prop].Key].$errorText = args.ErrorFields[prop].Value;
 
-                              if (!formCtrl.hasOwnProperty(serverValidations[prop].Key)) {
+
+                             
+
+                              toggleClasses(formCtrl[args.ErrorFields[prop].Key].$invalid);
+       
+
+                          }
+
+                          if (!formCtrl.hasOwnProperty(args.ErrorFields[prop].Key)) {
                                   //we've detected a field which doesn't relate to a form field,
                                   //lets display it as a main error!
-                                  mainErrors.push(serverValidations[prop].Value);
+                                  mainErrors.push(args.ErrorFields[prop].Value);
 
                                   //console.log(serverValidations[prop].Key);
                               }
 
-                          
+                            
                       };
 
                       if (mainErrors.length > 0) {
@@ -124,6 +135,7 @@
                   }, 0, false);
               });
               return toggleClasses = function (invalid) {
+               
                   el.toggleClass('has-error', invalid);
                   if (showSuccess) {
                       return el.toggleClass('has-success', !invalid);
@@ -185,4 +197,4 @@
             }
         };
     });
-}).call(this);
+})();
