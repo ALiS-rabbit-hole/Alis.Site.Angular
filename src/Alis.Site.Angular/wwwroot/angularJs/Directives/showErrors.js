@@ -62,25 +62,22 @@
                       scope.notifications = {};
                       scope.notifications.success = { valid: false };
 
-                      for (prop in args.ErrorFields) {
+                 
                          
-                          if (args.ErrorFields[prop].Key == inputName && formCtrl[args.ErrorFields[prop].Key]) {
+                          if (args.ErrorFields[inputName] != null && formCtrl[inputName]) {
                              
-                              formCtrl[args.ErrorFields[prop].Key].$setValidity(args.ErrorFields[prop].Key, false);
-                              formCtrl[args.ErrorFields[prop].Key].$errorText = args.ErrorFields[prop].Value;
+                              formCtrl[inputName].$setValidity(inputName, false);
+                              formCtrl[inputName].$errorText = args.ErrorFields[inputName];
 
-
-                             
-
-                              toggleClasses(formCtrl[args.ErrorFields[prop].Key].$invalid);
+                              toggleClasses(formCtrl[inputName].$invalid);
        
-
                           }
 
-                          if (!formCtrl.hasOwnProperty(args.ErrorFields[prop].Key)) {
+                          for (prop in args.ErrorFields) {
+                          if (!formCtrl[prop]) {
                                   //we've detected a field which doesn't relate to a form field,
                                   //lets display it as a main error!
-                                  mainErrors.push(args.ErrorFields[prop].Value);
+                                  mainErrors.push(args.ErrorFields[prop]);
 
                                   //console.log(serverValidations[prop].Key);
                               }
@@ -114,8 +111,8 @@
                           var prop;
                           for (prop in previousErrors) {
                           
-                                  if (formCtrl[previousErrors[prop].Key]) {
-                                      formCtrl[previousErrors[prop].Key].$setValidity(previousErrors[prop].Key, true);
+                                  if (formCtrl[prop]) {
+                                      formCtrl[prop].$setValidity(prop, true);
                                   }
                               
                           }
@@ -187,7 +184,16 @@
 
                     if (data.ErrorFields && data.ErrorFields.length > 0) {
 
-                        $rootScope.$broadcast("_ERROR_FIELDS_", { ErrorFields: data.ErrorFields });
+                        var errors = [];
+                        for (item in data.ErrorFields) {
+
+                            console.log(item);
+                            errors[data.ErrorFields[item].Key] = data.ErrorFields[item].Value;
+                        };
+
+                        console.log("here");
+
+                        $rootScope.$broadcast("_ERROR_FIELDS_", { ErrorFields: errors });
                     }
                 }
                 return response;

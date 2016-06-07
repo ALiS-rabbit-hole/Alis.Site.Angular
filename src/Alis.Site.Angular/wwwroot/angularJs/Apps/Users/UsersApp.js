@@ -1,4 +1,4 @@
-var usersApp = angular.module('usersApp', ['ngRoute', 'userServices', 'roleServices', 'institutionServices', 'ui.bootstrap.showErrors', 'helpers', 'customFilters']);
+var usersApp = angular.module('usersApp', ['ngRoute', 'userServices', 'roleServices', 'institutionServices', 'ui.bootstrap.showErrors', 'helpers', 'customFilters', 'checklist-model']);
 
 usersApp.config(function ($routeProvider, $sceProvider, $compileProvider) {
 
@@ -13,11 +13,15 @@ usersApp.config(function ($routeProvider, $sceProvider, $compileProvider) {
     $routeProvider.when('/Home', {
         controller: 'HomeController',
         controllerAs: "vm",
-        templateUrl: dir + 'Home.html'
+        templateUrl: dir + 'home.html'
     }).when('/Edit', {
         controller: 'EditController',
         controllerAs: 'vm',
-        templateUrl: dir + 'Edit.html'
+        templateUrl: dir + 'edit.html'
+    }).when('/Create', {
+        controller: 'CreateController',
+        controllerAs: 'vm',
+        templateUrl: dir + 'create.html'
     }).otherwise({
         redirectTo: '/Home'
     });
@@ -82,6 +86,45 @@ usersApp.controller("EditController", function ($userServices, $roleServices, $i
                 $scope.notifications.success.descriptions = ["The user '" + vm.user.Username + "' was successfully updated."];
 
              
+            }
+        });
+    };
+
+});
+
+usersApp.controller("CreateController", function ($userServices, $roleServices, $institutionServices, $location, $scope) {
+    var vm = this;
+
+    $userServices.newUser().then(function (data) {
+        vm.user = data.Results;
+    });
+
+    $roleServices.getAll().then(function (data) {
+        vm.roles = data.Results;
+    });
+
+    $institutionServices.getAll().then(function (data) {
+        vm.institutions = data.Results;
+    });
+
+    vm.addToInstitution = function (institution) {
+        vm.user.Institutions.push(institution);
+    };
+
+    vm.removeInstitution = function (institution) {
+        vm.user.Institutions.splice(vm.user.Institutions.indexOf(institution), 1);
+    };
+
+    vm.Save = function () {
+        $scope.$broadcast('show-errors-reset');
+        $userServices.create(vm.user).then(function (data) {
+
+            if (data.Success) {
+
+                $scope.notifications.success.valid = true;
+                $scope.notifications.success.descriptions = ["The user '" + vm.user.Username + "' was successfully created."];
+
+
             }
         });
     };

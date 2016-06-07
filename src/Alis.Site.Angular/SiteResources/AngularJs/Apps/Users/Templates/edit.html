@@ -68,7 +68,7 @@
                             <div class="panel-heading">Roles</div>
                             <div class="panel-body">
                                 <label class="checkbox-inline" ng-repeat="role in ::vm.roles track by role.ID">
-                                    <input type="checkbox" id="{{::role.ID}}" value="{{::role.ID}}"> {{::role.Name}}
+                                    <input type="checkbox" data-checklist-model="vm.user.Roles" data-checklist-value="role"> {{::role.Name}}
                                 </label>
                             </div>
                         </div>
@@ -96,7 +96,7 @@
                                     <button ng-click="vm.removeInstitution(institution)" class="btn btn-danger btn-sm pull-right">Remove</button>
                                     <div>
                                         <label class="checkbox-inline" ng-repeat="role in ::vm.roles track by role.ID">
-                                            <input type="checkbox" id="{{::role.ID}}" value="{{::role.ID}}"> {{::role.Name}}
+                                            <input type="checkbox" data-checklist-model="institution.Roles"data-checklist-value="role"> {{::role.Name}}
                                         </label>
                                     </div>
                                 </div>
