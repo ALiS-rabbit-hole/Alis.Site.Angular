@@ -1,0 +1,35 @@
+{
+  "name": "commonmark",
+  "main": "dist/commonmark.js",
+  "homepage": "https://github.com/jgm/commonmark.js",
+  "description": "CommonMark parsing and rendering library",
+  "license": "BSD-2-Clause",
+  "ignore": [
+    "**/.*",
+    "lib",
+    "bin",
+    "test",
+    "tools",
+    "bench",
+    "dingus",
+    "Makefile",
+    "*.md",
+    "release_checklist.md",
+    "eslint.json",
+    "package.json"
+  ],
+  "keywords": [
+    "markdown",
+    "commonmark"
+  ],
+  "version": "0.25.1",
+  "_release": "0.25.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.25.1",
+    "commit": "a6aadbebf047414530d7da0a64318e40a2a8a67b"
+  },
+  "_source": "https://github.com/jgm/commonmark.js.git",
+  "_target": "0.25.1",
+  "_originalSource": "commonmark"
+}
