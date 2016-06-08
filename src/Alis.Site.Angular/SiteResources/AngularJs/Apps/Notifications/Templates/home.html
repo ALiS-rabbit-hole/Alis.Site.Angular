@@ -1,0 +1,21 @@
+﻿
+
+<div class="dropdown">
+    <button class="btn btn-default dropdown-toggle" type="button" id="applicationsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        Applications
+        <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="applicationsDropdown">
+        <li ng-repeat="application in filtered = (vm.applications | filter:application.Events.length > 0)"><a ng-click="vm.selectedApplication = application">{{::application.Name}}</a></li>
+    </ul>
+</div>
+
+<div class="dropdown">
+    <button class="btn btn-default dropdown-toggle" ng-class="{'disabled':vm.selectedApplication == undefined}" type="button" id="eventsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        Events
+        <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="eventsDropdown">
+        <li ng-repeat="event in vm.selectedApplication.Events track by event.ID"><a href="#/Notifications?appID={{::vm.selectedApplication.ID}}&eventID={{::event.ID}}">{{::event.FriendlyName}}</a></li>
+    </ul>
+</div>

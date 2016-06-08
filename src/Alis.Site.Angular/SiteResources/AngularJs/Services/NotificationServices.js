@@ -1,6 +1,6 @@
-﻿angular.module('applicationServices', [])
-    .factory('$applicationServices', function ($http) {
-        var serviceRoot = config.serviceRoot + "/Applications/";
+﻿angular.module('notificationServices', [])
+    .factory('$notificationServices', function ($http) {
+        var serviceRoot = config.serviceRoot + "/Notifications/";
 
     return {
         getAll: function () {

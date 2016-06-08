@@ -9,7 +9,7 @@ angular.module('applicationServices', [])
             });
         },
         get: function(id) {
-            return $http.get(serviceRoot + "Get/", { params: { Id: id } }).then(function(result) {
+            return $http.get(serviceRoot + "Get", { params: { Id: id } }).then(function(result) {
                 return result.data;
             });
         }
