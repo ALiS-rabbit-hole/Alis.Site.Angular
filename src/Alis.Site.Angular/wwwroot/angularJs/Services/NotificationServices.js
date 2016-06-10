@@ -3,13 +3,14 @@ angular.module('notificationServices', [])
         var serviceRoot = config.serviceRoot + "/Notifications/";
 
     return {
-        getAll: function () {
-            return $http.get(serviceRoot + "GetAll").then(function (result) {
+        get: function(id) {
+            return $http.get(serviceRoot + "Get", { params: { Id: id } }).then(function(result) {
                 return result.data;
             });
         },
-        get: function(id) {
-            return $http.get(serviceRoot + "Get", { params: { Id: id } }).then(function(result) {
+        create: function (notification) {
+            //console.log(notification);
+            return $http.post(serviceRoot + "Create", notification).then(function (result) {
                 return result.data;
             });
         }

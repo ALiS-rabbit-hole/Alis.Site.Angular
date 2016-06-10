@@ -1,1 +1,16 @@
-﻿some stuff here!
+﻿<ol class="breadcrumb">
+    <li><a href="/">Home</a></li>
+    <li><a href="#">Notifications</a></li>
+    <li class="active">Edit</li>
+</ol>
+<a href="#/Create?appID={{::vm.appID}}&eventID={{::vm.eventID}}" class="btn btn-default">Create Notification</a>
+<table class="table">
+    <thead>
+        <tr></tr>
+    </thead>
+    <tr ng-repeat="notification in vm.notifications track by notification.ID">
+        <td>{{::institution.Subject}}</td>
+        <td><a href="#/Edit?id={{::notification.ID}}&appID={{::vm.appID}}&eventID={{::vm.eventID}}" class="btn btn-default">Edit</a></td>
+        <td><button ng-click="vm.delete(notification)" class="btn btn-danger">Delete</button></td>
+    </tr>
+</table>
