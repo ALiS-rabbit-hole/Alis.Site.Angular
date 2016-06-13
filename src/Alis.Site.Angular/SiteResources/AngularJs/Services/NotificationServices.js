@@ -3,8 +3,13 @@
         var serviceRoot = config.serviceRoot + "/Notifications/";
 
     return {
-        get: function(id) {
-            return $http.get(serviceRoot + "Get", { params: { Id: id } }).then(function(result) {
+        getByEventID: function(id) {
+            return $http.get(serviceRoot + "GetByEventID", { params: { Id: id } }).then(function (result) {
+                return result.data;
+            });
+        },
+        get: function (id) {
+            return $http.get(serviceRoot + "Get", { params: { Id: id } }).then(function (result) {
                 return result.data;
             });
         },

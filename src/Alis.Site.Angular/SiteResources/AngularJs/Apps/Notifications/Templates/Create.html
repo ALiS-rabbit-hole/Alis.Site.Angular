@@ -1,49 +1,85 @@
 ﻿<ol class="breadcrumb">
     <li><a href="/">Home</a></li>
-    <li><a href="#">Notifications</a></li>
+    <li><a href="#/home?appID={{::vm.appID}}&eventID={{::vm.eventID}}">Notifications</a></li>
     <li class="active">Create</li>
 </ol>
 
 <notifications></notifications>
 
 <h4>Create Notification for '{{::vm.Event.FriendlyName}}' Event</h4>
+<div class="row">
+    <div class="col-md-9">
+        <form name="createNotificationForm" class="form-horizontal">
 
-<form name="createNotificationForm" class="form-horizontal">
+            <div class="form-group" show-errors>
+                <label for="from" class="col-sm-2 control-label">From</label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" id="from" name="From" ng-disabled="vm.overrideFrom != true" placeholder="From" ng-required ng-model="vm.Notification.From"/>
 
-    <div class="form-group" show-errors>
-        <label for="from" class="col-sm-2 control-label">From</label>
-        <div class="col-sm-10">
-            <input type="text" class="form-control" id="from" name="From" placeholder="From" ng-required ng-model="vm.Notification.From" />
-            <span class="help-block" ng-show="createNotificationForm.From.$invalid">{{createNotificationForm.From.$errorText}}</span>
+                    <span class="help-block" ng-show="createNotificationForm.From.$invalid">{{createNotificationForm.From.$errorText}}</span>
+                </div>
+                <div class="col-sm-3">
+                    <div class="btn-group" data-toggle="buttons">
+                        <label class="btn btn-default" ng-class="{active: vm.overrideFrom == 'Override'}">
+                            <input type="checkbox" ng-model="vm.overrideFrom"> Override
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" show-errors>
+                <label for="to" class="col-sm-2 control-label">To</label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" id="to" name="to" placeholder="To" ng-required ng-model="vm.Notification.Recipients" ng-disabled="vm.fromRBL != 'Override'"/>
+                    <span class="help-block" ng-show="createNotificationForm.Recipients.$invalid">{{createNotificationForm.Recipients.$errorText}}</span>
+                </div>
+                <div class="col-sm-3">
+                    <div class="btn-group" data-toggle="buttons">
+                        <label class="btn btn-default" ng-class="{active: vm.fromRBL == 'Override'}">
+                            <input type="radio" ng-model="vm.fromRBL" value="Override"/> Override
+                        </label>
+                        <label class="btn btn-default" ng-class="{active: vm.fromRBL == 'DefaultRecipient'}">
+                            <input type="radio" ng-model="vm.fromRBL" value="DefaultRecipient"/> Default Recipient
+                        </label>
+                        <label class="btn btn-default" ng-show="vm.Event.HasTarget" ng-class="{active: vm.fromRBL == 'DefaultTarget'}">
+                            <input type="radio" ng-model="vm.fromRBL" value="DefaultTarget"/> Default Target
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" show-errors>
+                <label for="subject" class="col-sm-2 control-label">Subject</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="subject" name="Subject" placeholder="Notifiction Subject" ng-required ng-model="vm.Notification.Subject"/>
+                    <span class="help-block" ng-show="createNotificationForm.Subject.$invalid">{{createNotificationForm.Subject.$errorText}}</span>
+                </div>
+            </div>
+            <div class="form-group" show-errors>
+                <label for="message" class="col-sm-2 control-label">Message</label>
+                <div class="col-sm-10">
+                    <textarea class="form-control" id="message" name="Message" placeholder="Message" ng-required ng-model="vm.Notification.Message"></textarea>
+                    <span class="help-block" ng-show="createNotificationForm.Message.$invalid">{{createNotificationForm.Message.$errorText}}</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button class="btn btn-default" ng-click="vm.Create()">Create</button> <a href="#/home?appID={{::vm.appID}}&eventID={{::vm.eventID}}" class="btn btn-default">Back</a>
+                </div>
+            </div>
+
+
+        </form>
+    </div>
+    <div class="col-md-3">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Tags</h3>
+            </div>
+            <div class="panel-body">
+                <ul>
+                    <li ng-repeat="tag in vm.Event.Tags" popover data-trigger="hover" placement="top" data-original-title="Details" data-content="{{tag.Description}}">{{tag.FriendlyName}}</li>
+                </ul>
+            </div>
         </div>
     </div>
-    <div class="form-group" show-errors>
-        <label for="to" class="col-sm-2 control-label">To</label>
-        <div class="col-sm-10">
-            <input type="text" class="form-control" id="to" name="From" placeholder="From" ng-required ng-model="vm.Notification.Recipients" />
-            <span class="help-block" ng-show="createNotificationForm.Recipients.$invalid">{{createNotificationForm.Recipients.$errorText}}</span>
-        </div>
-    </div>
-    <div class="form-group" show-errors>
-        <label for="subject" class="col-sm-2 control-label">Subject</label>
-        <div class="col-sm-10">
-            <input type="text" class="form-control" id="subject" name="Subject" placeholder="Notifiction Subject" ng-required ng-model="vm.Notification.Subject" />
-            <span class="help-block" ng-show="createNotificationForm.Subject.$invalid">{{createNotificationForm.Subject.$errorText}}</span>
-        </div>
-    </div>
-    <div class="form-group" show-errors>
-        <label for="message" class="col-sm-2 control-label">Message</label>
-        <div class="col-sm-10">
-            <textarea class="form-control" id="message" name="Message" placeholder="Message" ng-required ng-model="vm.Notification.Message"></textarea>
-            <span class="help-block" ng-show="createNotificationForm.Message.$invalid">{{createNotificationForm.Message.$errorText}}</span>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-            <button class="btn btn-default" ng-click="vm.Create()">Create</button> <a href="#/Home" class="btn btn-default">Back</a>
-        </div>
-    </div>
-
-
-</form>
+</div>

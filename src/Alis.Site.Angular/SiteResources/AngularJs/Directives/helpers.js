@@ -24,6 +24,12 @@
             });
         });
 
+    mod.directive('popover', function() {
+        return function(scope, elem) {
+            elem.popover();
+        }
+    });
+
    /* mod.directive(
         "successMessages", function() {
             return ({
