@@ -1,15 +1,7 @@
-﻿<div ng-include src="angularJs/Templates/_generalError.html"></div>
-<form name="createRoleForm" class="form-horizontal">
-    <div class="form-group" show-errors>
-        <label for="name" class="col-sm-2 control-label">Create Role</label>
-        <div class="col-sm-10">
-            <input type="text" class="form-control" id="name" name="Name" placeholder="Role Name" ng-required ng-model="vm.role.Name">
-            <span  class="help-block" ng-show="createRoleForm.Name.$invalid">{{createRoleForm.Name.$errorText}}</span>
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-            <button class="btn btn-default" ng-click="vm.Create()">Create</button> <a href="#/Home" class="btn btn-warning">Cancel</a>
-        </div>
-    </div>
-</form>
+﻿<ol class="breadcrumb">
+    <li><a href="/">Home</a></li>
+    <li><a href="#">Roles</a></li>
+    <li class="active">Create</li>
+</ol>
+
+<role-form></role-form>

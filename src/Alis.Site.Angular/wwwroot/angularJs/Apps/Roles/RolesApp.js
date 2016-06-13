@@ -71,7 +71,7 @@ rolesApp.controller("CreateController", function ($location, $roleServices, $sco
 
     vm.role = {};
 
-    vm.Create = function () {
+    vm.Save = function () {
         $roleServices.create(vm.role).then(function (data) {
             if (data.Success) {
                 vm.role = data.Results;

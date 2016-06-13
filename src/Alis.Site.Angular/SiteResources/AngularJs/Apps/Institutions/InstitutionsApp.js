@@ -72,7 +72,7 @@ institutionsApp.controller("CreateController", function ($location, $institution
     vm.institutionConfig = {};
     vm.institutionConfig.Institution = {};
 
-    vm.Create = function () {
+    vm.Save = function () {
         $institutionServices.create(vm.institutionConfig).then(function (data) {
 
             if (data.Success) {

@@ -76,9 +76,7 @@
                 <h3 class="panel-title">Tags</h3>
             </div>
             <div class="panel-body">
-                <ul>
-                    <li ng-repeat="tag in vm.Event.Tags" popover data-trigger="hover" placement="top" data-original-title="Details" data-content="{{tag.Description}}">{{tag.FriendlyName}}</li>
-                </ul>
+                <span ng-repeat="tag in vm.Event.Tags" popover data-trigger="hover" placement="top" data-original-title="Details" data-content="{{tag.Description}}">{{tag.FriendlyName}}</span><br/>
             </div>
         </div>
     </div>
