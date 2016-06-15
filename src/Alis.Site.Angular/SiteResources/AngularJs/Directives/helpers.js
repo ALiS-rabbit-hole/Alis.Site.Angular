@@ -23,13 +23,13 @@
                 templateUrl: "angularJs/Templates/_addressForm.html"
             });
         });
-
-    mod.directive('popover', function() {
-        return function(scope, elem) {
-            elem.popover();
-        }
+    mod.directive(
+    "notificationForm", function () {
+        return ({
+            restrict: "E",
+            templateUrl: "angularJs/Templates/_notificationForm.html"
+        });
     });
-
    /* mod.directive(
         "successMessages", function() {
             return ({

@@ -1,4 +1,4 @@
-var notificationsApp = angular.module('notificationsApp', ['ngRoute', 'notificationServices', 'applicationServices', 'eventServices', 'ui.bootstrap.showErrors', 'helpers', 'customFilters']);
+var notificationsApp = angular.module('notificationsApp', ['ngRoute', 'notificationServices', 'applicationServices', 'eventServices','ui.bootstrap', 'ui.bootstrap.showErrors', 'helpers', 'customFilters']);
 
 notificationsApp.config(function ($routeProvider, $sceProvider, $compileProvider) {
 
@@ -31,9 +31,15 @@ notificationsApp.config(function ($routeProvider, $sceProvider, $compileProvider
     });
 });
 
-notificationsApp.controller("HomeController", function ($notificationServices, $applicationServices, $eventServices) {
+notificationsApp.controller("HomeController", function ($notificationServices, $applicationServices, $eventServices, $location) {
     var vm = this;
 
+
+    vm.appID = $location.search()["eventID"];
+    vm.eventID = $location.search()["appID"];
+
+
+    
     $applicationServices.getAll().then(function (data) {
         vm.applications = data.Results;
     });
@@ -55,12 +61,19 @@ notificationsApp.controller("HomeController", function ($notificationServices, $
 
                 vm.details = writer.render(parsed);
             }
+
+          //  vm.selectedApplication = vm.appID;
+           // vm.selectedEvent = vm.eventID;
+
+            
         });
 
         //todo: could do with an event service, so we can use it's details to flesh out the notifications.html page.
         $notificationServices.getByEventID(eventID).then(function (data) {
             vm.notifications = data.Results;
         });
+
+
 
     };
 
@@ -103,6 +116,9 @@ notificationsApp.controller("CreateController", function ($notificationServices,
     vm.appID = $location.search()["appID"];
     vm.eventID = $location.search()["eventID"];
 
+    vm.overrideFrom = 'nope';
+
+
     $applicationServices.get(vm.appID).then(function (data) {
         vm.application = data.Results;
     });
@@ -132,7 +148,8 @@ notificationsApp.controller("CreateController", function ($notificationServices,
     };
 
 
-    vm.Create = function() {
+    vm.Create = function () {
+        console.log($scope.overrideFrom);
         $scope.$broadcast('show-errors-reset');
     };
 });

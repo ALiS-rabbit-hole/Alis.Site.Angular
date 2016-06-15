@@ -1,4 +1,4 @@
-var institutionsApp = angular.module('institutionsApp', ['ngRoute', 'institutionServices', 'ui.bootstrap.showErrors', 'helpers']);
+var institutionsApp = angular.module('institutionsApp', ['ngRoute', 'institutionServices', 'ui.bootstrap.showErrors', 'ui.bootstrap', 'helpers']);
 
 institutionsApp.config(function ($routeProvider, $sceProvider, $compileProvider) {
 

@@ -1,4 +1,4 @@
-﻿var applicationsApp = angular.module('applicationsApp', ['ngRoute', 'applicationServices', 'ui.bootstrap.showErrors', 'helpers']);
+﻿var applicationsApp = angular.module('applicationsApp', ['ngRoute', 'applicationServices', 'ui.bootstrap.showErrors', 'ui.bootstrap', 'helpers']);
 
 applicationsApp.config(function ($routeProvider, $sceProvider, $compileProvider) {
 

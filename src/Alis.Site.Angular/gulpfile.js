@@ -36,7 +36,7 @@ gulp.task("clean:css", function (cb) {
 gulp.task("clean", ["clean:js", "clean:css"]);
 
 gulp.task("min:js", function () {
-    gulp.src([paths.resources + "js/jquery.js", paths.resources + "js/angular.js", paths.jsroot, "!" + paths.minJs])
+    gulp.src([paths.resources + "js/angular.js", paths.resources + "js/ui-bootstrap-tpls.js", paths.jsroot, "!" + paths.minJs])
         .pipe(concat(paths.concatJsDest))
         .pipe(uglify())
         .pipe(gulp.dest("."));
