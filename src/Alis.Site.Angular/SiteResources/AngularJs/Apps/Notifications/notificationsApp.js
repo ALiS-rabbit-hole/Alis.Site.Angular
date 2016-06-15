@@ -76,6 +76,8 @@ notificationsApp.controller("NotificationsController", function ($notificationSe
     vm.appID = $location.search()["eventID"];
     vm.eventID = $location.search()["appID"];
 
+
+
     $eventServices.get($location.search()["eventID"]).then(function (data) {
         vm.Event = data.Results;
 
@@ -101,16 +103,33 @@ notificationsApp.controller("CreateController", function ($notificationServices,
     vm.appID = $location.search()["appID"];
     vm.eventID = $location.search()["eventID"];
 
+    $applicationServices.get(vm.appID).then(function (data) {
+        vm.application = data.Results;
+    });
+
     $eventServices.get($location.search()["eventID"]).then(function (data) {
         vm.Event = data.Results;
         vm.Notification.EventID = vm.Event.ID;
         vm.Notification.Type = 0;
+        vm.Notification.Message = "";
+
+        var reader = new commonmark.Parser();
+        var writer = new commonmark.HtmlRenderer();
+
+        var parsed = reader.parse(vm.Event.Details);
+
+        vm.details = writer.render(parsed);
 
         vm.fromRBL = vm.Event.HasTarget ? "DefaultTarget" : "DefaultRecipient";
 
         console.log(vm.fromRBL);
     });
 
+    vm.AppendTag = function (tag) {
+
+
+        vm.Notification.Message += tag.Name;
+    };
 
 
     vm.Create = function() {

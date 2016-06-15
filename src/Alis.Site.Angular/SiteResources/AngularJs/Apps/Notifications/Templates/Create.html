@@ -4,9 +4,15 @@
     <li class="active">Create</li>
 </ol>
 
+<div class="page-header">
+    <h2>{{vm.application.Name}} <small>{ {{vm.Event.FriendlyName}} }</small>
+    </h2>
+    <small ng-bind-html="vm.details | sanitize"></small>
+</div>
+
 <notifications></notifications>
 
-<h4>Create Notification for '{{::vm.Event.FriendlyName}}' Event</h4>
+
 <div class="row">
     <div class="col-md-9">
         <form name="createNotificationForm" class="form-horizontal">
@@ -29,20 +35,14 @@
             <div class="form-group" show-errors>
                 <label for="to" class="col-sm-2 control-label">To</label>
                 <div class="col-sm-7">
-                    <input type="text" class="form-control" id="to" name="to" placeholder="To" ng-required ng-model="vm.Notification.Recipients" ng-disabled="vm.fromRBL != 'Override'"/>
+                    <input type="text" class="form-control" id="to" name="to" placeholder="To" ng-required ng-model="vm.Notification.Recipients" ng-disabled="vm.selectedTarget != 'Custom'"/>
                     <span class="help-block" ng-show="createNotificationForm.Recipients.$invalid">{{createNotificationForm.Recipients.$errorText}}</span>
                 </div>
                 <div class="col-sm-3">
-                    <div class="btn-group" data-toggle="buttons">
-                        <label class="btn btn-default" ng-class="{active: vm.fromRBL == 'Override'}">
-                            <input type="radio" ng-model="vm.fromRBL" value="Override"/> Override
-                        </label>
-                        <label class="btn btn-default" ng-class="{active: vm.fromRBL == 'DefaultRecipient'}">
-                            <input type="radio" ng-model="vm.fromRBL" value="DefaultRecipient"/> Default Recipient
-                        </label>
-                        <label class="btn btn-default" ng-show="vm.Event.HasTarget" ng-class="{active: vm.fromRBL == 'DefaultTarget'}">
-                            <input type="radio" ng-model="vm.fromRBL" value="DefaultTarget"/> Default Target
-                        </label>
+                    <div class="btn-group">
+                        <select class="form-control" ng-options="target as target for target in vm.Event.Targets" ng-model="vm.selectedTarget" >
+                        </select>
+
                     </div>
                 </div>
             </div>
@@ -76,7 +76,7 @@
                 <h3 class="panel-title">Tags</h3>
             </div>
             <div class="panel-body">
-                <span ng-repeat="tag in vm.Event.Tags" popover data-trigger="hover" placement="top" data-original-title="Details" data-content="{{tag.Description}}">{{tag.FriendlyName}}</span><br/>
+                <p ng-repeat="tag in vm.Event.Tags" popover data-trigger="hover" placement="top" data-original-title="Details" data-content="{{tag.Description}}" ng-click="vm.AppendTag(tag)">{{tag.Name}}</p><br/>
             </div>
         </div>
     </div>
