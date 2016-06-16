@@ -1,13 +1,11 @@
 ﻿<notifications></notifications>
 
-<ul class="nav nav-tabs">
-    <li role="presentation" class="active"><a data-target="#details" data-toggle="tab">Details</a></li>
-    <li role="presentation"><a data-target="#access" data-toggle="tab">Access Management</a></li>
-</ul>
 <form name="userForm" class="form-horizontal">
     <fieldset>
-        <div class="tab-content">
-            <div class="tab-pane active" id="details">
+        <uib-tabset active="activeForm">
+
+
+            <uib-tab index="0" heading="Details">
                 <h4>Details</h4>
                 <div class="form-group" show-errors>
                     <label for="username" class="col-sm-2 control-label">Username</label>
@@ -52,8 +50,11 @@
                     </div>
                 </div>
 
-            </div>
-            <div class="tab-pane" id="access">
+
+            </uib-tab>
+
+
+            <uib-tab index="1" heading="Access">
                 <h4>Access</h4>
                 <!-- to do, put this into a directive for role view etc -->
                 <div class="form-group">
@@ -98,7 +99,10 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
+
+            </uib-tab>
+
+
+        </uib-tabset>
     </fieldset>
 </form>

@@ -4,10 +4,10 @@
     showErrorsModule.config(function ($httpProvider) {
         $httpProvider.interceptors.push('fieldValInterceptor');
     });
-
+    /*
     showErrorsModule.directive('showErrorsNoForm', [''], function () {
 
-        var linkFn = function (scope, el, attrs, formCtrl) {
+        var link = function (scope, el, attrs, formCtrl) {
             scope.$on('_ERROR_FIELDS_', function (event, args) {
                 $timeout(function () {
                     console.log("kdsjlkfds");
@@ -34,12 +34,12 @@
         return {
             restrict: 'A',
             compile: function (elem, attrs) {
-                return linkFn;
+                return link;
             }
         };
 
 
-    });
+    });*/
 
 
     showErrorsModule.directive('showErrors', [

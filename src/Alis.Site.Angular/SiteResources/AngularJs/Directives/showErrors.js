@@ -4,7 +4,7 @@
     showErrorsModule.config(function ($httpProvider) {
         $httpProvider.interceptors.push('fieldValInterceptor');
     });
-
+    /*
     showErrorsModule.directive('showErrorsNoForm', [''], function () {
 
         var link = function (scope, el, attrs, formCtrl) {
@@ -39,7 +39,7 @@
         };
 
 
-    });
+    });*/
 
 
     showErrorsModule.directive('showErrors', [

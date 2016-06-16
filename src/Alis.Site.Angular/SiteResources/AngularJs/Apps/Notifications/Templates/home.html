@@ -7,13 +7,13 @@
 
 <div class="btn-group">
 
-    <select class="form-control" ng-options="application.ID as application.Name for application in filtered = (vm.applications | filter:application.Events.length > 0)" ng-model="vm.selectedApplication">
+    <select class="form-control" ng-options="application as application.Name for application in filtered = (vm.applications | filter:application.Events.length > 0)" ng-model="vm.selectedApplication">
         <option value="">Select an application</option>
     </select>
 </div>
 
 <div class="btn-group">
-    <select class="form-control" ng-disabled="vm.selectedApplication == undefined" ng-options="event.ID as event.FriendlyName for event in vm.selectedApplication.Events" ng-model="vm.selectedEvent" ng-change="vm.getNotifications(vm.selectedApplication.ID, vm.selectedEvent.ID)">
+    <select class="form-control" ng-disabled="vm.selectedApplication == undefined" ng-options="event as event.FriendlyName for event in vm.selectedApplication.Events" ng-model="vm.selectedEvent" ng-change="vm.getNotifications(vm.selectedApplication.ID, vm.selectedEvent.ID)">
         <option value="">Select an event</option>
     </select>
 

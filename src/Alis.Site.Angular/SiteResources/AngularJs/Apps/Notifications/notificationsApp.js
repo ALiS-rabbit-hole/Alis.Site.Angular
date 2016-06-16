@@ -149,7 +149,9 @@ notificationsApp.controller("CreateController", function ($notificationServices,
 
 
     vm.Create = function () {
-        console.log($scope.overrideFrom);
+        $notificationServices.create(vm.Notification).then(function (data) {
+
+        });
         $scope.$broadcast('show-errors-reset');
     };
 });
