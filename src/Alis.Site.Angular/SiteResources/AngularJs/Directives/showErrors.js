@@ -5,6 +5,43 @@
         $httpProvider.interceptors.push('fieldValInterceptor');
     });
 
+    showErrorsModule.directive('showErrorsNoForm', [''], function () {
+
+        var link = function (scope, el, attrs, formCtrl) {
+            scope.$on('_ERROR_FIELDS_', function (event, args) {
+                $timeout(function () {
+                    console.log("kdsjlkfds");
+                    var prop;
+                    var mainErrors = [];
+
+                    for (prop in args.ErrorFields) {
+
+                            mainErrors.push(args.ErrorFields[prop]);
+
+                    };
+
+                    if (mainErrors.length > 0) {
+                        scope.notifications = {};
+                        scope.notifications.errors = { invalid: true, descriptions: mainErrors };
+
+                    }
+                    scope.$apply();
+                }, 0, false);
+
+            });
+        };
+
+        return {
+            restrict: 'A',
+            compile: function (elem, attrs) {
+                return link;
+            }
+        };
+
+
+    });
+
+
     showErrorsModule.directive('showErrors', [
       '$timeout', 'showErrorsConfig', '$interpolate', function ($timeout, showErrorsConfig, $interpolate) {
             var getShowSuccess, getTrigger, linkFn, previousErrors;
@@ -25,6 +62,10 @@
               return showSuccess;
           };
           linkFn = function (scope, el, attrs, formCtrl) {
+
+
+
+
               var blurred, inputEl, inputName, inputNgEl, options, showSuccess, toggleClasses, trigger;
               blurred = false;
               options = scope.$eval(attrs.showErrors);
@@ -190,8 +231,6 @@
                             console.log(item);
                             errors[data.ErrorFields[item].Key] = data.ErrorFields[item].Value;
                         };
-
-                        console.log("here");
 
                         $rootScope.$broadcast("_ERROR_FIELDS_", { ErrorFields: errors });
                     }

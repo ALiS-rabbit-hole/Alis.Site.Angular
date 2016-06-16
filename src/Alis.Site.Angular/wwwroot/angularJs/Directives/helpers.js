@@ -1,5 +1,5 @@
 (function() {
-    var mod = angular.module("helpers",[]);
+    var mod = angular.module("helpers", ['ui.bootstrap']);
 
     /*   mod.controller("successMessageController", function($scope) {
         var vm = this;
@@ -60,6 +60,50 @@
             templateUrl: "angularJs/Templates/_institutionForm.html"
         });
     });
+
+
+    mod.directive('ngReallyClick', ['$uibModal',
+    function ($uibModal) {
+
+        var modalInstanceCtrl = function ($scope, $uibModalInstance) {
+            $scope.ok = function () {
+                $uibModalInstance.close();
+            };
+
+            $scope.cancel = function () {
+                $uibModalInstance.dismiss('cancel');
+            };
+        };
+
+        return {
+            restrict: 'A',
+            scope: {
+                ngReallyClick: "&"
+            },
+            link: function (scope, element, attrs) {
+                element.bind('click', function () {
+                    var message = attrs.ngReallyMessage || "Are you sure ?";
+
+                    var modalHtml = '<div class="modal-body">' + message + '</div>';
+                    modalHtml += '<div class="modal-footer"><button class="btn btn-primary" ng-click="ok()">OK</button><button class="btn btn-warning" ng-click="cancel()">Cancel</button></div>';
+
+                    var modalInstance = $uibModal.open({
+                        template: modalHtml,
+                        controller: modalInstanceCtrl
+                    });
+
+                    modalInstance.result.then(function () {
+                        scope.ngReallyClick();
+                    }, function () {
+                        //Modal dismissed
+                    });
+
+                });
+
+            }
+        }
+    }
+  ]);
 
     mod.directive(
         "userForm", function () {

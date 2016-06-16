@@ -5,13 +5,13 @@
 
 <notifications></notifications>
 <a href="#/Create" class="btn btn-default">Create Role</a>
-<table class="table">
+<table class="table" show-errors-no-form>
     <thead>
     <tr></tr>
     </thead>
     <tr ng-repeat="role in vm.roles track by role.ID">
         <td>{{::role.Name}}</td>
         <td><a href="#/Edit?id={{::role.ID}}" class="btn btn-default">Edit</a></td>
-        <td><button ng-click="vm.delete(role)" class="btn btn-danger">Delete</button></td>
+        <td><button ng-really-message="Are you sure ?" ng-really-click="vm.reallyDelete(role)" class="btn btn-danger">Delete</button></td>
     </tr>
 </table>

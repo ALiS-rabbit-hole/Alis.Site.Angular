@@ -34,7 +34,7 @@ rolesApp.controller("HomeController", function ($roleServices) {
         vm.roles = data.Results;
     });
 
-    vm.delete = function (role) {
+    vm.reallyDelete = function (role) {
 
         $roleServices.remove(role).then(function (data) {
             if (data.Success) {
