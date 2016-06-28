@@ -10,7 +10,10 @@
     "Microsoft.AspNet.IISPlatformHandler": "1.0.0-rc1-final",
     "Microsoft.AspNet.Mvc": "6.0.0-rc1-final",
     "Microsoft.AspNet.Server.Kestrel": "1.0.0-rc1-final",
-    "Microsoft.AspNet.StaticFiles": "1.0.0-rc1-final"
+    "Microsoft.AspNet.StaticFiles": "1.0.0-rc1-final",
+
+    "ServiceStack.Common.CoreClrUnofficial": "4.0.50.1",
+    "ServiceStack.Interfaces.CoreClrUnofficial": "4.0.50.1"
   },
 
   "commands": {
@@ -18,8 +21,10 @@
   },
 
   "frameworks": {
-    "dnx451": { },
-    "dnxcore50": { }
+    "dnx451": {
+      "dependencies": {  }
+    },
+    "netcore50": { }
   },
 
   "exclude": [
