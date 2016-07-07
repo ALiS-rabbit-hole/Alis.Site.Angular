@@ -9,7 +9,7 @@ namespace Alis.Site.Angular.Controllers
         // GET: /<controller>/
         public IActionResult Login()
         {
-            var client = new ServiceStack.JsonServiceClient("https://alis.ws");
+           // var client = new ServiceStack.JsonServiceClient("https://alis.ws");
 
 
 

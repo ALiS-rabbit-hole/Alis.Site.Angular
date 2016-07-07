@@ -1,0 +1,2 @@
+﻿var singleApp = angular.module('singleApp', ['accountsApp', 'applicationsApp', 'institutionsApp', 'notificationsApp', 'rolesApp']);
+http://stackoverflow.com/questions/18512434/multiple-module-in-angularjs
