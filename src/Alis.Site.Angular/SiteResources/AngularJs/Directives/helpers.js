@@ -61,6 +61,15 @@
         });
     });
 
+    mod.directive("paging", function () {
+        return {
+            restrict: 'E',
+            scope: {
+                queryItem: '='
+            },
+            templateUrl: "angularJs/Templates/_paging.html"
+        };
+    });
 
     mod.directive('ngReallyClick', ['$uibModal',
     function ($uibModal) {

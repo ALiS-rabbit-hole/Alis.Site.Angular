@@ -4,7 +4,7 @@ angular.module('userServices', [])
 
         return {
 
-            newUser: function (id) {
+            newUser: function () {
                 return $http.get(serviceRoot + "Get/New").then(function (result) {
                     return result.data;
                 });
@@ -16,6 +16,16 @@ angular.module('userServices', [])
             },
             get: function (id) {
                 return $http.get(serviceRoot + "Get", { params: { Id: id } }).then(function (result) {
+                    return result.data;
+                });
+            },
+            getWithQuery: function (query) {
+                return $http.post(serviceRoot + "Get/Query",  query).then(function (result) {
+                    return result.data;
+                });
+            },
+            getQueryItem: function () {
+                return $http.get(serviceRoot + "Query").then(function (result) {
                     return result.data;
                 });
             },

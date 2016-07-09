@@ -30,15 +30,61 @@ usersApp.config(function ($routeProvider, $sceProvider, $compileProvider) {
 usersApp.controller("HomeController", function($userServices) {
     var vm = this;
 
-    $userServices.getAll().then(function(data) {
-        vm.users= data.Results;
-    }).catch(function(error) {
+    $userServices.getQueryItem(vm.query).then(function (data) {
+        vm.query = data.Results;
+
+        $userServices.getWithQuery(vm.query).then(function (data) {
+            vm.users = data.Results;
+        }).catch(function (error) {
+            console.log(error);
+        });
+
+
+    }).catch(function (error) {
         console.log(error);
     });
+
+    vm.pageChanged = function() {
+        $userServices.getWithQuery(vm.query).then(function (data) {
+            vm.users = data.Results;
+        }).catch(function (error) {
+            console.log(error);
+        });
+    };
+
+    vm.reorder = function (column) {
+
+        if (column === vm.query.OrderBy) {
+            vm.query.Direction === "Asc" ? vm.query.Direction = "Desc" : vm.query.Direction = "Asc";
+        } else {
+            vm.query.Direction = "Asc";
+            vm.query.OrderBy = column;
+        }
+
+        $userServices.getWithQuery(vm.query).then(function(data) {
+            vm.users = data.Results;
+        }).catch(function(error) {
+            console.log(error);
+        });
+    };
+
+    vm.getGlyphClass = function (column) {
+
+        //<span ng-class="{'glyphicon glyphicon-triangle-bottom': vm.query.OrderBy!='username', 'glyphicon-triangle-top': vm.query.OrderBy==='username' && vm.query.Direction === 'Desc', 'glyphicon-triangle-bottom': vm.query.OrderBy==='username' && vm.query.Direction === 'Asc'}" aria-hidden="true"></span></a></th>
+        if (vm.query === undefined || column !== vm.query.OrderBy)
+            return "glyphicon glyphicon-triangle-bottom";
+
+        if(column === vm.query.OrderBy && vm.query.Direction === "Desc")
+            return "glyphicon glyphicon-triangle-top";
+        else
+            return "glyphicon glyphicon-triangle-bottom";
+    };
 });
 
 usersApp.controller("EditController", function ($userServices, $roleServices, $institutionServices, $location, $scope) {
     var vm = this;
+
+
 
     $userServices.get($location.search()["id"]).then(function (data) {
         vm.user = data.Results;
