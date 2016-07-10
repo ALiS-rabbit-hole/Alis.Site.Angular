@@ -1,0 +1,45 @@
+@mixin transition($enter_from, $in, $leave_to){
+    &.ng-enter{
+        @include generate_styles($enter_from);
+    }
+
+    &.ng-leave,
+    .ng-enter-active {
+        @include generate_styles($in);
+    }
+
+    &.ng-leave-active {
+        @include generate_styles($leave_to);
+    }
+}
+
+@mixin transition_simple($in, $out){
+    &.ng-leave,
+    &.ng-enter.ng-enter-active {
+        @include generate_styles($in);
+    }
+
+    &.ng-enter,
+    &.ng-leave.ng-leave-active {
+        @include generate_styles($out);
+    }
+}
+
+@mixin transition_full($enter_from, $enter_to, $leave_from, $leave_to){
+    &.ng-enter{
+        @include generate_styles($enter_from);
+    }
+
+    .ng-enter-active {
+        @include generate_styles($enter_to);
+    }
+
+    &.ng-leave {
+        @include generate_styles($leave_from);
+    }
+
+    &.ng-leave-active {
+        @include generate_styles($leave_to);
+    }
+}
+

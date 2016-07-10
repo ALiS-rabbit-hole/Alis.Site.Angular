@@ -1,0 +1,12 @@
+@mixin ng_if_transition($enter_from, $in, $leave_to){
+    @include transition($enter_from, $in, $leave_to);
+}
+
+@mixin ng_if_transition_simple($in, $out){
+    @include transition_simple($in, $out);
+}
+
+@mixin ng_if_transition_full($enter_from, $enter_to, $leave_from, $leave_to){
+    @include transition_full($enter_from, $enter_to, $leave_from, $leave_to);
+}
+

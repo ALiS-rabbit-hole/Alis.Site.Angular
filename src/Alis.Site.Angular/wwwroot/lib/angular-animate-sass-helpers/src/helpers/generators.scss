@@ -1,0 +1,19 @@
+@mixin generate_style_for_selector($selector, $styles: (opacity: 1)) {
+    @if not $selector {
+        @each $property, $value in $styles {
+            #{$property}: $value;
+        }
+    } @else {
+        .#{$selector} {
+            @each $property, $value in $styles {
+                #{$property}: $value;
+            }
+        }
+    }
+}
+
+@mixin generate_styles($styles:()) {
+    @each $selector, $properties in $styles {
+        @include generate_style_for_selector($selector, $properties);
+    }
+}

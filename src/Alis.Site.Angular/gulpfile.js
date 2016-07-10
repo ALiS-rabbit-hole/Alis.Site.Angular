@@ -6,8 +6,10 @@ var gulp = require("gulp"),
     cssmin = require("gulp-cssmin"),
     uglify = require("gulp-uglify"),
     inject = require("gulp-inject"),
+    htmlmin = require('gulp-htmlmin'),
+    sass = require("gulp-sass"),
     project = require("./project.json");
-    htmlmin = require('gulp-htmlmin');
+    
 
 var paths = {
     webroot: "./" + project.webroot + "/",
@@ -19,6 +21,7 @@ paths.minJs = paths.resources + "js/**/*.min.js";
 paths.css = paths.resources + "css/**/*.css";
 paths.minCss = paths.resources + "css/**/*.min.css";
 paths.concatJs = "js/site.min.js";
+paths.sass = [paths.resources + "scss/styles.scss", paths.resources + "scss/bootstrap.scss"];
 
 paths.concatJsDest = paths.webroot + paths.concatJs;//call dest full or some such?
 paths.concatCss = "css/site.min.css";
@@ -100,4 +103,15 @@ gulp.task('angularMinify', function () {
     return gulp.src(paths.webroot + "angularJs/**/*.html")
         .pipe(htmlmin({ collapseWhitespace: true }))
         .pipe(gulp.dest(paths.webroot + "angularJs"));
+});
+
+gulp.task('sass', function () {
+    gulp.src(paths.sass)
+      .pipe(sass()).pipe(concat(paths.concatCssDest))
+        .pipe(cssmin())
+        .pipe(gulp.dest("."));
+});
+
+gulp.task('sass:watch', function () {
+    gulp.watch(paths.sass, ['sass']);
 });

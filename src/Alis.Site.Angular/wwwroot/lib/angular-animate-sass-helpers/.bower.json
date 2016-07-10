@@ -1,0 +1,29 @@
+{
+  "name": "angular-animate-sass-helpers",
+  "version": "0.0.1",
+  "description": "Sass mixin helpers for ngAnimate",
+  "main": "Gruntfile.js",
+  "authors": [
+    "JaimeBeneytez"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "Angular",
+    "resource",
+    "ngResource",
+    "REST",
+    "$resource"
+  ],
+  "homepage": "https://github.com/soda-codes/angular-animate-sass-helpers",
+  "moduleType": [],
+  "devDependencies": {},
+  "_release": "0.0.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.0.1",
+    "commit": "4f679cb7f2dfcb404bd8333efdc74249efafb8ed"
+  },
+  "_source": "https://github.com/soda-codes/angular-animate-sass-helpers.git",
+  "_target": "0.0.1",
+  "_originalSource": "angular-animate-sass-helpers"
+}

@@ -1,0 +1,23 @@
+﻿using Microsoft.AspNet.Mvc;
+
+// For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+
+namespace Alis.Site.Angular.Controllers
+{
+    public class AccountController : Controller
+    {
+        // GET: /<controller>/
+        public IActionResult Login()
+        {
+<<<<<<< HEAD
+          //  var client = new ServiceStack.JsonServiceClient("https://alis.ws");
+=======
+           // var client = new ServiceStack.JsonServiceClient("https://alis.ws");
+>>>>>>> 8c7fab855b6dd47b7addd54aae9e1c409943eed4
+
+
+
+            return View();
+        }
+    }
+}
