@@ -30,19 +30,77 @@ rolesApp.config(function ($routeProvider, $sceProvider, $compileProvider, showEr
 rolesApp.controller("HomeController", function ($roleServices) {
     var vm = this;
 
-    $roleServices.getAll().then(function (data) {
-        vm.roles = data.Results;
+
+    $roleServices.getQueryItem(vm.query).then(function (data) {
+        vm.query = data.Results;
+
+        $roleServices.getWithQuery(vm.query).then(function (data) {
+            vm.roles = data.Results;
+        }).catch(function (error) {
+            console.log(error);
+        });
+
+
+    }).catch(function (error) {
+        console.log(error);
     });
+
 
     vm.reallyDelete = function (role) {
 
         $roleServices.remove(role).then(function (data) {
             if (data.Success) {
 
-                vm.roles.splice(vm.roles.indexOf(role), 1);
+                // vm.roles.splice(vm.roles.indexOf(role), 1);
+
+                $roleServices.getWithQuery(vm.query).then(function (data) {
+                    vm.roles = data.Results;
+                }).catch(function (error) {
+                    console.log(error);
+                });
             }
         });
     };
+
+
+
+    vm.pageChanged = function () {
+        $roleServices.getWithQuery(vm.query).then(function (data) {
+            vm.roles = data.Results;
+        }).catch(function (error) {
+            console.log(error);
+        });
+    };
+
+    vm.reorder = function (column) {
+
+        if (column === vm.query.OrderBy) {
+            vm.query.Direction === "Asc" ? vm.query.Direction = "Desc" : vm.query.Direction = "Asc";
+        } else {
+            vm.query.Direction = "Asc";
+            vm.query.OrderBy = column;
+        }
+
+        $roleServices.getWithQuery(vm.query).then(function (data) {
+            vm.roles = data.Results;
+        }).catch(function (error) {
+            console.log(error);
+        });
+    };
+
+    vm.getGlyphClass = function (column) {
+
+        //<span ng-class="{'glyphicon glyphicon-triangle-bottom': vm.query.OrderBy!='username', 'glyphicon-triangle-top': vm.query.OrderBy==='username' && vm.query.Direction === 'Desc', 'glyphicon-triangle-bottom': vm.query.OrderBy==='username' && vm.query.Direction === 'Asc'}" aria-hidden="true"></span></a></th>
+        if (vm.query === undefined || column !== vm.query.OrderBy)
+            return "glyphicon glyphicon-triangle-bottom";
+
+        if (column === vm.query.OrderBy && vm.query.Direction === "Desc")
+            return "glyphicon glyphicon-triangle-top";
+        else
+            return "glyphicon glyphicon-triangle-bottom";
+    };
+
+
 
 });
 

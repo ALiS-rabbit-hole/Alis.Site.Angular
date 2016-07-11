@@ -7,11 +7,17 @@
 <a href="#/Create" class="btn btn-default">Create Role</a>
 <table class="table" show-errors-no-form>
     <thead>
-    <tr></tr>
+    <tr>
+        <th><a ng-click="vm.reorder('name')">name <span ng-class="vm.getGlyphClass('name')" aria-hidden="true"></span></a></th>
+        <th></th>
+        <th></th>
+    </tr>
     </thead>
-    <tr ng-repeat="role in vm.roles track by role.ID">
+    <tr ng-repeat="role in vm.roles">
         <td>{{::role.Name}}</td>
         <td><a href="#/Edit?id={{::role.ID}}" class="btn btn-default">Edit</a></td>
         <td><button ng-really-message="Are you sure ?" ng-really-click="vm.reallyDelete(role)" class="btn btn-danger">Delete</button></td>
     </tr>
 </table>
+
+<uib-pagination total-items="vm.query.TotalNumberOfResults" ng-model="vm.query.StartAt" ng-change="vm.pageChanged()" items-per-page="vm.query.PageSize" class="pagination-sm" boundary-links="true"></uib-pagination>

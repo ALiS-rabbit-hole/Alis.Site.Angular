@@ -13,6 +13,16 @@ angular.module('roleServices', [])
                 return result.data;
             });
         },
+        getWithQuery: function (query) {
+            return $http.post(serviceRoot + "Get/Query",  query).then(function (result) {
+                return result.data;
+            });
+        },
+        getQueryItem: function () {
+            return $http.get(serviceRoot + "Query").then(function (result) {
+                return result.data;
+            });
+        },
         update: function (role) {
             return $http.put(serviceRoot + "Update",  role).then(function (result) {
                 return result.data;
