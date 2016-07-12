@@ -1,0 +1,22 @@
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div ng-app="configurationApp">
+    <div ng-view></div>
+</div>
+
+<!-- inject:angularConfig:js -->
+<script src="/angularJs/config.dev.js"></script>
+<!-- endinject -->
+
+@section Scripts
+{
+<script src="~/angularjs/directives/helpers.js"></script>
+<script src="~/angularjs/directives/showErrors.js"></script>
+    <script src="~/angularjs/services/searchServices.js"></script>
+    <script src="~/angularjs/apps/Configuration/configurationApp.js"></script>
+}
