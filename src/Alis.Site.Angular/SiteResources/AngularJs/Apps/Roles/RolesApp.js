@@ -1,15 +1,15 @@
-﻿var rolesApp = angular.module('rolesApp', ['ngRoute', 'roleServices', 'helpers', 'ui.bootstrap', 'ui.bootstrap.showErrors']);
+﻿var rolesApp = angular.module('rolesApp', [ 'roleServices', 'helpers', 'ui.bootstrap', 'ui.bootstrap.showErrors']);
 
-rolesApp.config(function ($routeProvider, $sceProvider, $compileProvider, showErrorsConfigProvider) {
+rolesApp.config(function ($sceProvider, $compileProvider) {
 
     $compileProvider.debugInfoEnabled(false);
    // showErrorsConfigProvider.showSuccess(true);
 
-    var dir = config.angularRoot + "/Apps/Roles/Templates/";
+   // var dir = config.angularRoot + "/Apps/Roles/Templates/";
     $sceProvider.enabled(false);
 
 
-
+    /*
     $routeProvider.when('/Home', {
         controller: 'HomeController as ctrl',
         controllerAs: "vm",
@@ -24,10 +24,10 @@ rolesApp.config(function ($routeProvider, $sceProvider, $compileProvider, showEr
         templateUrl: dir + 'Create.html'
     }).otherwise({
         redirectTo: '/Home'
-    });
+    });*/
 });
 
-rolesApp.controller("HomeController", function ($roleServices) {
+rolesApp.controller("RolesHomeController", function ($roleServices) {
     var vm = this;
 
 
@@ -104,7 +104,7 @@ rolesApp.controller("HomeController", function ($roleServices) {
 
 });
 
-rolesApp.controller("EditController", function ($location, $roleServices, $scope) {
+rolesApp.controller("RolesEditController", function ($location, $roleServices, $scope) {
     var vm = this;
 
     $roleServices.get($location.search()["id"]).then(function (data) {
@@ -124,7 +124,7 @@ rolesApp.controller("EditController", function ($location, $roleServices, $scope
     };
 });
 
-rolesApp.controller("CreateController", function ($location, $roleServices, $scope) {
+rolesApp.controller("RolesCreateController", function ($location, $roleServices, $scope) {
     var vm = this;
 
     vm.role = {};

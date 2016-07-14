@@ -2,12 +2,12 @@
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_LayoutNg.cshtml";
 }
 
-<div ng-app="singlePageApp">
-    <div ng-view></div>
-</div>
+
+    <div ui-view></div>
+
 
 <!-- inject:angularConfig:js -->
 <script src="/angularJs/config.dev.js"></script>
@@ -19,8 +19,15 @@
     <script src="~/angularjs/directives/showErrors.js"></script>
     <script src="~/angularjs/modules/filterModules.js"></script>
 
+<script src="~/angularjs/apps/singleapp/singleapp.js"></script>
+<script src="~/angularjs/services/applicationservices.js"></script>
+<script src="~/angularjs/services/eventservices.js"></script>
+<script src="~/angularjs/services/notificationservices.js"></script>
+<script src="~/angularjs/services/searchservices.js"></script>
     <script src="~/angularjs/services/userservices.js"></script>
     <script src="~/angularjs/services/roleservices.js"></script>
     <script src="~/angularjs/services/institutionservices.js"></script>
+
     <script src="~/angularjs/apps/users/usersapp.js"></script>
+<script src="~/angularjs/apps/roles/rolesapp.js"></script>
 }

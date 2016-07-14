@@ -1,33 +1,17 @@
-var usersApp = angular.module('usersApp', ['ngRoute', 'userServices', 'roleServices', 'institutionServices', 'ui.bootstrap', 'ui.bootstrap.showErrors', 'helpers', 'customFilters', 'checklist-model']);
+var usersApp = angular.module('usersApp', ['userServices', 'roleServices', 'institutionServices', 'ui.bootstrap', 'ui.bootstrap.showErrors', 'helpers', 'customFilters', 'checklist-model']);
 
-usersApp.config(function ($routeProvider, $sceProvider, $compileProvider) {
+usersApp.config(function ($sceProvider, $compileProvider) {
 
     $compileProvider.debugInfoEnabled(false);
 
-    //var dir = "http://alissitea1.azurewebsites.net/AngularJs/Apps/Users/Templates/";
-    var dir = config.angularRoot + "/Apps/Users/Templates/";
     $sceProvider.enabled(false);
 
 
 
-    $routeProvider.when('/Home', {
-        controller: 'HomeController',
-        controllerAs: "vm",
-        templateUrl: dir + 'home.html'
-    }).when('/Edit', {
-        controller: 'EditController',
-        controllerAs: 'vm',
-        templateUrl: dir + 'edit.html'
-    }).when('/Create', {
-        controller: 'CreateController',
-        controllerAs: 'vm',
-        templateUrl: dir + 'create.html'
-    }).otherwise({
-        redirectTo: '/Home'
-    });
+
 });
 
-usersApp.controller("HomeController", function($userServices) {
+usersApp.controller("UsersHomeController", function ($userServices) {
     var vm = this;
 
     $userServices.getQueryItem(vm.query).then(function (data) {
@@ -81,12 +65,12 @@ usersApp.controller("HomeController", function($userServices) {
     };
 });
 
-usersApp.controller("EditController", function ($userServices, $roleServices, $institutionServices, $location, $scope) {
+usersApp.controller("UsersEditController", function ($userServices, $roleServices, $institutionServices, $stateParams, $scope) {
     var vm = this;
 
 
 
-    $userServices.get($location.search()["id"]).then(function (data) {
+    $userServices.get($stateParams.id).then(function (data) {
         vm.user = data.Results;
     });
 
@@ -138,7 +122,7 @@ usersApp.controller("EditController", function ($userServices, $roleServices, $i
 
 });
 
-usersApp.controller("CreateController", function ($userServices, $roleServices, $institutionServices, $location, $scope) {
+usersApp.controller("UsersCreateController", function ($userServices, $roleServices, $institutionServices, $scope) {
     var vm = this;
 
     $userServices.newUser().then(function (data) {

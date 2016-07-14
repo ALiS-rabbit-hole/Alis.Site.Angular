@@ -8,6 +8,7 @@ var gulp = require("gulp"),
     inject = require("gulp-inject"),
     project = require("./project.json");
     htmlmin = require('gulp-htmlmin');
+    templateCache = require('gulp-angular-templatecache');
 
 var paths = {
     webroot: "./" + project.webroot + "/",
@@ -94,6 +95,12 @@ gulp.task("clean:angularJs", function (cb) {
 
 gulp.task('copyAngular', ['clean:angularJs'], function () {
     gulp.src(paths.angularJs + '/**/*').pipe(gulp.dest(paths.webroot + "angularJs"));
+});
+
+gulp.task('buildAngularTemplates', function () {
+    return gulp.src(paths.angularJs + '/**/*.html')
+      .pipe(templateCache())
+      .pipe(gulp.dest(paths.webroot + "angularJs"));
 });
 
 gulp.task('angularMinify', function () {

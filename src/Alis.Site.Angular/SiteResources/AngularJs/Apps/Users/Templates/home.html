@@ -3,7 +3,7 @@
     <li class="active">Users</li>
 </ol>
 <notifications></notifications>
-<a href="#/Create" class="btn btn-default">Create User</a>
+<a ui-sref="users.create" class="btn btn-default">Create User</a>
 <table class="table">
     <thead>
     <tr>
@@ -20,7 +20,7 @@
         <td>{{::user.Forename}}</td>
         <td>{{::user.Surname}}</td>
         <td>{{::user.Email}}</td>
-        <td><a href="#/Edit?id={{::user.ID}}" class="btn btn-default">Edit</a></td>
+        <td><a ui-sref="users.edit({id:{{::user.ID}}})" class="btn btn-default">Edit</a></td>
     </tr>
 </table>
 <uib-pagination total-items="vm.query.TotalNumberOfResults" ng-model="vm.query.StartAt" ng-change="vm.pageChanged()" items-per-page="vm.query.PageSize" class="pagination-sm" boundary-links="true"></uib-pagination>
