@@ -1,4 +1,4 @@
-var rolesApp = angular.module('rolesApp', [ 'roleServices', 'helpers', 'ui.bootstrap', 'ui.bootstrap.showErrors']);
+var rolesApp = angular.module('rolesApp', ['roleServices', 'helpers', 'ui.bootstrap', 'ui.bootstrap.showErrors']);
 
 rolesApp.config(function ($sceProvider, $compileProvider) {
 

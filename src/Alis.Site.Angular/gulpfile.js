@@ -1,14 +1,13 @@
-﻿/// <binding BeforeBuild='min' Clean='clean' />
-
-var gulp = require("gulp"),
+﻿var gulp = require("gulp"),
     rimraf = require("rimraf"),
     concat = require("gulp-concat"),
     cssmin = require("gulp-cssmin"),
     uglify = require("gulp-uglify"),
     inject = require("gulp-inject"),
+    htmlmin = require('gulp-htmlmin'),
+    templateCache = require('gulp-angular-templatecache'),
     project = require("./project.json");
-    htmlmin = require('gulp-htmlmin');
-    templateCache = require('gulp-angular-templatecache');
+
 
 var paths = {
     webroot: "./" + project.webroot + "/",
@@ -97,9 +96,17 @@ gulp.task('copyAngular', ['clean:angularJs'], function () {
     gulp.src(paths.angularJs + '/**/*').pipe(gulp.dest(paths.webroot + "angularJs"));
 });
 
+gulp.task('copyAngularNoTemplates', ['clean:angularJs'], function () {
+    gulp.src(paths.angularJs + '/**/*.js').pipe(gulp.dest(paths.webroot + "angularJs"));
+});
+
+gulp.task('angularPublish', ['copyAngularNoTemplates', 'buildAngularTemplates']);
+
+
 gulp.task('buildAngularTemplates', function () {
     return gulp.src(paths.angularJs + '/**/*.html')
-      .pipe(templateCache())
+      .pipe(htmlmin({ collapseWhitespace: true, removeComments:true }))
+      .pipe(templateCache('templatescache.js', { module: 'templatescache', standalone: true, root: 'angularJs/' }))
       .pipe(gulp.dest(paths.webroot + "angularJs"));
 });
 
