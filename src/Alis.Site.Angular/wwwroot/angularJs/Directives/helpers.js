@@ -118,10 +118,14 @@
         "userForm", function () {
     return ({
         restrict: "E",
-        require: '^form',
+      //  require: '^form',
         controller: "successMessageController",
         scope: false,
-        templateUrl: "angularJs/Templates/_userForm.html"
+  
+        templateUrl: "angularJs/Templates/_userForm.html",
+        link: function (scope, element, attrs) {
+            scope.backRoute = attrs.backRoute;
+        }
     });
         });
 
