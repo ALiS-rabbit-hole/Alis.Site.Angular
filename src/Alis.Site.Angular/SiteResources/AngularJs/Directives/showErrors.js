@@ -4,48 +4,11 @@
     showErrorsModule.config(function ($httpProvider) {
         $httpProvider.interceptors.push('fieldValInterceptor');
     });
-    /*
-    showErrorsModule.directive('showErrorsNoForm', [''], function () {
-
-        var link = function (scope, el, attrs, formCtrl) {
-            scope.$on('_ERROR_FIELDS_', function (event, args) {
-                $timeout(function () {
-                    console.log("kdsjlkfds");
-                    var prop;
-                    var mainErrors = [];
-
-                    for (prop in args.ErrorFields) {
-
-                            mainErrors.push(args.ErrorFields[prop]);
-
-                    };
-
-                    if (mainErrors.length > 0) {
-                        scope.notifications = {};
-                        scope.notifications.errors = { invalid: true, descriptions: mainErrors };
-
-                    }
-                    scope.$apply();
-                }, 0, false);
-
-            });
-        };
-
-        return {
-            restrict: 'A',
-            compile: function (elem, attrs) {
-                return link;
-            }
-        };
-
-
-    });*/
-
 
     showErrorsModule.directive('showErrors', [
       '$timeout', 'showErrorsConfig', '$interpolate', function ($timeout, showErrorsConfig, $interpolate) {
-            var getShowSuccess, getTrigger, linkFn, previousErrors;
-          getTrigger = function (options) {
+            var previousErrors;
+          var getTrigger = function (options) {
               var trigger;
               trigger = showErrorsConfig.trigger;
               if (options && (options.trigger != null)) {
@@ -53,7 +16,7 @@
               }
               return trigger;
           };
-          getShowSuccess = function (options) {
+          var getShowSuccess = function (options) {
               var showSuccess;
               showSuccess = showErrorsConfig.showSuccess;
               if (options && (options.showSuccess != null)) {
@@ -61,22 +24,22 @@
               }
               return showSuccess;
           };
-          linkFn = function (scope, el, attrs, formCtrl) {
+          var linkFn = function (scope, el, attrs, formCtrl) {
 
 
 
 
-              var blurred, inputEl, inputName, inputNgEl, options, showSuccess, toggleClasses, trigger;
-              blurred = false;
-              options = scope.$eval(attrs.showErrors);
-              showSuccess = getShowSuccess(options);
-              trigger = getTrigger(options);
-              inputEl = el[0].querySelector('.form-control[name]');
-              inputNgEl = angular.element(inputEl);
+              var toggleClasses;
+              var blurred = false;
+              var options = scope.$eval(attrs.showErrors);
+              var showSuccess = getShowSuccess(options);
+              var trigger = getTrigger(options);
+              var inputEl = el[0].querySelector('.form-control[name]');
+              var inputNgEl = angular.element(inputEl);
 
       
 
-              inputName = $interpolate(inputNgEl.attr('name') || '')(scope);
+              var inputName = $interpolate(inputNgEl.attr('name') || '')(scope);
 
               if (!inputName) {
                   throw "show-errors element has no child input elements with a 'name' attribute and a 'form-control' class";
@@ -105,23 +68,23 @@
 
                  
                          
-                          if (args.ErrorFields[inputName] != null && formCtrl[inputName]) {
+                      if (args.ErrorFields[inputName] != null && formCtrl[inputName]) {
                              
-                              formCtrl[inputName].$setValidity(inputName, false);
-                              formCtrl[inputName].$errorText = args.ErrorFields[inputName];
+                          formCtrl[inputName].$setValidity(inputName, false);
+                          formCtrl[inputName].$errorText = args.ErrorFields[inputName];
 
-                              toggleClasses(formCtrl[inputName].$invalid);
+                          toggleClasses(formCtrl[inputName].$invalid);
        
-                          }
+                      }
 
-                          for (prop in args.ErrorFields) {
+                      for (prop in args.ErrorFields) {
                           if (!formCtrl[prop]) {
-                                  //we've detected a field which doesn't relate to a form field,
-                                  //lets display it as a main error!
-                                  mainErrors.push(args.ErrorFields[prop]);
+                              //we've detected a field which doesn't relate to a form field,
+                              //lets display it as a main error!
+                              mainErrors.push(args.ErrorFields[prop]);
 
-                                  //console.log(serverValidations[prop].Key);
-                              }
+                              //console.log(serverValidations[prop].Key);
+                          }
 
                             
                       };
@@ -131,7 +94,7 @@
                           scope.notifications.errors = { invalid: true, descriptions: mainErrors };
                         
                       }
-                       scope.$apply();
+                      scope.$apply();
                   }, 0, false);
 
               });
@@ -152,9 +115,9 @@
                           var prop;
                           for (prop in previousErrors) {
                           
-                                  if (formCtrl[prop]) {
-                                      formCtrl[prop].$setValidity(prop, true);
-                                  }
+                              if (formCtrl[prop]) {
+                                  formCtrl[prop].$setValidity(prop, true);
+                              }
                               
                           }
                           // reset validation's state

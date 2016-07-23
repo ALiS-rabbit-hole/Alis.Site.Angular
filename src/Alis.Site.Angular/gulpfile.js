@@ -6,12 +6,14 @@
     inject = require("gulp-inject"),
     htmlmin = require('gulp-htmlmin'),
     templateCache = require('gulp-angular-templatecache'),
+    ngAnnotate = require('gulp-ng-annotate'),
     project = require("./project.json");
 
 
 var paths = {
     webroot: "./" + project.webroot + "/",
-    resources: "./" + project.siteResources + "/"
+    resources: "./" + project.siteResources + "/",
+    buildFolder: "./" + project.buildFolder + "/"
 };
 paths.angularJs = paths.resources + "angularJs/";
 paths.jsroot = paths.resources + "js/**/*.js";
@@ -48,6 +50,20 @@ gulp.task("min:css", function () {
         .pipe(cssmin())
         .pipe(gulp.dest("."));
 });
+
+gulp.task('ng-annotate', function () {
+    return gulp.src(paths.angularJs)
+        .pipe(ngAnnotate())
+        .pipe(gulp.dest('dist'));
+});
+
+gulp.task("min:SinglePageApp:js", function () {
+    gulp.src([paths.angularJs + "services/*.js", paths.angularJs + "modules/*.js", paths.angularJs + "Directives/*.js", paths.angularJs + "Apps/SingleApp/**/*.js", paths.angularJs + "Apps/Users/**/*.js", paths.angularJs + "Apps/Roles/**/*.js", paths.angularJs + "!/**/*.min.js"])
+        .pipe(concat(paths.webroot + "js/singleApp.min.js"))
+     //   .pipe(uglify())
+        .pipe(gulp.dest("."));
+});
+
 
 gulp.task("min", ["min:js", "min:css"]);
 
@@ -88,19 +104,61 @@ gulp.task("inject:AngularConfig:live", function () {
     // It's not necessary to read the files (will speed up things), we're only after their paths:       
 });
 
+
 gulp.task("clean:angularJs", function (cb) {
     rimraf(paths.webroot + "angularJs", cb);
 });
+
 
 gulp.task('copyAngular', ['clean:angularJs'], function () {
     gulp.src(paths.angularJs + '/**/*').pipe(gulp.dest(paths.webroot + "angularJs"));
 });
 
+gulp.task("clean:angularJs:TempBuild", function (cb) {
+    rimraf(paths.buildFolder + "angularJs", cb);
+});
+
+gulp.task('buildAngularTemplates:TempBuild', function () {
+    return gulp.src(paths.angularJs + '/**/*.html')
+      .pipe(htmlmin({ collapseWhitespace: true, removeComments: true }))
+      .pipe(templateCache('templatescache.js', { module: 'templatescache', standalone: true, root: 'angularJs/' }))
+      .pipe(gulp.dest(paths.buildFolder + "angularJs"));
+});
+
+gulp.task('copyAngularNoTemplates:TempBuild', function () {
+    gulp.src(paths.angularJs + '/**/*.js').pipe(gulp.dest(paths.buildFolder + "angularJs"));
+});
+
+gulp.task('angularAnnotate:TempBuild', function () {
+    return gulp.src(paths.buildFolder + "angularJs/**/*.js'")
+        .pipe(ngAnnotate())
+        .pipe(gulp.dest(paths.buildFolder + "angularJs"));
+});
+
+gulp.task("min:SinglePageApp:js", function () {
+    gulp.src([paths.angularJs + "services/*.js", paths.angularJs + "modules/*.js", paths.angularJs + "Directives/*.js", paths.angularJs + "Apps/SingleApp/**/*.js", paths.angularJs + "Apps/Users/**/*.js", paths.angularJs + "Apps/Roles/**/*.js", paths.angularJs + "!/**/*.min.js"])
+        .pipe(concat(paths.webroot + "js/singleApp.min.js"))
+     //   .pipe(uglify())
+        .pipe(gulp.dest("."));
+});
+
+gulp.task("min:SinglePageApp:TempBuild:js", function () {
+    gulp.src([paths.buildFolder + "**/*.js"])
+        .pipe(concat(paths.webroot + "js/singleApp.min.js"))
+        .pipe(uglify({ mangle: false }))
+        .pipe(gulp.dest("."));
+});
+
+gulp.task('angularPublish', ['copyAngularNoTemplates:TempBuild', 'buildAngularTemplates:TempBuild', 'angularAnnotate:TempBuild', 'min:SinglePageApp:TempBuild:js']);
+
 gulp.task('copyAngularNoTemplates', ['clean:angularJs'], function () {
     gulp.src(paths.angularJs + '/**/*.js').pipe(gulp.dest(paths.webroot + "angularJs"));
 });
 
-gulp.task('angularPublish', ['copyAngularNoTemplates', 'buildAngularTemplates']);
+
+
+
+//gulp.task('angularPublish', ['copyAngularNoTemplates', 'buildAngularTemplates']);
 
 
 gulp.task('buildAngularTemplates', function () {

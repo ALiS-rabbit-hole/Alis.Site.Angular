@@ -120,11 +120,11 @@
         restrict: "E",
       //  require: '^form',
         controller: "successMessageController",
-        scope: false,
-  
+     //   scope: false,
+      
         templateUrl: "angularJs/Templates/_userForm.html",
         link: function (scope, element, attrs) {
-            scope.backRoute = attrs.backRoute;
+            scope.backg = attrs.backg;
         }
     });
         });

@@ -5,6 +5,7 @@
   },
   "webroot": "wwwroot",
   "siteResources": "SiteResources",
+  "buildFolder": "TempBuild",
 
   "dependencies": {
     "Microsoft.AspNet.IISPlatformHandler": "1.0.0-rc1-final",
