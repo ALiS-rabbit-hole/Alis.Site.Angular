@@ -1,0 +1,13 @@
+<ol class="breadcrumb">
+    <li><a href="/">Home</a></li>
+    <li><a href="#/home?appID={{::vm.appID}}&eventID={{::vm.eventID}}">Notifications</a></li>
+    <li class="active">Create</li>
+</ol>
+
+<div class="page-header">
+    <h2>{{vm.application.Name}} <small>{ {{vm.Event.FriendlyName}} }</small>
+    </h2>
+    <small ng-bind-html="vm.details | sanitize"></small>
+</div>
+
+<notification-form></notification-form>

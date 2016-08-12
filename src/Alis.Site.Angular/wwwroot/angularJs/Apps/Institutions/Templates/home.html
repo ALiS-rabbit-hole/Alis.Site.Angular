@@ -1,0 +1,16 @@
+<ol class="breadcrumb">
+    <li><a href="/">Home</a></li>
+    <li><a href="#" class="active">Institutions</a></li>
+</ol>
+
+<a href="#/Create" class="btn btn-default">Create Institution</a>
+<table class="table">
+    <thead>
+    <tr></tr>
+    </thead>
+    <tr ng-repeat="institution in vm.institutions track by institution.ID">
+        <td>{{::institution.Name}}</td>
+        <td><a href="#/Edit?id={{::institution.ID}}" class="btn btn-default">Edit</a></td>
+        <td><button ng-click="vm.delete(institution)" class="btn btn-danger">Delete</button></td>
+    </tr>
+</table>
