@@ -121,10 +121,14 @@
       //  require: '^form',
         controller: "successMessageController",
      //   scope: false,
-      
+        scope: {
+          backRoute: '&'  
+        },
         templateUrl: "angularJs/Templates/_userForm.html",
         link: function (scope, element, attrs) {
-            scope.backg = attrs.backg;
+
+            console.log(attrs.backRoute);
+            scope.backRoute = attrs.backRoute;
         }
     });
         });

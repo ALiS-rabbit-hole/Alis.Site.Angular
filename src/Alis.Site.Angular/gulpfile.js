@@ -89,9 +89,17 @@ gulp.task("inject:AngularConfig:live", function () {
     // It's not necessary to read the files (will speed up things), we're only after their paths:       
 });
 
+
+//gulp.task('buildAngularTemplates', function () {
+//    return gulp.src(paths.angularJs + '/**/*.html')
+//      .pipe(templateCache())
+//      .pipe(gulp.dest(paths.webroot + "angularJs"));
+//});
+
 gulp.task('buildAngularTemplates', function () {
     return gulp.src(paths.angularJs + '/**/*.html')
-      .pipe(templateCache())
+      .pipe(htmlmin({ collapseWhitespace: true, removeComments: true }))
+      .pipe(templateCache('templates.js', { module: 'templatescache', standalone: true, root: 'angularJs/' }))
       .pipe(gulp.dest(paths.webroot + "angularJs"));
 });
 

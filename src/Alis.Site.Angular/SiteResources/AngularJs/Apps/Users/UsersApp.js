@@ -68,7 +68,7 @@ usersApp.controller("UsersHomeController", function ($userServices) {
 usersApp.controller("UsersEditController", function ($userServices, $roleServices, $institutionServices, $stateParams, $scope) {
     var vm = this;
 
-
+  //  alert($scope.backRoute);
 
     $userServices.get($stateParams.id).then(function (data) {
         vm.user = data.Results;
