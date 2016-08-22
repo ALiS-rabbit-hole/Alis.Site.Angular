@@ -121,13 +121,13 @@
       //  require: '^form',
         controller: "successMessageController",
      //   scope: false,
-        scope: {
+      /*  scope: {
           backRoute: '&'  
-        },
+        },*/
         templateUrl: "angularJs/Templates/_userForm.html",
         link: function (scope, element, attrs) {
 
-            console.log(attrs.backRoute);
+         //   console.log(attrs.backRoute);
             scope.backRoute = attrs.backRoute;
         }
     });
@@ -137,10 +137,15 @@
     "roleForm", function () {
         return ({
             restrict: "E",
-            require: '^form',
+          //  require: '^form',
             controller: "successMessageController",
-            scope: false,
-            templateUrl: "angularJs/Templates/_roleForm.html"
+            //scope: false,
+            templateUrl: "angularJs/Templates/_roleForm.html",
+            link: function (scope, element, attrs) {
+
+                //   console.log(attrs.backRoute);
+                scope.backRoute = attrs.backRoute;
+            }
         });
     });
 

@@ -104,10 +104,10 @@ rolesApp.controller("RolesHomeController", function ($roleServices) {
 
 });
 
-rolesApp.controller("RolesEditController", function ($location, $roleServices, $scope) {
+rolesApp.controller("RolesEditController", function ($roleServices, $stateParams, $scope) {
     var vm = this;
 
-    $roleServices.get($location.search()["id"]).then(function (data) {
+    $roleServices.get($stateParams.id).then(function (data) {
         vm.role = data.Results;
     });
 

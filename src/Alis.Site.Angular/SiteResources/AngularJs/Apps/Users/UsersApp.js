@@ -68,8 +68,6 @@ usersApp.controller("UsersHomeController", function ($userServices) {
 usersApp.controller("UsersEditController", function ($userServices, $roleServices, $institutionServices, $stateParams, $scope) {
     var vm = this;
 
-  //  alert($scope.backRoute);
-
     $userServices.get($stateParams.id).then(function (data) {
         vm.user = data.Results;
     });
@@ -125,6 +123,8 @@ usersApp.controller("UsersEditController", function ($userServices, $roleService
 usersApp.controller("UsersCreateController", function ($userServices, $roleServices, $institutionServices, $scope) {
     var vm = this;
 
+ 
+
     $userServices.newUser().then(function (data) {
         vm.user = data.Results;
     });
@@ -146,6 +146,7 @@ usersApp.controller("UsersCreateController", function ($userServices, $roleServi
     };
 
     vm.Save = function () {
+        alert("here");
         $scope.$broadcast('show-errors-reset');
         $userServices.create(vm.user).then(function (data) {
 
