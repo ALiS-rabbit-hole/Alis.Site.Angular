@@ -1,7 +1,7 @@
 //http://stackoverflow.com/questions/18512434/multiple-module-in-angularjs
 
 
-var singleApp = angular.module('singleApp', ['ncy-angular-breadcrumb', 'templatescache', 'ui.router', 'rolesApp', 'usersApp'])
+var singleApp = angular.module('singleApp', ['ncy-angular-breadcrumb', 'templatescache', 'ui.router', 'rolesApp', 'usersApp', 'institutionsApp'])
     .config(function ($breadcrumbProvider) {
         $breadcrumbProvider.setOptions({
             prefixStateName: 'users'
@@ -26,14 +26,14 @@ var singleApp = angular.module('singleApp', ['ncy-angular-breadcrumb', 'template
                     ncyBreadcrumb: { label: "Users Home" }
                 })
                 .state('users.edit', {
-                    url: "/edit/:id",
+                    url: "/users/edit/:id",
                     controller: 'UsersEditController',
                     controllerAs: "vm",
                     templateUrl: "angularJs/Apps/Users/Templates/edit.html",
                     ncyBreadcrumb: { label: "Edit User", parent: 'users.home' }
                 })
                 .state('users.create', {
-                    url: "/create",
+                    url: "/users/create",
                     controller: 'UsersCreateController',
                     controllerAs: "vm",
                     templateUrl: "angularJs/Apps/Users/Templates/create.html",
@@ -51,17 +51,42 @@ var singleApp = angular.module('singleApp', ['ncy-angular-breadcrumb', 'template
                     ncyBreadcrumb: { label: "Roles Home" }
                 })
                 .state('roles.edit', {
-                    url: "/edit:id",
+                    url: "/roles/edit/:id",
                     controller: 'RolesEditController',
                     controllerAs: "vm",
                     templateUrl: "angularJs/Apps/Roles/Templates/edit.html",
                     ncyBreadcrumb: { label: "Edit Role", parent: 'roles.home' }
                 })
                 .state('roles.create', {
-                    url: "/create",
+                    url: "/roles/create",
                     controller: 'RolesCreateController',
                     controllerAs: "vm",
                     templateUrl: "angularJs/Apps/Roles/Templates/create.html",
                     ncyBreadcrumb: { label: "Create Role", parent: 'roles.home' }
+                })
+            .state('institutions', {
+                        abstract: true,
+                        template: '<div ui-view></div>'
+                    })
+                .state('institutions.home', {
+                    url: "/institutions",
+                    controller: 'InstitutionsHomeController',
+                    controllerAs: "vm",
+                    templateUrl: "angularJs/Apps/Institutions/Templates/home.html",
+                    ncyBreadcrumb: { label: "Institutions Home" }
+                })
+                .state('institutions.edit', {
+                    url: "/institutions/edit/:id",
+                    controller: 'InstitutionsEditController',
+                    controllerAs: "vm",
+                    templateUrl: "angularJs/Apps/Institutions/Templates/edit.html",
+                    ncyBreadcrumb: { label: "Edit Institution", parent: 'institutions.home' }
+                })
+                .state('institutions.create', {
+                    url: "/institutions/create",
+                    controller: 'InstitutionsCreateController',
+                    controllerAs: "vm",
+                    templateUrl: "angularJs/Apps/Institutions/Templates/create.html",
+                    ncyBreadcrumb: { label: "Create Institution", parent: 'institutions.home' }
                 });
 });

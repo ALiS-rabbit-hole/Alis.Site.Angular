@@ -107,8 +107,8 @@ gulp.task("clean:angularJs", function (cb) {
     rimraf(paths.webroot + "angularJs", cb);
 });
 
-gulp.task('copyAngular', ['clean:angularJs'], function () {
-    gulp.src(paths.angularJs + '/**/*').pipe(gulp.dest(paths.webroot + "angularJs"));
+gulp.task('copyAngular', ['clean:angularJs', 'buildAngularTemplates'], function () {
+    gulp.src(paths.angularJs + '/**/*.js').pipe(gulp.dest(paths.webroot + "angularJs"));
 });
 
 gulp.task('angularMinify', function () {

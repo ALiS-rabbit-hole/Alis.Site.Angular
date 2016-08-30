@@ -67,7 +67,7 @@ usersApp.controller("UsersHomeController", function ($userServices) {
 
 usersApp.controller("UsersEditController", function ($userServices, $roleServices, $institutionServices, $stateParams, $scope) {
     var vm = this;
-
+ 
     $userServices.get($stateParams.id).then(function (data) {
         vm.user = data.Results;
     });
@@ -117,7 +117,6 @@ usersApp.controller("UsersEditController", function ($userServices, $roleService
             }
         });
     };
-
 });
 
 usersApp.controller("UsersCreateController", function ($userServices, $roleServices, $institutionServices, $scope) {

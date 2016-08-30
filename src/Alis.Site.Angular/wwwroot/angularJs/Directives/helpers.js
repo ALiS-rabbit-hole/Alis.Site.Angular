@@ -115,39 +115,36 @@
   ]);
 
     mod.directive(
-        "userForm", function () {
+        "userForm", ['$state', function ($state) {
     return ({
         restrict: "E",
-      //  require: '^form',
         controller: "successMessageController",
-     //   scope: false,
-      /*  scope: {
+
+       /* scope: {
           backRoute: '&'  
         },*/
         templateUrl: "angularJs/Templates/_userForm.html",
         link: function (scope, element, attrs) {
 
-         //   console.log(attrs.backRoute);
-            scope.backRoute = attrs.backRoute;
+            scope.backRoute = function () { return $state.href(attrs.backRoute); }
         }
     });
-        });
+        }]);
 
     mod.directive(
-    "roleForm", function () {
+    "roleForm", ['$state',function ($state) {
         return ({
             restrict: "E",
           //  require: '^form',
             controller: "successMessageController",
-            //scope: false,
+
             templateUrl: "angularJs/Templates/_roleForm.html",
             link: function (scope, element, attrs) {
 
-                //   console.log(attrs.backRoute);
-                scope.backRoute = attrs.backRoute;
+                   scope.backRoute = function () { return $state.href(attrs.backRoute); }
             }
         });
-    });
+    }]);
 
     mod.controller("successMessageController", function ($scope) {
     

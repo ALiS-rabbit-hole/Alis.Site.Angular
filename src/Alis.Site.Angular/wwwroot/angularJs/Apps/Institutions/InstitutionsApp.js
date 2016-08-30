@@ -1,33 +1,17 @@
-var institutionsApp = angular.module('institutionsApp', ['ngRoute', 'institutionServices', 'ui.bootstrap.showErrors', 'ui.bootstrap', 'helpers']);
+var institutionsApp = angular.module('institutionsApp', ['institutionServices', 'ui.bootstrap.showErrors', 'ui.bootstrap', 'helpers']);
 
-institutionsApp.config(function ($routeProvider, $sceProvider, $compileProvider) {
+institutionsApp.config(function ($sceProvider, $compileProvider) {
 
     $compileProvider.debugInfoEnabled(false);
    // showErrorsConfigProvider.showSuccess(true);
 
-    var dir = config.angularRoot + "/Apps/Institutions/Templates/";
     $sceProvider.enabled(false);
 
 
 
-    $routeProvider.when('/Home', {
-        controller: 'HomeController as ctrl',
-        controllerAs: "vm",
-        templateUrl: dir + 'Home.html'
-    }).when('/Edit', {
-        controller: 'EditController',
-        controllerAs: 'vm',
-        templateUrl: dir + 'Edit.html'
-    }).when('/Create', {
-        controller: 'CreateController',
-        controllerAs: 'vm',
-        templateUrl: dir + 'Create.html'
-    }).otherwise({
-        redirectTo: '/Home'
-    });
 });
 
-institutionsApp.controller("HomeController", function ($institutionServices) {
+institutionsApp.controller("InstitutionsHomeController", function ($institutionServices) {
     var vm = this;
 
     $institutionServices.getAll().then(function (data) {
@@ -45,7 +29,7 @@ institutionsApp.controller("HomeController", function ($institutionServices) {
 
 });
 
-institutionsApp.controller("EditController", function ($location, $institutionServices, $scope) {
+institutionsApp.controller("InstitutionsEditController", function ($location, $institutionServices, $scope) {
     var vm = this;
 
     $institutionServices.get($location.search()["id"]).then(function (data) {
@@ -66,7 +50,7 @@ institutionsApp.controller("EditController", function ($location, $institutionSe
     };
 });
 
-institutionsApp.controller("CreateController", function ($location, $institutionServices, $scope) {
+institutionsApp.controller("InstitutionsCreateController", function ($location, $institutionServices, $scope) {
     var vm = this;
 
     vm.institutionConfig = {};
