@@ -1,42 +1,57 @@
-﻿var notificationsApp = angular.module('notificationsApp', ['ngRoute', 'notificationServices', 'applicationServices', 'eventServices','ui.bootstrap', 'ui.bootstrap.showErrors', 'helpers', 'customFilters']);
+﻿var notificationsApp = angular.module('notificationsApp', ['notificationServices', 'applicationServices', 'eventServices','ui.bootstrap', 'ui.bootstrap.showErrors', 'helpers', 'customFilters']);
 
-notificationsApp.config(function ($routeProvider, $sceProvider, $compileProvider) {
+notificationsApp.config(function ($stateProvider, $sceProvider, $compileProvider) {
 
     $compileProvider.debugInfoEnabled(false);
    // showErrorsConfigProvider.showSuccess(true);
 
-    var dir = config.angularRoot + "/Apps/Notifications/Templates/";
     $sceProvider.enabled(false);
 
-
-    
-    $routeProvider.when('/Home', {
-        controller: 'HomeController',
-        controllerAs: "vm",
-        templateUrl: dir + 'Home.html'
-    }).when('/Notifications', {
-        controller: 'NotificationsController',
-        controllerAs: "vm",
-        templateUrl: dir + 'Notifications.html'
-    }).when('/Create', {
-        controller: 'CreateController',
-        controllerAs: "vm",
-        templateUrl: dir + 'Create.html'
-    }).when('/Edit', {
-        controller: 'EditController',
-        controllerAs: "vm",
-        templateUrl: dir + 'Edit.html'
-    }).otherwise({
-        redirectTo: '/Home'
-    });
+    $stateProvider.state('notifications',
+        {
+            abstract: true,
+            template: '<div ui-view></div>'
+        })
+        .state('notifications.home',
+        {
+            url: "/notifications",
+            controller: 'NotificationsHomeController',
+            controllerAs: "vm",
+            templateUrl: "angularJs/Apps/Notifications/Templates/home.html",
+            ncyBreadcrumb: { label: "Notifications Home" }
+        })
+        .state('notifications.notifications',
+        {
+            url: "/notifications/notifications",
+            controller: 'NotificationsNotificationsController',
+            controllerAs: "vm",
+            templateUrl: "angularJs/Apps/Notifications/Templates/notifications.html",
+            ncyBreadcrumb: { label: "Users Home" }
+        })
+        .state('notifications.create',
+        {
+            url: "/notifications/create",
+            controller: 'NotificationsCreateController',
+            controllerAs: "vm",
+            templateUrl: "angularJs/Apps/Notifications/Templates/create.html",
+            ncyBreadcrumb: { label: "Users Home" }
+        })
+        .state('notifications.edit',
+        {
+            url: "/notifications/edit/:appID/:eventID",
+            controller: 'NotificationsEditController',
+            controllerAs: "vm",
+            templateUrl: "angularJs/Apps/Notifications/Templates/edit.html",
+            ncyBreadcrumb: { label: "Users Home" }
+        });
 });
 
-notificationsApp.controller("HomeController", function ($notificationServices, $applicationServices, $eventServices, $location) {
+notificationsApp.controller("NotificationsHomeController", function ($stateParams, $notificationServices, $applicationServices, $eventServices) {
     var vm = this;
 
 
-    vm.appID = $location.search()["eventID"];
-    vm.eventID = $location.search()["appID"];
+    vm.appID = $stateParams.appID;
+    vm.eventID = $stateParams.eventID;
 
 
     
@@ -83,7 +98,7 @@ notificationsApp.controller("HomeController", function ($notificationServices, $
     };
 });
 
-notificationsApp.controller("NotificationsController", function ($notificationServices, $eventServices, $applicationServices, $location, $sce) {
+notificationsApp.controller("NotificationsNotificationsController", function ($notificationServices, $eventServices, $applicationServices, $location, $sce) {
     var vm = this;
 
     vm.appID = $location.search()["eventID"];
@@ -108,7 +123,7 @@ notificationsApp.controller("NotificationsController", function ($notificationSe
     });
 });
 
-notificationsApp.controller("CreateController", function ($notificationServices, $applicationServices, $eventServices, $location, $scope) {
+notificationsApp.controller("NotificationsCreateController", function ($notificationServices, $applicationServices, $eventServices, $location, $scope) {
     var vm = this;
 
     vm.Notification = {};
@@ -156,7 +171,7 @@ notificationsApp.controller("CreateController", function ($notificationServices,
     };
 });
 
-notificationsApp.controller("EditController", function ($notificationServices, $applicationServices, $location, $scope) {
+notificationsApp.controller("NotificationsEditController", function ($notificationServices, $applicationServices, $location, $scope) {
     var vm = this;
 
     vm.appID = $location.search()["appID"];

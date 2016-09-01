@@ -1,11 +1,40 @@
 ﻿var rolesApp = angular.module('rolesApp', ['roleServices', 'helpers', 'ui.bootstrap', 'ui.bootstrap.showErrors']);
 
-rolesApp.config(function ($sceProvider, $compileProvider) {
+rolesApp.config(function ($stateProvider, $sceProvider, $compileProvider) {
 
     $compileProvider.debugInfoEnabled(false);
 
     $sceProvider.enabled(false);
 
+    $stateProvider.state('roles',
+        {
+            abstract: true,
+            template: '<div ui-view></div>'
+        })
+        .state('roles.home',
+        {
+            url: "/roles",
+            controller: 'RolesHomeController',
+            controllerAs: "vm",
+            templateUrl: "angularJs/Apps/Roles/Templates/home.html",
+            ncyBreadcrumb: { label: "Roles Home" }
+        })
+        .state('roles.edit',
+        {
+            url: "/roles/edit/:id",
+            controller: 'RolesEditController',
+            controllerAs: "vm",
+            templateUrl: "angularJs/Apps/Roles/Templates/edit.html",
+            ncyBreadcrumb: { label: "Edit Role", parent: 'roles.home' }
+        })
+        .state('roles.create',
+        {
+            url: "/roles/create",
+            controller: 'RolesCreateController',
+            controllerAs: "vm",
+            templateUrl: "angularJs/Apps/Roles/Templates/create.html",
+            ncyBreadcrumb: { label: "Create Role", parent: 'roles.home' }
+        });
 });
 
 rolesApp.controller("RolesHomeController", function ($roleServices) {

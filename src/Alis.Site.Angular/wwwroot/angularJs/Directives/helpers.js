@@ -1,21 +1,6 @@
 (function() {
     var mod = angular.module("helpers", ['ui.bootstrap']);
 
-    /*   mod.controller("successMessageController", function($scope) {
-        var vm = this;
-        $scope.$on('_success_', function(event, args) {
-            vm.success = true;
-            vm.success.messages = args.messages;
-        });
-    });
-  mod.directive(
-        "mainErrors", function() {
-            return ({
-                restrict: "E",
-                templateUrl: "angularJs/Templates/_generalErrors.html"
-            });
-        });*/
-
     mod.directive(
         "addressForm", function() {
             return ({
@@ -30,23 +15,18 @@
             templateUrl: "angularJs/Templates/_notificationForm.html"
         });
     });
-   /* mod.directive(
-        "successMessages", function() {
-            return ({
-                restrict: "E",
-                controllerAs: "vm",
-                controller: "successMessageController",
-                templateUrl: "angularJs/Templates/_successMessages.html"
-            });
-        });*/
     mod.directive(
         "notifications", function() {
             return ({
                 restrict: "E",
-                require: '^form',
+             //   require: '^form',
                 controller: "successMessageController",
                 scope: false,
-                templateUrl: "angularJs/Templates/_notifications.html"
+                templateUrl: "angularJs/Templates/_notifications.html",
+                link: function (scope, element, attrs) {
+
+                    scope.backRoute = function () { return $state.href(attrs.backRoute); }
+                }
             });
         });
 
@@ -60,6 +40,35 @@
             templateUrl: "angularJs/Templates/_institutionForm.html"
         });
     });
+
+    mod.directive(
+        "userForm", ['$state', function ($state) {
+    return ({
+        restrict: "E",
+        controller: "successMessageController",
+        templateUrl: "angularJs/Templates/_userForm.html",
+        link: function (scope, element, attrs) {
+
+            scope.backRoute = function () { return $state.href(attrs.backRoute); }
+        }
+    });
+        }]);
+
+    mod.directive(
+    "roleForm", ['$state',function ($state) {
+        return ({
+            restrict: "E",
+            controller: "successMessageController",
+
+            templateUrl: "angularJs/Templates/_roleForm.html",
+            link: function (scope, element, attrs) {
+
+                   scope.backRoute = function () { return $state.href(attrs.backRoute); }
+            }
+        });
+    }]);
+
+
 
     mod.directive("paging", function () {
         return {
@@ -112,39 +121,9 @@
             }
         }
     }
-  ]);
+    ]);
 
-    mod.directive(
-        "userForm", ['$state', function ($state) {
-    return ({
-        restrict: "E",
-        controller: "successMessageController",
 
-       /* scope: {
-          backRoute: '&'  
-        },*/
-        templateUrl: "angularJs/Templates/_userForm.html",
-        link: function (scope, element, attrs) {
-
-            scope.backRoute = function () { return $state.href(attrs.backRoute); }
-        }
-    });
-        }]);
-
-    mod.directive(
-    "roleForm", ['$state',function ($state) {
-        return ({
-            restrict: "E",
-          //  require: '^form',
-            controller: "successMessageController",
-
-            templateUrl: "angularJs/Templates/_roleForm.html",
-            link: function (scope, element, attrs) {
-
-                   scope.backRoute = function () { return $state.href(attrs.backRoute); }
-            }
-        });
-    }]);
 
     mod.controller("successMessageController", function ($scope) {
     

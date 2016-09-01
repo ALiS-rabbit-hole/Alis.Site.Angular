@@ -1,12 +1,40 @@
 ﻿var usersApp = angular.module('usersApp', ['userServices', 'roleServices', 'institutionServices', 'ui.bootstrap', 'ui.bootstrap.showErrors', 'helpers', 'customFilters', 'checklist-model']);
 
-usersApp.config(function ($sceProvider, $compileProvider) {
+usersApp.config(function ($stateProvider, $sceProvider, $compileProvider) {
 
     $compileProvider.debugInfoEnabled(false);
 
     $sceProvider.enabled(false);
 
-
+    $stateProvider.state('users',
+        {
+            abstract: true,
+            template: '<div ui-view></div>'
+        })
+        .state('users.home',
+        {
+            url: "/users",
+            controller: 'UsersHomeController',
+            controllerAs: "vm",
+            templateUrl: "angularJs/Apps/Users/Templates/home.html",
+            ncyBreadcrumb: { label: "Users Home" }
+        })
+        .state('users.edit',
+        {
+            url: "/users/edit/:id",
+            controller: 'UsersEditController',
+            controllerAs: "vm",
+            templateUrl: "angularJs/Apps/Users/Templates/edit.html",
+            ncyBreadcrumb: { label: "Edit User", parent: 'users.home' }
+        })
+        .state('users.create',
+        {
+            url: "/users/create",
+            controller: 'UsersCreateController',
+            controllerAs: "vm",
+            templateUrl: "angularJs/Apps/Users/Templates/create.html",
+            ncyBreadcrumb: { label: "Create User", parent: 'users.home' }
+        });
 
 
 });

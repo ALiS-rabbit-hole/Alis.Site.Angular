@@ -1,12 +1,38 @@
 var institutionsApp = angular.module('institutionsApp', ['institutionServices', 'ui.bootstrap.showErrors', 'ui.bootstrap', 'helpers']);
 
-institutionsApp.config(function ($sceProvider, $compileProvider) {
+institutionsApp.config(function ($stateProvider, $sceProvider, $compileProvider) {
 
     $compileProvider.debugInfoEnabled(false);
    // showErrorsConfigProvider.showSuccess(true);
 
     $sceProvider.enabled(false);
 
+    $stateProvider
+    .state('institutions', {
+        abstract: true,
+        template: '<div ui-view></div>'
+    })
+        .state('institutions.home', {
+            url: "/institutions",
+            controller: 'InstitutionsHomeController',
+            controllerAs: "vm",
+            templateUrl: "angularJs/Apps/Institutions/Templates/home.html",
+            ncyBreadcrumb: { label: "Institutions Home" }
+        })
+        .state('institutions.edit', {
+            url: "/institutions/edit/:id",
+            controller: 'InstitutionsEditController',
+            controllerAs: "vm",
+            templateUrl: "angularJs/Apps/Institutions/Templates/edit.html",
+            ncyBreadcrumb: { label: "Edit Institution", parent: 'institutions.home' }
+        })
+        .state('institutions.create', {
+            url: "/institutions/create",
+            controller: 'InstitutionsCreateController',
+            controllerAs: "vm",
+            templateUrl: "angularJs/Apps/Institutions/Templates/create.html",
+            ncyBreadcrumb: { label: "Create Institution", parent: 'institutions.home' }
+        });
 
 
 });
