@@ -150,8 +150,6 @@ usersApp.controller("UsersEditController", function ($userServices, $roleService
 usersApp.controller("UsersCreateController", function ($userServices, $roleServices, $institutionServices, $scope) {
     var vm = this;
 
- 
-
     $userServices.newUser().then(function (data) {
         vm.user = data.Results;
     });

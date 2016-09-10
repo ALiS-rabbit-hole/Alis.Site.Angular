@@ -10,18 +10,19 @@ notificationsApp.config(function ($stateProvider, $sceProvider, $compileProvider
     $stateProvider.state('notifications',
         {
             abstract: true,
-            template: '<div ui-view></div>'
+            template: '<div ui-view></div>',
+            ncyBreadcrumb: { label: "Notification Home", parent: 'users.home' }
         })
         .state('notifications.home',
         {
-            url: "/notifications",
+            url: "/notifications?appID&eventID",
             controller: 'NotificationsHomeController',
             controllerAs: "vm",
             templateUrl: "angularJs/Apps/Notifications/Templates/home.html",
             ncyBreadcrumb: { label: "Notifications Home" }
         })
         .state('notifications.notifications',
-        {
+        { 
             url: "/notifications/notifications",
             controller: 'NotificationsNotificationsController',
             controllerAs: "vm",
@@ -30,19 +31,19 @@ notificationsApp.config(function ($stateProvider, $sceProvider, $compileProvider
         })
         .state('notifications.create',
         {
-            url: "/notifications/create",
+            url: "/notifications/create/:appID/:eventID",
             controller: 'NotificationsCreateController',
             controllerAs: "vm",
             templateUrl: "angularJs/Apps/Notifications/Templates/create.html",
-            ncyBreadcrumb: { label: "Users Home" }
+            ncyBreadcrumb: { label: "Create Notification", parent: 'notifications.home' }
         })
         .state('notifications.edit',
         {
-            url: "/notifications/edit/:appID/:eventID",
+            url: "/notifications/edit/:id/:appID/:eventID",
             controller: 'NotificationsEditController',
             controllerAs: "vm",
             templateUrl: "angularJs/Apps/Notifications/Templates/edit.html",
-            ncyBreadcrumb: { label: "Users Home" }
+            ncyBreadcrumb: { label: "Edit Notification", parent: 'notifications.home' }
         });
 });
 
@@ -53,16 +54,41 @@ notificationsApp.controller("NotificationsHomeController", function ($stateParam
     vm.appID = $stateParams.appID;
     vm.eventID = $stateParams.eventID;
 
+    console.log($stateParams.appID);
 
     
     $applicationServices.getAll().then(function (data) {
         vm.applications = data.Results;
+
+        //Set up previous state if appid and event id have values
+        if (vm.appID != null) {
+
+            vm.selectedApplication = findById(vm.applications, vm.appID);
+
+            if (vm.eventID != null && (vm.selectedApplication != null && vm.selectedApplication.Events.length > 0)) {
+                vm.selectedEvent = findById(vm.selectedApplication.Events, vm.eventID);
+       
+                if (vm.selectedEvent != null) {
+                    vm.getNotifications(vm.appID, vm.eventID);
+
+
+                }
+            }
+        }
+
+
     });
 
     vm.getNotifications = function(appID, eventID) {
 
+        if (appID == undefined || eventID == undefined) {
+            vm.details = {};
+            vm.notifications = null;
+            return;
+        }
         vm.eventID = eventID;
         vm.appID = appID;
+        console.log(eventID);
 
         $eventServices.get(eventID).then(function (data) {
             vm.Event = data.Results;
@@ -83,6 +109,7 @@ notificationsApp.controller("NotificationsHomeController", function ($stateParam
             
         });
 
+
         //todo: could do with an event service, so we can use it's details to flesh out the notifications.html page.
         $notificationServices.getByEventID(eventID).then(function (data) {
             vm.notifications = data.Results;
@@ -93,52 +120,40 @@ notificationsApp.controller("NotificationsHomeController", function ($stateParam
     };
 
 
+    function findById(source, id) {
+        //console.log(id);
+        for (var i = 0; i < source.length; i++) {
+            //console.log(source[i]);
+            if (source[i].ID == id) {
+               
+                return source[i];
+            }
+        }
+        throw "Couldn't find object with id: " + id;
+    }
+
     vm.Create = function () {
         $scope.$broadcast('show-errors-reset');
     };
 });
 
-notificationsApp.controller("NotificationsNotificationsController", function ($notificationServices, $eventServices, $applicationServices, $location, $sce) {
-    var vm = this;
-
-    vm.appID = $location.search()["eventID"];
-    vm.eventID = $location.search()["appID"];
-
-
-
-    $eventServices.get($location.search()["eventID"]).then(function (data) {
-        vm.Event = data.Results;
-
-        var reader = new commonmark.Parser();
-        var writer = new commonmark.HtmlRenderer();
-
-        var parsed = reader.parse(vm.Event.Details);
-
-        vm.details = writer.render(parsed);
-    });
-
-    //todo: could do with an event service, so we can use it's details to flesh out the notifications.html page.
-    $notificationServices.getByEventID($location.search()["eventID"]).then(function (data) {
-        vm.notifications = data.Results;
-    });
-});
-
-notificationsApp.controller("NotificationsCreateController", function ($notificationServices, $applicationServices, $eventServices, $location, $scope) {
+notificationsApp.controller("NotificationsCreateController", function ($notificationServices, $applicationServices, $eventServices, $stateParams, $scope) {
     var vm = this;
 
     vm.Notification = {};
 
-    vm.appID = $location.search()["appID"];
-    vm.eventID = $location.search()["eventID"];
+    vm.appID = $stateParams.appID;
+    vm.eventID = $stateParams.eventID;
 
-    vm.overrideFrom = 'nope';
+   // console.log($stateParams);
+   // vm.overrideFrom = 'nope';
 
 
     $applicationServices.get(vm.appID).then(function (data) {
         vm.application = data.Results;
     });
 
-    $eventServices.get($location.search()["eventID"]).then(function (data) {
+    $eventServices.get(vm.eventID).then(function (data) {
         vm.Event = data.Results;
         vm.Notification.EventID = vm.Event.ID;
         vm.Notification.Type = 0;
@@ -171,30 +186,54 @@ notificationsApp.controller("NotificationsCreateController", function ($notifica
     };
 });
 
-notificationsApp.controller("NotificationsEditController", function ($notificationServices, $applicationServices, $location, $scope) {
+notificationsApp.controller("NotificationsEditController", function ($notificationServices, $applicationServices, $eventServices, $stateParams, $scope) {
     var vm = this;
 
-    vm.appID = $location.search()["appID"];
+    vm.id = $stateParams.id;
+    vm.appID = $stateParams.appID;
+    vm.eventID = $stateParams.eventID;
 
-
-    $notificationServices.get($location.search()["id"]).then(function (data) {
+    $notificationServices.get(vm.id).then(function (data) {
         vm.Notification = data.Results;
 
         if (vm.Notification.From != null)
-            vm.fromRBL = "Override";
+            vm.fromRBL = vm.selectedTarget ="Override";
         else
-            vm.fromRBL = vm.Notification.GeneratedBy.HasTarget ? "DefaultTarget" : "DefaultRecipient";
+            vm.fromRBL = vm.selectedTarget = vm.Notification.GeneratedBy.HasTarget ? "DefaultTarget" : "DefaultRecipient";
     });
 
-    var reader = new commonmark.Parser();
-    var writer = new commonmark.HtmlRenderer();
+    $applicationServices.get(vm.appID).then(function (data) {
+        vm.application = data.Results;
+    });
+
+    $eventServices.get(vm.eventID).then(function (data) {
+        vm.Event = data.Results;
+        vm.Notification.EventID = vm.Event.ID;
+        vm.Notification.Type = 0;
+        vm.Notification.Message = "";
+
+        var reader = new commonmark.Parser();
+        var writer = new commonmark.HtmlRenderer();
+
+        var parsed = reader.parse(vm.Event.Details);
+
+        vm.details = writer.render(parsed);
+
+        vm.fromRBL = vm.Event.HasTarget ? "DefaultTarget" : "DefaultRecipient";
+
+        console.log(vm.fromRBL);
+    });
+
+    vm.AppendTag = function (tag) {
+
+
+        vm.Notification.Message += tag.Name;
+    };
+
 
     vm.Create = function () {
         $scope.$broadcast('show-errors-reset');
 
-        var parsed = reader.parse(vm.Notification.Message);
-
-        console.log(writer.render(parsed));
 
     };
 });

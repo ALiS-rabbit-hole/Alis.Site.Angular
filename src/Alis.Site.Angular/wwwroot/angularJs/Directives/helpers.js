@@ -9,47 +9,51 @@
             });
         });
     mod.directive(
-    "notificationForm", function () {
+    "notificationForm", ['$state', function ($state) {
         return ({
             restrict: "E",
-            templateUrl: "angularJs/Templates/_notificationForm.html"
+            templateUrl: "angularJs/Templates/_notificationForm.html",
+            link: function (scope, element, attrs) {
+                console.log($state.href(attrs.backRoute));
+                scope.back = $state.href(attrs.backRoute);
+            }
         });
-    });
+    }]);
     mod.directive(
-        "notifications", function() {
+        "notifications",  function() {
             return ({
                 restrict: "E",
-             //   require: '^form',
                 controller: "successMessageController",
-                scope: false,
                 templateUrl: "angularJs/Templates/_notifications.html",
-                link: function (scope, element, attrs) {
-
-                    scope.backRoute = function () { return $state.href(attrs.backRoute); }
-                }
             });
         });
 
     mod.directive(
-    "institutionForm", function () {
+    "institutionForm", ['$state', function ($state) {
         return ({
             restrict: "E",
-            require: '^form',
             controller: "successMessageController",
-            scope: false,
-            templateUrl: "angularJs/Templates/_institutionForm.html"
+            templateUrl: "angularJs/Templates/_institutionForm.html",
+            link: function (scope, element, attrs) {
+
+                scope.tst = function () { console.log("here!");}
+                scope.back = $state.href(attrs.backRoute);
+            }
         });
-    });
+    }]);
 
     mod.directive(
         "userForm", ['$state', function ($state) {
     return ({
         restrict: "E",
+        // scope: { backRoute: '@'},
+        
+        
         controller: "successMessageController",
         templateUrl: "angularJs/Templates/_userForm.html",
         link: function (scope, element, attrs) {
 
-            scope.backRoute = function () { return $state.href(attrs.backRoute); }
+            scope.back = $state.href(attrs.backRoute); 
         }
     });
         }]);
@@ -63,7 +67,7 @@
             templateUrl: "angularJs/Templates/_roleForm.html",
             link: function (scope, element, attrs) {
 
-                   scope.backRoute = function () { return $state.href(attrs.backRoute); }
+                scope.back = $state.href(attrs.backRoute);
             }
         });
     }]);
