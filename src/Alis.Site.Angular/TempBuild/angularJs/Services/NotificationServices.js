@@ -18,6 +18,12 @@ angular.module('notificationServices', [])
             return $http.post(serviceRoot + "Create", notification).then(function (result) {
                 return result.data;
             });
+        },
+        update: function (notification) {
+            //console.log(notification);
+            return $http.put(serviceRoot + "Update", notification).then(function (result) {
+                return result.data;
+            });
         }
     };
 });

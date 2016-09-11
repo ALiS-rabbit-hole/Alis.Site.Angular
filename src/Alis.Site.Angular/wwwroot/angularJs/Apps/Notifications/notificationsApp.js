@@ -154,19 +154,19 @@ notificationsApp.controller("NotificationsCreateController", function ($notifica
     });
 
     $eventServices.get(vm.eventID).then(function (data) {
-        vm.Event = data.Results;
-        vm.Notification.EventID = vm.Event.ID;
+        vm.Notification.GeneratedBy = data.Results;
         vm.Notification.Type = 0;
         vm.Notification.Message = "";
+        vm.Notification.From = "";
 
         var reader = new commonmark.Parser();
         var writer = new commonmark.HtmlRenderer();
 
-        var parsed = reader.parse(vm.Event.Details);
+        var parsed = reader.parse(vm.Notification.GeneratedBy.Details);
 
         vm.details = writer.render(parsed);
 
-        vm.fromRBL = vm.Event.HasTarget ? "DefaultTarget" : "DefaultRecipient";
+        vm.fromRBL = vm.Notification.GeneratedBy.HasTarget ? "DefaultTarget" : "DefaultRecipient";
 
         console.log(vm.fromRBL);
     });
@@ -178,11 +178,22 @@ notificationsApp.controller("NotificationsCreateController", function ($notifica
     };
 
 
-    vm.Create = function () {
-        $notificationServices.create(vm.Notification).then(function (data) {
+    vm.Save = function () {
 
+        vm.Notification.Recipients = vm.selectedTarget;
+        $notificationServices.create(vm.Notification).then(function (data) {
+            if (data.Success) {
+                //todo: should this be outside the success function??
+                $scope.$broadcast('show-errors-reset');
+                vm.Notification = data.Results;
+
+                $scope.notifications.success.valid = true;
+                $scope.notifications.success.descriptions = ["The notification was successfully created."];
+            } else {
+                vm.Notification.Recipients = "";
+            }
         });
-        $scope.$broadcast('show-errors-reset');
+        
     };
 });
 
@@ -197,44 +208,65 @@ notificationsApp.controller("NotificationsEditController", function ($notificati
         vm.Notification = data.Results;
 
         if (vm.Notification.From != null)
-            vm.fromRBL = vm.selectedTarget ="Override";
+            vm.fromRBL = "Override";
         else
-            vm.fromRBL = vm.selectedTarget = vm.Notification.GeneratedBy.HasTarget ? "DefaultTarget" : "DefaultRecipient";
-    });
+            vm.fromRBL = vm.Notification.GeneratedBy.HasTarget ? "DefaultTarget" : "DefaultRecipient";
 
-    $applicationServices.get(vm.appID).then(function (data) {
-        vm.application = data.Results;
-    });
-
-    $eventServices.get(vm.eventID).then(function (data) {
-        vm.Event = data.Results;
-        vm.Notification.EventID = vm.Event.ID;
-        vm.Notification.Type = 0;
-        vm.Notification.Message = "";
+        if (vm.Notification.Recipients != null)
+            vm.selectedTarget = "Custom";
 
         var reader = new commonmark.Parser();
         var writer = new commonmark.HtmlRenderer();
 
-        var parsed = reader.parse(vm.Event.Details);
+        var parsed = reader.parse(vm.Notification.GeneratedBy.Details);
 
         vm.details = writer.render(parsed);
 
-        vm.fromRBL = vm.Event.HasTarget ? "DefaultTarget" : "DefaultRecipient";
 
-        console.log(vm.fromRBL);
+        var result = findByName(vm.Notification.GeneratedBy.Targets, vm.Notification.Recipients);
+
+        if (result != null) {
+            vm.selectedTarget = result;
+            vm.Notification.Recipients = "";
+        }
     });
 
-    vm.AppendTag = function (tag) {
+    $applicationServices.get(vm.appID).then(function (data) {
+        vm.application = data.Results;
 
 
-        vm.Notification.Message += tag.Name;
-    };
+    });
 
 
-    vm.Create = function () {
+    function findByName(source, name) {
+        //console.log(id);
+        for (var i = 0; i < source.length; i++) {
+            //console.log(source[i]);
+            if (source[i] == name) {
+
+                return source[i];
+            }
+        }
+        throw "Couldn't find object with name: " + name;
+    }
+
+    vm.Save = function () {
+
+        vm.Notification.Recipients = vm.selectedTarget;
         $scope.$broadcast('show-errors-reset');
 
+        $notificationServices.update(vm.Notification).then(function (data) {
+            if (data.Success) {
+                //todo: should this be outside the success function??
+                $scope.$broadcast('show-errors-reset');
+               // vm.Notification = data.Results;
 
+                $scope.notifications.success.valid = true;
+                $scope.notifications.success.descriptions = ["The notification was successfully updated."];
+            } else {
+                vm.Notification.Recipients = "";
+            }
+        });
     };
 });
 

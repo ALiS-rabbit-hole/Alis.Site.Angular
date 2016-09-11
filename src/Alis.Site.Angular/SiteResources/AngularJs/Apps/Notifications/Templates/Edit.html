@@ -1,1 +1,8 @@
-﻿<notification-form back-route="notifications.home"></notification-form>
+﻿<div class="page-header">
+    <h2>
+        {{vm.application.Name}} <small>{ {{vm.Notification.GeneratedBy.FriendlyName}} }</small>
+    </h2>
+    <small ng-bind-html="vm.details | sanitize"></small>
+</div>
+
+<notification-form back-route="notifications.home"></notification-form>

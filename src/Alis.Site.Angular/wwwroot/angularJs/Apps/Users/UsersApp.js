@@ -171,7 +171,7 @@ usersApp.controller("UsersCreateController", function ($userServices, $roleServi
     };
 
     vm.Save = function () {
-        alert("here");
+       // alert("here");
         $scope.$broadcast('show-errors-reset');
         $userServices.create(vm.user).then(function (data) {
 
