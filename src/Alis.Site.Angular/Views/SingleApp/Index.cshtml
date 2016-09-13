@@ -4,11 +4,16 @@
 @{
     Layout = "~/Views/Shared/_LayoutNg.cshtml";
 }
-<div ncy-breadcrumb></div>
-
-    <div ui-view></div>
-
-
+<div class="page-header">
+    <div class="container"><h1 class="page-title pull-left">Page Info</h1>
+        <ol ncy-breadcrumb class="breadcrumb"></ol>
+    </div>
+</div>
+<div class="page-content">
+    <div class="container">
+        <div ui-view></div>
+    </div>
+</div>
 <!-- inject:angularConfig:js -->
 <script src="/angularJs/config.dev.js"></script>
 <!-- endinject -->
