@@ -29,6 +29,11 @@ angular.module('notificationServices', [])
                 return $http.put(serviceRoot + "Update", notification).then(function (result) {
                     return result.data;
                 });
+            },
+            remove: function (notification) {
+                return $http.delete(serviceRoot + "Delete", { params: { ID: notification.ID } }).then(function (result) {
+                    return result.data;
+                });
             }
         };
     });

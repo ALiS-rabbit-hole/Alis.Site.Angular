@@ -79,6 +79,18 @@ notificationsApp.controller("NotificationsHomeController", function ($stateParam
 
     });
 
+    vm.reallyDelete = function (role) {
+
+        $notificationServices.remove(role).then(function (data) {
+            if (data.Success) {
+
+                // vm.roles.splice(vm.roles.indexOf(role), 1);
+
+                vm.getNotifications(vm.appID, vm.eventID);
+            }
+        });
+    };
+
     vm.getNotifications = function(appID, eventID) {
 
         if (appID == undefined || eventID == undefined) {

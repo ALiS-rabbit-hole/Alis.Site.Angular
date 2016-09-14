@@ -35,7 +35,7 @@
                     <td><span class="label label-info">Email</span></td>
                     <td>{{::notification.Subject}}</td>
                     <td><a ui-sref="notifications.edit({id:notification.ID, appID:vm.selectedApplication.ID, eventID:vm.selectedEvent.ID})" class="btn btn-default btn-sm">Edit</a></td>
-                    <td><button ng-click="vm.delete(notification)" class="btn btn-danger btn-sm">Delete</button></td>
+                    <td><button ng-really-message="Are you sure ?" ng-really-click="vm.reallyDelete(notification)" class="btn btn-danger btn-sm">Delete</button></td>
                 </tr>
             </table>
         </div>

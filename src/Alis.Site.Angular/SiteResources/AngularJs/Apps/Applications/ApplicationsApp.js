@@ -1,6 +1,6 @@
-﻿var applicationsApp = angular.module('applicationsApp', ['ngRoute', 'applicationServices', 'ui.bootstrap.showErrors', 'ui.bootstrap', 'helpers']);
+﻿var applicationsApp = angular.module('applicationsApp', ['applicationServices', 'ui.bootstrap.showErrors', 'ui.bootstrap', 'helpers']);
 
-applicationsApp.config(function ($routeProvider, $sceProvider, $compileProvider) {
+applicationsApp.config(function ($stateProvider, $sceProvider, $compileProvider) {
 
     $compileProvider.debugInfoEnabled(false);
    // showErrorsConfigProvider.showSuccess(true);
