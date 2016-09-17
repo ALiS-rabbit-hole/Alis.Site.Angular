@@ -1,4 +1,4 @@
-var notificationsApp = angular.module('notificationsApp', ['notificationServices', 'applicationServices', 'eventServices','ui.bootstrap', 'ui.bootstrap.showErrors', 'helpers', 'customFilters']);
+var notificationsApp = angular.module('notificationsApp', ['notificationServices', 'applicationServices', 'eventServices', 'ui.bootstrap', 'ui.bootstrap.showErrors', 'helpers', 'customFilters']);
 
 notificationsApp.config(function ($stateProvider, $sceProvider, $compileProvider) {
 

@@ -7,6 +7,11 @@
             return $http.post(serviceRoot + "ResendPassword", { Email: email }).then(function (result) {
                 return result.data;
             });
+        },
+        tokenIsValid: function(token) {
+            return $http.get(serviceRoot + "TokenisValid", {Token: token}).then(function(result) {
+                return result.data;
+            });
         }
     };
 });

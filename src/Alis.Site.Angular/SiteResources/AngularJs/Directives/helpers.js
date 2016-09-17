@@ -134,4 +134,44 @@
         $scope.notifications = {};
         $scope.notifications.success = {};
     });
+
+    mod.directive("markItUp", ["markitupSettings", function (markitupSettings) {
+        return {
+            restrict: "A",
+            scope: {
+                ngModel: "="
+            },
+            link: function (scope, element, attrs) {
+                console.log(scope); console.log(element);
+                var settings;
+                settings = markitupSettings.create(function (event) {
+                    scope.$apply(function () {
+                        scope.ngModel = event.textarea.value;
+                        
+                    });
+                });
+                angular.element(element).markItUp(settings);
+            }
+        };
+    }
+    ]);
+
+    mod.factory('markitupSettings', [
+  function() {
+      var factory, markset;
+      markset = [
+        //here goes your usual markItUp layout
+      ];
+      factory = {};
+      factory.create = function (callback) {
+
+          return {
+              afterInsert: callback,
+              previewParserPath: '',
+              markupSet: markset
+          };
+      };
+      return factory;
+  }
+    ]);
 }());

@@ -42,7 +42,8 @@
             <div class="form-group" show-errors>
                 <label for="message" class="col-sm-2 control-label">Message</label>
                 <div class="col-sm-10">
-                    <textarea class="form-control" id="message" name="Message" placeholder="Message" ng-required ng-model="vm.Notification.Message"></textarea>
+                    <textarea class="form-control" id="message" name="Message" placeholder="Message" ng-required ng-model="vm.Notification.Message" mark-it-up></textarea>
+
                     <span class="help-block" ng-show="notificationForm.Message.$invalid">{{notificationForm.Message.$errorText}}</span>
                 </div>
             </div>
