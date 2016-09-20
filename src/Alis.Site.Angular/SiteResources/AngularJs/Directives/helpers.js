@@ -59,6 +59,19 @@
         }]);
 
     mod.directive(
+    "changePasswordForm", ['$state', function ($state) {
+        return ({
+            restrict: "E",
+            controller: "successMessageController",
+            templateUrl: "angularJs/Templates/_changePasswordForm.html",
+            link: function (scope, element, attrs) {
+
+                scope.back = $state.href(attrs.backRoute);
+            }
+        });
+    }]);
+
+    mod.directive(
     "roleForm", ['$state',function ($state) {
         return ({
             restrict: "E",

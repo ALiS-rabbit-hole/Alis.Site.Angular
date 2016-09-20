@@ -27,7 +27,14 @@ accountsApp.config(function ($stateProvider, $sceProvider, $compileProvider) {
             controllerAs: "vm",
             templateUrl: "angularJs/Apps/Account/Templates/forgotPassword.html",
             ncyBreadcrumb: { label: "Forgot Password", parent: 'account.login' }
-        });
+        }).state('account.resetPassword',
+        {
+            url: "/account/resetPassword/:token",
+            controller: 'ResetPasswordController',
+            controllerAs: "vm",
+            templateUrl: "angularJs/Apps/Account/Templates/resetPassword.html",
+            ncyBreadcrumb: { label: "Reset Password", parent: 'account.login' }
+        });;
 
 });
 
@@ -37,6 +44,8 @@ accountsApp.controller("LoginController", function () {
 
 accountsApp.controller("ForgotPasswordController", function ($accountServices, $scope) {
     var vm = this;
+
+
 
     vm.resendPassword = function () {
 
@@ -49,4 +58,31 @@ accountsApp.controller("ForgotPasswordController", function ($accountServices, $
             }
         });
     };
+});
+
+accountsApp.controller("ResetPasswordController", function ($accountServices, $scope, $stateParams) {
+    var vm = this;
+
+    $accountServices.tokenIsValid($stateParams.token).then(function (data) {
+
+        vm.validToken = data.Success;
+
+        vm.ChangePasswordWithToken = {};
+        vm.ChangePasswordWithToken.Token = $stateParams.token;
+
+    });
+
+    vm.Save = function ()
+    {
+        $scope.$broadcast('show-errors-reset');
+        $accountServices.changePassword(vm.ChangePasswordWithToken).then(function (data) {
+        
+            if (data.Success) {
+                $scope.notifications.success.valid = true;
+                $scope.notifications.success.descriptions = ["Your password was successfully changed"];
+                //we can call this here to reset all errors and the form. if you redirect out on success, no need to call this.
+                $scope.$broadcast('show-errors-reset');//need here too??
+            }
+        });
+    }
 });

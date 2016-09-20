@@ -9,7 +9,12 @@
             });
         },
         tokenIsValid: function(token) {
-            return $http.get(serviceRoot + "TokenisValid", {Token: token}).then(function(result) {
+            return $http.post(serviceRoot + "ChangePassword/Token", { Token: token }).then(function (result) {
+                return result.data;
+            });
+        },
+        changePassword: function (changePassword) {
+            return $http.post(serviceRoot + "ChangePassword", changePassword).then(function (result) {
                 return result.data;
             });
         }

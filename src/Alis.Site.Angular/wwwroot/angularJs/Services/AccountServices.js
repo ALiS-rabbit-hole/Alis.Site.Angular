@@ -7,6 +7,16 @@ angular.module('accountServices', [])
             return $http.post(serviceRoot + "ResendPassword", { Email: email }).then(function (result) {
                 return result.data;
             });
+        },
+        tokenIsValid: function(token) {
+            return $http.post(serviceRoot + "ChangePassword/Token", { Token: token }).then(function (result) {
+                return result.data;
+            });
+        },
+        changePassword: function (changePassword) {
+            return $http.post(serviceRoot + "ChangePassword", changePassword).then(function (result) {
+                return result.data;
+            });
         }
     };
 });
