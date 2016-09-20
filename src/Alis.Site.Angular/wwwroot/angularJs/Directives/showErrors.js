@@ -91,7 +91,12 @@
 
                       if (mainErrors.length > 0) {
                           scope.notifications = {};
-                          scope.notifications.errors = { invalid: true, descriptions: mainErrors };
+                          if (args.Success) {
+                              scope.notifications.successMessages = { invalid: true, descriptions: mainErrors };
+                          } else {
+                              scope.notifications.errors = { invalid: true, descriptions: mainErrors };
+                          }
+                          
                         
                       }
                       scope.$apply();
@@ -195,7 +200,7 @@
                             errors[data.ErrorFields[item].Key] = data.ErrorFields[item].Value;
                         };
 
-                        $rootScope.$broadcast("_ERROR_FIELDS_", { ErrorFields: errors });
+                        $rootScope.$broadcast("_ERROR_FIELDS_", { ErrorFields: errors, Success: data.Success });
                     }
                 }
                 return response;
