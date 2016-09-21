@@ -1,5 +1,5 @@
 {
-  "name": "ASP.NET",
+  "name": "alis.angular.site",
   "private": true,
   "dependencies": {
     "angular-bootstrap": "1.3.3",
