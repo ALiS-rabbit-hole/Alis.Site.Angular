@@ -1,5 +1,5 @@
 ﻿var accountsApp = angular.module('accountsApp', ['accountServices', 'ui.bootstrap.showErrors', 'ui.bootstrap', 'helpers']);
-
+//http://jasonwatmore.com/post/2016/04/05/angularjs-jwt-authentication-example-tutorial
 accountsApp.config(function ($stateProvider, $sceProvider, $compileProvider) {
 
     $compileProvider.debugInfoEnabled(false);
@@ -34,13 +34,33 @@ accountsApp.config(function ($stateProvider, $sceProvider, $compileProvider) {
             controllerAs: "vm",
             templateUrl: "angularJs/Apps/Account/Templates/resetPassword.html",
             ncyBreadcrumb: { label: "Reset Password", parent: 'account.login' }
-        });;
+        }).state('account.logout',
+        {
+            url: "/account/resetPassword/:token",
+            controller: 'LogoutController',
+            controllerAs: "vm",
+            ncyBreadcrumb: { label: "Reset Password", parent: 'account.login' }
+        });
 
 });
 
-accountsApp.controller("LoginController", function () {
+accountsApp.controller("LoginController", function ($accountServices) {
     var vm = this;
+
+    vm.login = function() {
+        $accountServices.authenticate({ username: "chris.withers@gmail.com", password: "22bullseye22" }).then(function(result) {
+        });
+    }
 });
+
+
+accountsApp.controller("LogoutController", function ($http, $localStorage) {
+    var vm = this;
+    // remove user from local storage and clear http auth header
+    delete $localStorage.currentUser;
+    $http.defaults.headers.common.Authorization = '';
+});
+
 
 accountsApp.controller("ForgotPasswordController", function ($accountServices, $scope) {
     var vm = this;

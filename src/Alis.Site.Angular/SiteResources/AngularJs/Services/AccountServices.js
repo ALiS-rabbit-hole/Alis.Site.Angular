@@ -17,6 +17,12 @@
             return $http.post(serviceRoot + "ChangePassword", changePassword).then(function (result) {
                 return result.data;
             });
+        },
+        authenticate: function(credentials) {
+            return $http.post(config.serviceRoot + "/session-to-token", credentials).then(function (result) {
+                console.log(result);
+                return result;
+            });
         }
     };
 });

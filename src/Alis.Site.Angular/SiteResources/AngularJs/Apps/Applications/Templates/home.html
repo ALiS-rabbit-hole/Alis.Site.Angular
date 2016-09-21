@@ -9,6 +9,6 @@
     </thead>
     <tr ng-repeat="application in vm.applications track by application.ID">
         <td>{{::application.Name}}</td>
-        <td><a href="#/View?id={{::application.ID}}" class="btn btn-default">View</a></td>
+        <td><a ui-sref="applications.view({id:{{::application.ID}}})" class="btn btn-default">View</a></td>
     </tr>
 </table>

@@ -55,10 +55,10 @@ institutionsApp.controller("InstitutionsHomeController", function ($institutionS
 
 });
 
-institutionsApp.controller("InstitutionsEditController", function ($location, $institutionServices, $scope) {
+institutionsApp.controller("InstitutionsEditController", function ($stateParams, $institutionServices, $scope) {
     var vm = this;
 
-    $institutionServices.get($location.search()["id"]).then(function (data) {
+    $institutionServices.get($stateParams.id).then(function (data) {
         vm.institutionConfig = data.Results;
     });
 
@@ -76,7 +76,7 @@ institutionsApp.controller("InstitutionsEditController", function ($location, $i
     };
 });
 
-institutionsApp.controller("InstitutionsCreateController", function ($location, $institutionServices, $scope) {
+institutionsApp.controller("InstitutionsCreateController", function ($institutionServices, $scope) {
     var vm = this;
 
     vm.institutionConfig = {};

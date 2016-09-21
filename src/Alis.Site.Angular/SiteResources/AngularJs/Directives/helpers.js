@@ -36,7 +36,6 @@
             templateUrl: "angularJs/Templates/_institutionForm.html",
             link: function (scope, element, attrs) {
 
-                scope.tst = function () { console.log("here!");}
                 scope.back = $state.href(attrs.backRoute);
             }
         });
