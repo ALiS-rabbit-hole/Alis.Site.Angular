@@ -63,6 +63,7 @@
                       previousErrors = args.ErrorFields;
                       var prop;
                       var mainErrors = [];
+
                       scope.notifications = {};
                       scope.notifications.success = { valid: false };
 
@@ -78,21 +79,30 @@
                       }
 
                       for (prop in args.ErrorFields) {
-                          if (!formCtrl[prop]) {
-                              //we've detected a field which doesn't relate to a form field,
-                              //lets display it as a main error!
-                              mainErrors.push(args.ErrorFields[prop]);
+                          if (args.ErrorFields.hasOwnProperty(prop)) {
+                              if (!formCtrl[prop]) {
+                                  //we've detected a field which doesn't relate to a form field,
+                                  //lets display it as a main error!
+                                  mainErrors.push(prop); //   mainErrors.push(args.ErrorFields[prop]);
+                                 // console.log(args.ErrorFields);
+                                  //console.log(serverValidations[prop].Key);
+                              }
 
-                              //console.log(serverValidations[prop].Key);
+
                           }
-
-                            
                       };
-
+                      
                       if (mainErrors.length > 0) {
                           scope.notifications = {};
-                          if (args.Success) {
-                              scope.notifications.successMessages = { invalid: true, descriptions: mainErrors };
+                          scope.notifications.success = {};
+                          scope.notifications.errors = {};
+                          console.log(args);
+                          if (args.Success == true) {
+                              //scope.notifications.success = {};
+                              scope.notifications.success.valid = true;
+                              scope.notifications.success.descriptions = mainErrors;
+
+
                           } else {
                               scope.notifications.errors = { invalid: true, descriptions: mainErrors };
                           }
@@ -119,11 +129,13 @@
                       if (previousErrors != null) {
                           var prop;
                           for (prop in previousErrors) {
-                          
-                              if (formCtrl[prop]) {
-                                  formCtrl[prop].$setValidity(prop, true);
+                              if (previousErrors.hasOwnProperty(prop)) {
+
+                                  if (formCtrl[prop]) {
+                                      formCtrl[prop].$setValidity(prop, true);
+                                  }
+
                               }
-                              
                           }
                           // reset validation's state
                           formCtrl.$setPristine();
@@ -195,9 +207,11 @@
 
                         var errors = [];
                         for (item in data.ErrorFields) {
+                            if (data.ErrorFields.hasOwnProperty(item)) {
 
-                            console.log(item);
-                            errors[data.ErrorFields[item].Key] = data.ErrorFields[item].Value;
+                                console.log(item);
+                                errors[data.ErrorFields[item].Key] = data.ErrorFields[item].Value;
+                            }
                         };
 
                         $rootScope.$broadcast("_ERROR_FIELDS_", { ErrorFields: errors, Success: data.Success });

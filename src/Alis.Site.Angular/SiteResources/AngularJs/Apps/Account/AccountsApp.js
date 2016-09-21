@@ -48,13 +48,13 @@ accountsApp.controller("ForgotPasswordController", function ($accountServices, $
 
 
     vm.resendPassword = function () {
-
+        $scope.$broadcast('show-errors-reset');
         $accountServices.resendPassword(vm.email).then(function (data) {
             if (data.Success) {
                 $scope.notifications.success.valid = true;
                 $scope.notifications.success.descriptions = ["The password was successfully something."];
                 //we can call this here to reset all errors and the form. if you redirect out on success, no need to call this.
-                $scope.$broadcast('show-errors-reset');
+           
             }
         });
     };
