@@ -20,6 +20,14 @@ accountsApp.config(function ($stateProvider, $sceProvider, $compileProvider) {
             templateUrl: "angularJs/Apps/Account/Templates/login.html",
             ncyBreadcrumb: { label: "Login" }
         })
+        .state('account.logout',
+        {
+            url: "/account/logout",
+            controller: 'LogoutController',
+            controllerAs: "vm",
+            templateUrl: "angularJs/Apps/Account/Templates/logout.html",
+            ncyBreadcrumb: { label: "Login" }
+        })
         .state('account.forgotPassword',
         {
             url: "/account/resendPassword",
@@ -34,7 +42,7 @@ accountsApp.config(function ($stateProvider, $sceProvider, $compileProvider) {
             controllerAs: "vm",
             templateUrl: "angularJs/Apps/Account/Templates/resetPassword.html",
             ncyBreadcrumb: { label: "Reset Password", parent: 'account.login' }
-        }).state('account.logout',
+        }).state('account.whatisthis',
         {
             url: "/account/resetPassword/:token",
             controller: 'LogoutController',
@@ -43,12 +51,20 @@ accountsApp.config(function ($stateProvider, $sceProvider, $compileProvider) {
         });
 
 });
-
-accountsApp.controller("LoginController", function ($accountServices) {
+//http://jasonwatmore.com/post/2016/04/05/angularjs-jwt-authentication-example-tutorial
+accountsApp.controller("LoginController", function ($accountServices, $localStorage, $http) {
     var vm = this;
+    // reset login status
+  //  $AuthenticationService.ClearCredentials();
 
     vm.login = function() {
-        $accountServices.authenticate({ username: "chris.withers@gmail.com", password: "22bullseye22" }).then(function(result) {
+        $accountServices.authenticate({ username: "chris.withers@gmail.com", password: "22bullseye22"}).then(function (result) {
+            console.log(result);
+            if (result != null && result.BearerToken.length > 0) {
+                $localStorage.currentUser = { username: "chris.withers@gmail.com", token: result.BearerToken };
+                $http.defaults.headers.common.Authorization = 'Bearer ' + result.token;
+            }
+            //     $AuthenticationService.SetCredentials("chris.withers@gmail.com", "22bullseye22");
         });
     }
 });

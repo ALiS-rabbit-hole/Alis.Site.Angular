@@ -19,9 +19,16 @@ angular.module('accountServices', [])
             });
         },
         authenticate: function(credentials) {
-            return $http.post(config.serviceRoot + "/session-to-token", credentials).then(function (result) {
+            return $http.post(config.serviceRoot + "/authenticate", credentials).then(function (result) {
                 console.log(result);
-                return result;
+                return result.data;
+             /*   console.log(result);
+                return $http.post(config.serviceRoot + "/session-to-token", result.data.sessionId ).then(function (result1) {
+                    console.log(result1);
+                    return result;*/
+
+
+               // });
             });
         }
     };

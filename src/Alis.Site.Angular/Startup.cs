@@ -31,7 +31,7 @@ namespace Alis.Site.Angular
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=SingleApp}/{action=Index}/{id?}");
             });
         }
 

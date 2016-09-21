@@ -18,7 +18,7 @@
     "ng-flow": "2.7.4",
     "markitup": "1.1.14",
     "angular": "1.5.5",
-    "ng-cookies": "1.1.1"
+    "ngstorage": "0.3.11"
   },
   "resolutions": {
     "angular": "~1",
