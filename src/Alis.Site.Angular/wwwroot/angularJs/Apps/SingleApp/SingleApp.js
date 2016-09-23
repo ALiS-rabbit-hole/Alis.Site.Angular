@@ -1,9 +1,10 @@
 //http://stackoverflow.com/questions/18512434/multiple-module-in-angularjs
 //http://jasonwatmore.com/post/2016/04/05/AngularJS-JWT-Authentication-Example-Tutorial.aspx
 //http://blog.ionic.io/angularjs-authentication/
-var singleApp = angular.module('singleApp', ['ngStorage','ncy-angular-breadcrumb', 'templatescache', 'ui.router', 'rolesApp', 'usersApp', 'institutionsApp', 'notificationsApp', 'accountsApp', 'applicationsApp'])
-    .config(function ($breadcrumbProvider, $stateProvider, $urlRouterProvider) {
-
+var singleApp = angular.module('singleApp', ['ngCookies','ncy-angular-breadcrumb', 'templatescache', 'ui.router', 'rolesApp', 'usersApp', 'institutionsApp', 'notificationsApp', 'accountsApp', 'applicationsApp'])
+    .config(function ($breadcrumbProvider, $stateProvider, $urlRouterProvider, $cookiesProvider, $httpProvider) {
+       // $cookiesProvider.defaults.path = '/';
+        $httpProvider.defaults.withCredentials = true;
         $breadcrumbProvider.setOptions({
             prefixStateName: 'users'
         });
@@ -19,7 +20,7 @@ var singleApp = angular.module('singleApp', ['ngStorage','ncy-angular-breadcrumb
         //
         // Now set up the states
 
-    }).run(function ($rootScope, $http, $state, $location, $localStorage) {
+    })/*.run(function ($rootScope, $http, $state, $location, $localStorage) {
         if ($localStorage.currentUser) {
             $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.currentUser.token;
         }
@@ -32,4 +33,4 @@ var singleApp = angular.module('singleApp', ['ngStorage','ncy-angular-breadcrumb
                 $location.path($state.href('account.login'));
             }
         });
-    });
+    })*/;

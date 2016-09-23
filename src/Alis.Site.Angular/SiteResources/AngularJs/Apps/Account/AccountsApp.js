@@ -52,18 +52,28 @@ accountsApp.config(function ($stateProvider, $sceProvider, $compileProvider) {
 
 });
 //http://jasonwatmore.com/post/2016/04/05/angularjs-jwt-authentication-example-tutorial
-accountsApp.controller("LoginController", function ($accountServices, $localStorage, $http) {
+accountsApp.controller("LoginController", function ($accountServices, $cookies, $http) {
     var vm = this;
     // reset login status
   //  $AuthenticationService.ClearCredentials();
 
     vm.login = function() {
         $accountServices.authenticate({ username: "chris.withers@gmail.com", password: "22bullseye22"}).then(function (result) {
-            console.log(result);
-            if (result != null && result.BearerToken.length > 0) {
-                $localStorage.currentUser = { username: "chris.withers@gmail.com", token: result.BearerToken };
-                $http.defaults.headers.common.Authorization = 'Bearer ' + result.token;
-            }
+            console.log(result.SessionId);
+
+            var now = new Date();
+            // this will set the expiration to 30 days
+            var exp = new Date(now.getFullYear(), now.getMonth() + 1, now.getDate());
+
+            // Set the cookie
+          //  $cookies.put('ss-id', result.SessionId, { expires: exp });
+
+            //This actually works!!
+          //  console.log($cookies.get('token'));
+         //   if (result != null && result.BearerToken.length > 0) {
+              //  $localStorage.currentUser = { username: "chris.withers@gmail.com", token: result.BearerToken };
+              //  $http.defaults.headers.common.Authorization = 'Bearer ' + result.token;
+          //  }
             //     $AuthenticationService.SetCredentials("chris.withers@gmail.com", "22bullseye22");
         });
     }
