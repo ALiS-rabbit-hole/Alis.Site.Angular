@@ -3,8 +3,8 @@
 //http://blog.ionic.io/angularjs-authentication/
 var singleApp = angular.module('singleApp', ['ngCookies','ncy-angular-breadcrumb', 'templatescache', 'ui.router', 'rolesApp', 'usersApp', 'institutionsApp', 'notificationsApp', 'accountsApp', 'applicationsApp'])
     .config(function ($breadcrumbProvider, $stateProvider, $urlRouterProvider, $cookiesProvider, $httpProvider) {
-       // $cookiesProvider.defaults.path = '/';
-        $httpProvider.defaults.withCredentials = true;
+        $cookiesProvider.defaults.path = '/';
+      //  $httpProvider.defaults.withCredentials = true;
         $breadcrumbProvider.setOptions({
             prefixStateName: 'users'
         });

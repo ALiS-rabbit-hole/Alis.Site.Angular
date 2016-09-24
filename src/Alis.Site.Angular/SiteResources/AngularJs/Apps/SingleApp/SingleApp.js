@@ -4,7 +4,7 @@
 var singleApp = angular.module('singleApp', ['ngCookies','ncy-angular-breadcrumb', 'templatescache', 'ui.router', 'rolesApp', 'usersApp', 'institutionsApp', 'notificationsApp', 'accountsApp', 'applicationsApp'])
     .config(function ($breadcrumbProvider, $stateProvider, $urlRouterProvider, $cookiesProvider, $httpProvider) {
         $cookiesProvider.defaults.path = '/';
-        $httpProvider.defaults.withCredentials = true;
+      //  $httpProvider.defaults.withCredentials = true;
         $breadcrumbProvider.setOptions({
             prefixStateName: 'users'
         });
