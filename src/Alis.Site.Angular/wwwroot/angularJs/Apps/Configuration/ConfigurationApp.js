@@ -1,25 +1,28 @@
-var configurationApp = angular.module('configurationApp', ['ngRoute', 'searchServices', 'helpers', 'ui.bootstrap', 'ui.bootstrap.showErrors']);
+var configurationApp = angular.module('configurationApp', ['searchServices', 'helpers', 'ui.bootstrap', 'ui.bootstrap.showErrors']);
 
-configurationApp.config(function ($routeProvider, $sceProvider, $compileProvider) {
+configurationApp.config(function ($stateProvider, $sceProvider, $compileProvider) {
 
     $compileProvider.debugInfoEnabled(false);
-   // showErrorsConfigProvider.showSuccess(true);
 
-    var dir = config.angularRoot + "/Apps/Configuration/Templates/";
     $sceProvider.enabled(false);
 
-
-
-    $routeProvider.when('/Home', {
-        controller: 'HomeController',
-        controllerAs: "vm",
-        templateUrl: dir + 'Home.html'
-    }).otherwise({
-        redirectTo: '/Home'
-    });
+    $stateProvider.state('configuration',
+        {
+            abstract: true,
+            template: '<div ui-view></div>',
+            ncyBreadcrumb: { label: "Configuration", parent: 'users.home' }
+        })
+        .state('configuration.home',
+        {
+            url: "/configuration",
+            controller: 'ConfigurationHomeController',
+            controllerAs: "vm",
+            templateUrl: "angularJs/Apps/Configuration/Templates/home.html",
+            ncyBreadcrumb: { label: "Login" }
+        });
 });
 
-configurationApp.controller("HomeController", function ($searchServices) {
+configurationApp.controller("ConfigurationHomeController", function ($searchServices) {
     var vm = this;
 
     var objs = new Array();

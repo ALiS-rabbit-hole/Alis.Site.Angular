@@ -1,10 +1,10 @@
 //http://stackoverflow.com/questions/18512434/multiple-module-in-angularjs
 //http://jasonwatmore.com/post/2016/04/05/AngularJS-JWT-Authentication-Example-Tutorial.aspx
 //http://blog.ionic.io/angularjs-authentication/
-var singleApp = angular.module('singleApp', ['ngCookies','ncy-angular-breadcrumb', 'templatescache', 'ui.router', 'rolesApp', 'usersApp', 'institutionsApp', 'notificationsApp', 'accountsApp', 'applicationsApp'])
+var singleApp = angular.module('singleApp', ['ngCookies', 'ncy-angular-breadcrumb', 'templatescache', 'ui.router', 'rolesApp', 'usersApp', 'institutionsApp', 'notificationsApp', 'accountsApp', 'applicationsApp', 'configurationApp'])
     .config(function ($breadcrumbProvider, $stateProvider, $urlRouterProvider, $cookiesProvider, $httpProvider) {
         $cookiesProvider.defaults.path = '/';
-      //  $httpProvider.defaults.withCredentials = true;
+        $httpProvider.defaults.withCredentials = true;
         $breadcrumbProvider.setOptions({
             prefixStateName: 'users'
         });
