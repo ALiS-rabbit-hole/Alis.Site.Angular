@@ -80,11 +80,11 @@ accountsApp.controller("LoginController", function ($accountServices, $cookies, 
 });
 
 
-accountsApp.controller("LogoutController", function ($http, $localStorage) {
+accountsApp.controller("LogoutController", function ($http) {
     var vm = this;
     // remove user from local storage and clear http auth header
-    delete $localStorage.currentUser;
-    $http.defaults.headers.common.Authorization = '';
+  //  delete $localStorage.currentUser;
+  //  $http.defaults.headers.common.Authorization = '';
 });
 
 

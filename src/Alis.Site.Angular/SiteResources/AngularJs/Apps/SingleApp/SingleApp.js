@@ -18,11 +18,11 @@ var singleApp = angular.module('singleApp', ['ngCookies', 'ncy-angular-breadcrum
         //
         // For any unmatched url, redirect to /state1
         $urlRouterProvider.otherwise("users");
-       // $httpProvider.defaults.withCredentials = true;
+     //   $httpProvider.defaults.withCredentials = true;
         //
         // Now set up the states
 
-    }).run(function ($rootScope, $http, $state, $location, $localStorage) {
+    }).run(function ($rootScope, $http, $state, $location) {
     /*    $rootScope.$on("$stateChangeStart",
             function (event, toState, toParams,
                       fromState, fromParams) {

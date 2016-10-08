@@ -1,6 +1,8 @@
 //http://stackoverflow.com/questions/18512434/multiple-module-in-angularjs
 //http://jasonwatmore.com/post/2016/04/05/AngularJS-JWT-Authentication-Example-Tutorial.aspx
 //http://blog.ionic.io/angularjs-authentication/
+
+//https://github.com/fnakstad/angular-client-side-auth/blob/master/client/js/services.js
 var singleApp = angular.module('singleApp', ['ngCookies', 'ncy-angular-breadcrumb', 'templatescache', 'ui.router', 'rolesApp', 'usersApp', 'institutionsApp', 'notificationsApp', 'accountsApp', 'applicationsApp', 'configurationApp'])
     .config(function ($breadcrumbProvider, $stateProvider, $urlRouterProvider, $cookiesProvider, $httpProvider) {
         $cookiesProvider.defaults.path = '/';
@@ -16,21 +18,26 @@ var singleApp = angular.module('singleApp', ['ngCookies', 'ncy-angular-breadcrum
         //
         // For any unmatched url, redirect to /state1
         $urlRouterProvider.otherwise("users");
-       // $httpProvider.defaults.withCredentials = true;
+     //   $httpProvider.defaults.withCredentials = true;
         //
         // Now set up the states
 
-    })/*.run(function ($rootScope, $http, $state, $location, $localStorage) {
-        if ($localStorage.currentUser) {
-            $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.currentUser.token;
-        }
+    }).run(function ($rootScope, $http, $state, $location) {
+    /*    $rootScope.$on("$stateChangeStart",
+            function (event, toState, toParams,
+                      fromState, fromParams) {
+                if (!Auth.authorize(toState.data.access)) {
+                    $rootScope.error = "Access denied";
+                    event.preventDefault();
 
-        // redirect to login page if not logged in and trying to access a restricted page
-        $rootScope.$on('$locationChangeStart', function (event, next, current) {
-            var publicPages = [$state.href('account.login')];
-            var restrictedPage = publicPages.indexOf($location.path()) === -1;
-            if (restrictedPage && !$localStorage.currentUser) {
-                $location.path($state.href('account.login'));
-            }
-        });
-    })*/;
+                    if (fromState.url === '^') {
+                        if (Auth.isLoggedIn())
+                            $state.go('user.home');
+                        else {
+                            $rootScope.error = null;
+                            $state.go('anon.login');
+                        }
+                    }
+                }
+            });*/
+    });
