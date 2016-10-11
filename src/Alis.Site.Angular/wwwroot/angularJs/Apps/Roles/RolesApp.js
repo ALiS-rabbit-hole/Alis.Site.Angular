@@ -17,7 +17,8 @@ rolesApp.config(function ($stateProvider, $sceProvider, $compileProvider) {
             controller: 'RolesHomeController',
             controllerAs: "vm",
             templateUrl: "angularJs/Apps/Roles/Templates/home.html",
-            ncyBreadcrumb: { label: "Roles Home" }
+            ncyBreadcrumb: { label: "Roles Home" },
+            authenticate: true
         })
         .state('roles.edit',
         {
@@ -25,7 +26,8 @@ rolesApp.config(function ($stateProvider, $sceProvider, $compileProvider) {
             controller: 'RolesEditController',
             controllerAs: "vm",
             templateUrl: "angularJs/Apps/Roles/Templates/edit.html",
-            ncyBreadcrumb: { label: "Edit Role", parent: 'roles.home' }
+            ncyBreadcrumb: { label: "Edit Role", parent: 'roles.home' },
+            authenticate: true
         })
         .state('roles.create',
         {
@@ -33,7 +35,8 @@ rolesApp.config(function ($stateProvider, $sceProvider, $compileProvider) {
             controller: 'RolesCreateController',
             controllerAs: "vm",
             templateUrl: "angularJs/Apps/Roles/Templates/create.html",
-            ncyBreadcrumb: { label: "Create Role", parent: 'roles.home' }
+            ncyBreadcrumb: { label: "Create Role", parent: 'roles.home' },
+            authenticate: true
         });
 });
 
