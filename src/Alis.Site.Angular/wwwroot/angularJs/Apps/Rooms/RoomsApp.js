@@ -24,4 +24,7 @@ rolesApp.config(function ($stateProvider, $sceProvider, $compileProvider) {
 rolesApp.controller("RoomsHomeController", function ($roomServices) {
     var vm = this;
 
+    $roomServices.getAll().then(function (data) {
+        console.log(data);
+    });
 });
