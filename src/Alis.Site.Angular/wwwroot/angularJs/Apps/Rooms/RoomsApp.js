@@ -1,4 +1,4 @@
-var rolesApp = angular.module('roomsApp', ['roomServices', 'helpers', 'ui.bootstrap', 'ui.bootstrap.showErrors']);
+var rolesApp = angular.module('roomsApp', ['roomServices', 'accountServices','helpers', 'ui.bootstrap', 'ui.bootstrap.showErrors']);
 
 rolesApp.config(function ($stateProvider, $sceProvider, $compileProvider) {
 
@@ -22,8 +22,12 @@ rolesApp.config(function ($stateProvider, $sceProvider, $compileProvider) {
         });
 });
 
-rolesApp.controller("RoomsHomeController", function ($roomServices) {
+rolesApp.controller("RoomsHomeController", function ($roomServices, $accountServices) {
     var vm = this;
+
+    $accountServices.getAuthenticatedUser().then(function(data) {
+        console.log(data);
+    });
 
     $roomServices.getAll().then(function (data) {
         console.log(data);
