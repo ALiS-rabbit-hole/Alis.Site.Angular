@@ -1,4 +1,4 @@
-var accountsApp = angular.module('accountsApp', ['accountServices', 'ui.bootstrap.showErrors', 'ui.bootstrap', 'helpers']);
+var accountsApp = angular.module('accountsApp', ['accountServices', 'authenticationService', 'ui.bootstrap.showErrors', 'ui.bootstrap', 'helpers']);
 //http://jasonwatmore.com/post/2016/04/05/angularjs-jwt-authentication-example-tutorial
 accountsApp.config(function ($stateProvider, $sceProvider, $compileProvider) {
 
@@ -18,7 +18,13 @@ accountsApp.config(function ($stateProvider, $sceProvider, $compileProvider) {
             controller: 'LoginController',
             controllerAs: "vm",
             templateUrl: "angularJs/Apps/Account/Templates/login.html",
-            ncyBreadcrumb: { label: "Login" }
+            ncyBreadcrumb: { label: "Login" },
+            resolve: {
+                currentState: function($state) {
+                    return $state.current;
+                }
+            }
+
         })
         .state('account.logout',
         {
@@ -52,29 +58,18 @@ accountsApp.config(function ($stateProvider, $sceProvider, $compileProvider) {
 
 });
 //http://jasonwatmore.com/post/2016/04/05/angularjs-jwt-authentication-example-tutorial
-accountsApp.controller("LoginController", function ($accountServices, $cookies, $http) {
+accountsApp.controller("LoginController", function ($authenticationService, $rootScope, AUTH_EVENTS) {
     var vm = this;
-    // reset login status
-  //  $AuthenticationService.ClearCredentials();
+
 
     vm.login = function() {
-        $accountServices.authenticate({ username: "chris.withers@gmail.com", password: "22bullseye22"}).then(function (result) {
+        $authenticationService.login({ username: "chris.withers@gmail.com", password: "22bullseye22" }).then(function (result) {
             console.log(result.SessionId);
 
-            var now = new Date();
-            // this will set the expiration to 30 days
-            var exp = new Date(now.getFullYear(), now.getMonth() + 1, now.getDate());
-
-            // Set the cookie
-          //  $cookies.put('ss-id', result.SessionId, { expires: exp });
-
-            //This actually works!!
-          //  console.log($cookies.get('token'));
-         //   if (result != null && result.BearerToken.length > 0) {
-              //  $localStorage.currentUser = { username: "chris.withers@gmail.com", token: result.BearerToken };
-              //  $http.defaults.headers.common.Authorization = 'Bearer ' + result.token;
-          //  }
-            //     $AuthenticationService.SetCredentials("chris.withers@gmail.com", "22bullseye22");
+            $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+           // $scope.setCurrentUser(user);
+        }, function() {
+            $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
         });
     }
 });

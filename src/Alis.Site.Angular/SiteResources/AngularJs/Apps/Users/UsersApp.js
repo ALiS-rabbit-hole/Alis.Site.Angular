@@ -17,7 +17,8 @@ usersApp.config(function ($stateProvider, $sceProvider, $compileProvider) {
             controller: 'UsersHomeController',
             controllerAs: "vm",
             templateUrl: "angularJs/Apps/Users/Templates/home.html",
-            ncyBreadcrumb: { label: "Users Home" }
+            ncyBreadcrumb: { label: "Users Home" },
+            authenticate: true
         })
         .state('users.edit',
         {
@@ -25,7 +26,8 @@ usersApp.config(function ($stateProvider, $sceProvider, $compileProvider) {
             controller: 'UsersEditController',
             controllerAs: "vm",
             templateUrl: "angularJs/Apps/Users/Templates/edit.html",
-            ncyBreadcrumb: { label: "Edit User", parent: 'users.home' }
+            ncyBreadcrumb: { label: "Edit User", parent: 'users.home' },
+            authenticate: true
         })
         .state('users.create',
         {
@@ -33,7 +35,8 @@ usersApp.config(function ($stateProvider, $sceProvider, $compileProvider) {
             controller: 'UsersCreateController',
             controllerAs: "vm",
             templateUrl: "angularJs/Apps/Users/Templates/create.html",
-            ncyBreadcrumb: { label: "Create User", parent: 'users.home' }
+            ncyBreadcrumb: { label: "Create User", parent: 'users.home' },
+            authenticate: true
         });
 
 

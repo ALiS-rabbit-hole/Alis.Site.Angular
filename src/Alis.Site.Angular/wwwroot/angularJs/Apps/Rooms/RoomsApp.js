@@ -17,7 +17,8 @@ rolesApp.config(function ($stateProvider, $sceProvider, $compileProvider) {
             controller: 'RoomsHomeController',
             controllerAs: "vm",
             templateUrl: "angularJs/Apps/Rooms/Templates/home.html",
-            ncyBreadcrumb: { label: "Rooms Home" }
+            ncyBreadcrumb: { label: "Rooms Home" },
+            authenticate: true
         });
 });
 

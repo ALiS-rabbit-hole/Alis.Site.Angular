@@ -18,14 +18,16 @@ applicationsApp.config(function ($stateProvider, $sceProvider, $compileProvider)
             controller: 'ApplicationsHomeController',
             controllerAs: "vm",
             templateUrl: "angularJs/Apps/Applications/Templates/home.html",
-            ncyBreadcrumb: { label: "Applications Home" }
+            ncyBreadcrumb: { label: "Applications Home" },
+            authenticate: true
         }).state('applications.view',
         {
             url: "/applications/view/:id",
             controller: 'ApplicationsViewController',
             controllerAs: "vm",
             templateUrl: "angularJs/Apps/Applications/Templates/view.html",
-            ncyBreadcrumb: { label: "Application View" }
+            ncyBreadcrumb: { label: "Application View" },
+            authenticate: true
         });
 });
 

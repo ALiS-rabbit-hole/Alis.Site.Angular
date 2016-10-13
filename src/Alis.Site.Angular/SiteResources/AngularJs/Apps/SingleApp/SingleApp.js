@@ -10,34 +10,41 @@ var singleApp = angular.module('singleApp', ['ngCookies', 'ncy-angular-breadcrum
         $breadcrumbProvider.setOptions({
             prefixStateName: 'users'
         });
-        //http://stackoverflow.com/questions/27307914/angular-error-running-karma-tests-html5-mode-requires-a-base-tag
-       /* $locationProvider.html5Mode({
-            enabled: true,
-            requireBase: false
-        });*/
-        //
-        // For any unmatched url, redirect to /state1
-        $urlRouterProvider.otherwise("users");
-     //   $httpProvider.defaults.withCredentials = true;
-        //
-        // Now set up the states
 
-    }).run(function ($rootScope, $http, $state, $location) {
-    /*    $rootScope.$on("$stateChangeStart",
-            function (event, toState, toParams,
-                      fromState, fromParams) {
-                if (!Auth.authorize(toState.data.access)) {
-                    $rootScope.error = "Access denied";
-                    event.preventDefault();
+        $urlRouterProvider.otherwise("account");
+    
 
-                    if (fromState.url === '^') {
-                        if (Auth.isLoggedIn())
-                            $state.go('user.home');
-                        else {
-                            $rootScope.error = null;
-                            $state.go('anon.login');
-                        }
-                    }
-                }
-            });*/
+    }).constant('AUTH_EVENTS', {
+        loginSuccess: 'auth-login-success',
+        loginFailed: 'auth-login-failed',
+        logoutSuccess: 'auth-logout-success',
+        sessionTimeout: 'auth-session-timeout',
+        notAuthenticated: 'auth-not-authenticated',
+        notAuthorized: 'auth-not-authorized'
+    }).service('Session', function () {
+        this.create = function (sessionId, userId, userRole) {
+            this.id = sessionId;
+            this.userId = userId;
+            this.userRole = userRole;
+        };
+        this.destroy = function () {
+            this.id = null;
+            this.userId = null;
+            this.userRole = null;
+        };
+
+        this.isAuthenticated = function () {
+          
+            return !!this.userId;
+        }
+    }).run(function ($rootScope, $http, $state, Session) {
+
+        $rootScope.$on("$stateChangeStart", function (event, toState, toParams, fromState, fromParams) {
+            $state.current = toState;
+            if (toState.authenticate && !Session.isAuthenticated()) {
+                // User isn’t authenticated
+                $state.go("account.login");
+                event.preventDefault();
+            }
+        });
     });

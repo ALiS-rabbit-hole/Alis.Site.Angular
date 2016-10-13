@@ -1,0 +1,47 @@
+﻿<nav class="navbar navbar-default" role="navigation" ng-show="visible">
+    <div class="container">
+        <!-- TOPBAR -->
+        <div class="topbar">
+            <ul class="list-inline top-nav">
+                <li><a href="#">Help</a></li>
+                <li><a href="#">Support</a></li>
+            </ul>
+            <div class="searchbox">
+                <form method="post">
+                    <div class="input-group input-group-sm">
+                        <input type="text" class="form-control" placeholder="search ...">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- END TOPBAR -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <i class="fa fa-bars"></i>
+            </button>
+            <a ui-sref="users.home" class="navbar-brand navbar-logo navbar-logo-bigger">
+                <!--  <img src="http://static1.squarespace.com/static/561b7c1fe4b0a09ae304c95c/t/5672939fcbced6829d657242/1473447659482/?format=150w" alt="ALiS - Mirrador">-->
+            </a>
+        </div>
+        <!-- MAIN NAVIGATION -->
+        <div id="navbar" class="navbar-collapse collapse navbar-mega-menu">
+            <ul class="nav navbar-nav navbar-right">
+                <!-- <li><a ui-sref="home">Home</a></li>-->
+                <li><a ui-sref="users.home">Users</a></li>
+                <li><a ui-sref="rooms.home">Rooms</a></li>
+                <li><a ui-sref="roles.home">Roles</a></li>
+                <li><a ui-sref="institutions.home">Institutions</a></li>
+                <li><a ui-sref="applications.home">Applications</a></li>
+                <li><a ui-sref="notifications.home">Notifications</a></li>
+                <li><a ui-sref="configuration.home">Configuration</a></li>
+                <li><a ui-sref="account.login">Account</a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+        <!-- END MAIN NAVIGATION -->
+    </div>
+</nav>
+<!-- END NAVBAR -->

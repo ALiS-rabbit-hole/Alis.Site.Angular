@@ -18,7 +18,8 @@ configurationApp.config(function ($stateProvider, $sceProvider, $compileProvider
             controller: 'ConfigurationHomeController',
             controllerAs: "vm",
             templateUrl: "angularJs/Apps/Configuration/Templates/home.html",
-            ncyBreadcrumb: { label: "Login" }
+            ncyBreadcrumb: { label: "Login" },
+            authenticate: true
         });
 });
 

@@ -24,9 +24,57 @@
             return ({
                 restrict: "E",
                 controller: "successMessageController",
-                templateUrl: "angularJs/Templates/_notifications.html",
+                templateUrl: "angularJs/Templates/_notifications.html"
             });
         });
+
+    mod.directive(
+        "angularAppMenu", function () {
+            console.log("InMenu");
+            return ({
+                restrict: "E",
+                controller: "angularAppMenuController",
+                templateUrl: "angularJs/Templates/_angularAppMenu.html"
+            });
+        });
+    mod.controller("angularAppMenuController", function (Session, $scope, AUTH_EVENTS) {
+        var vm = this;
+
+        $scope.visible = Session.isAuthenticated();
+
+        $scope.$on(AUTH_EVENTS.loginSuccess, function () {
+       
+            $scope.visible = true;
+
+
+
+        });
+
+    });
+    mod.directive(
+    "pageInfo", function () {
+        return ({
+            restrict: "E",
+            scope: {},
+            template: "<h1 class=\"page-title pull-left\">{{info}}</h1>",
+            controller: "pageInfoController"
+
+        });
+    });
+
+    mod.controller("pageInfoController", function ($scope, $timeout) {
+        var vm = this;
+
+        $scope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
+            console.log("here");
+
+                $scope.info = toState.ncyBreadcrumbLabel;
+        });
+
+    });
+
+
+
 
     mod.directive(
     "institutionForm", ['$state', function ($state) {

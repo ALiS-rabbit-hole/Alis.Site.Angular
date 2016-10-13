@@ -19,7 +19,8 @@ notificationsApp.config(function ($stateProvider, $sceProvider, $compileProvider
             controller: 'NotificationsHomeController',
             controllerAs: "vm",
             templateUrl: "angularJs/Apps/Notifications/Templates/home.html",
-            ncyBreadcrumb: { label: "Notifications Home" }
+            ncyBreadcrumb: { label: "Notifications Home" },
+            authenticate: true
         })
         .state('notifications.notifications',
         { 
@@ -27,7 +28,8 @@ notificationsApp.config(function ($stateProvider, $sceProvider, $compileProvider
             controller: 'NotificationsNotificationsController',
             controllerAs: "vm",
             templateUrl: "angularJs/Apps/Notifications/Templates/notifications.html",
-            ncyBreadcrumb: { label: "Users Home" }
+            ncyBreadcrumb: { label: "Users Home" },
+            authenticate: true
         })
         .state('notifications.create',
         {
@@ -35,7 +37,8 @@ notificationsApp.config(function ($stateProvider, $sceProvider, $compileProvider
             controller: 'NotificationsCreateController',
             controllerAs: "vm",
             templateUrl: "angularJs/Apps/Notifications/Templates/create.html",
-            ncyBreadcrumb: { label: "Create Notification", parent: 'notifications.home' }
+            ncyBreadcrumb: { label: "Create Notification", parent: 'notifications.home' },
+            authenticate: true
         })
         .state('notifications.edit',
         {
@@ -43,7 +46,8 @@ notificationsApp.config(function ($stateProvider, $sceProvider, $compileProvider
             controller: 'NotificationsEditController',
             controllerAs: "vm",
             templateUrl: "angularJs/Apps/Notifications/Templates/edit.html",
-            ncyBreadcrumb: { label: "Edit Notification", parent: 'notifications.home' }
+            ncyBreadcrumb: { label: "Edit Notification", parent: 'notifications.home' },
+            authenticate: true
         });
 });
 

@@ -1,4 +1,6 @@
-﻿angular.module('accountServices', [])
+﻿//https://medium.com/opinionated-angularjs/techniques-for-authentication-in-angularjs-applications-7bbf0346acec#.o7pey3wuu
+
+angular.module('accountServices', [])
     .factory('$accountServices', function ($http) {
         var serviceRoot = config.serviceRoot + "/Account/";
 
@@ -17,19 +19,6 @@
             return $http.post(serviceRoot + "ChangePassword", changePassword).then(function (result) {
                 return result.data;
             });
-        },
-        authenticate: function(credentials) {
-            return $http.post(config.serviceRoot + "/authenticate", credentials).then(function (result) {
-                console.log(result);
-                return result.data;
-             /*   console.log(result);
-                return $http.post(config.serviceRoot + "/session-to-token", result.data.sessionId ).then(function (result1) {
-                    console.log(result1);
-                    return result;*/
-
-
-               // });
-            });
         }
     };
-});
+    });
