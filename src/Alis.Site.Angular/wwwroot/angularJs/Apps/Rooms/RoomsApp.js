@@ -19,17 +19,35 @@ rolesApp.config(function ($stateProvider, $sceProvider, $compileProvider) {
             templateUrl: "angularJs/Apps/Rooms/Templates/home.html",
             ncyBreadcrumb: { label: "Rooms Home" },
             authenticate: true
+        }).state('rooms.edit',
+        {
+            url: "/rooms/edit/:id",
+            controller: 'RoomsEditController',
+            controllerAs: "vm",
+            templateUrl: "angularJs/Apps/Rooms/Templates/edit.html",
+            ncyBreadcrumb: { label: "Rooms Edit", parent: 'rooms.home' },
+            authenticate: true
         });
 });
 
 rolesApp.controller("RoomsHomeController", function ($roomServices, $accountServices) {
     var vm = this;
 
-    $accountServices.getAuthenticatedUser().then(function(data) {
-        console.log(data);
+    $roomServices.getAll().then(function (data) {
+        vm.rooms = data.Results;
+        console.log(vm.rooms);
+    });
+});
+
+rolesApp.controller("RoomsEditController", function ($roomServices, $stateParams, $accountServices) {
+    var vm = this;
+
+    $roomServices.get($stateParams.id).then(function (data) {
+        vm.room = data.Results;
+        console.log(vm.room);
     });
 
-    $roomServices.getAll().then(function (data) {
-        console.log(data);
+    $roomServices.getTypes().then(function (roomData) {
+        console.log(roomData);
     });
 });

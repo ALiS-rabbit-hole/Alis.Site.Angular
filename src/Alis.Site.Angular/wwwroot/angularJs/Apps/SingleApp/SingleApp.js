@@ -34,8 +34,8 @@ var singleApp = angular.module('singleApp', ['ngCookies', 'ncy-angular-breadcrum
         };
 
         this.isAuthenticated = function () {
-          
-            return !!this.userId;
+
+            return true; //!!this.userId;
         }
     }).run(function ($rootScope, $http, $state, Session) {
 

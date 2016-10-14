@@ -132,6 +132,19 @@
         });
     }]);
 
+    mod.directive(
+"roomForm", ['$state', function ($state) {
+    return ({
+        restrict: "E",
+        controller: "successMessageController",
+
+        templateUrl: "angularJs/Templates/_roomForm.html",
+        link: function (scope, element, attrs) {
+
+            scope.back = $state.href(attrs.backRoute);
+        }
+    });
+}]);
 
 
     mod.directive("paging", function () {
