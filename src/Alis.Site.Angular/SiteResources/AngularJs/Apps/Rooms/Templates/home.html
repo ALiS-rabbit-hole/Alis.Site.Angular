@@ -19,4 +19,8 @@
     </tr>
 </table>
 
-<uib-pagination total-items="vm.query.TotalNumberOfResults" ng-model="vm.query.StartAt" ng-change="vm.pageChanged()" items-per-page="vm.query.PageSize" class="pagination-sm" boundary-links="true"></uib-pagination>
+<ul ng-repeat="user in selectedUsers">
+    <li>{{::user.Email}}</li>
+</ul>
+
+<user-list></user-list>

@@ -1,0 +1,31 @@
+﻿<div class="row">
+    <div class="col-lg-6">
+        <div class="panel panel-default" id="selectUsers">
+            <div class="panel-heading">Select users <button type="button" class="close"
+        data-target="#selectUsers"
+        data-dismiss="alert">
+    <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+</button></div>
+            <div class="panel-body">
+                <table class="table table-condensed table-responsive table-striped" ng-cloak>
+                    <thead>
+                        <tr>
+                            <th><a ng-click="reorder('forename')">forename</a> <span ng-class="getGlyphClass('forename')" aria-hidden="true"></span></th>
+                            <th><a ng-click="reorder('surname')">surname</a> <span ng-class="getGlyphClass('surname')" aria-hidden="true"></span></th>
+                            <th><a ng-click="reorder('email')">email</a> <span ng-class="getGlyphClass('email')" aria-hidden="true"></span></th>
+                            <th></th>
+                        </tr>
+
+                    </thead>
+                    <tr ng-repeat="user in users | notInArray:selectedUsers:'ID'">
+                        <td>{{::user.Forename}}</td>
+                        <td>{{::user.Surname}}</td>
+                        <td>{{::user.Email}}</td>
+                        <td><button class="btn btn-sm btn-default" ng-click="pushUser(user)">Select</button></td>
+                    </tr>
+                </table>
+                <uib-pagination total-items="query.TotalNumberOfResults" ng-model="query.StartAt" ng-change="pageChanged()" items-per-page="query.PageSize" class="pagination-sm" boundary-links="true"></uib-pagination>
+            </div>
+        </div>
+    </div>
+</div>

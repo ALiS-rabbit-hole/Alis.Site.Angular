@@ -38,5 +38,6 @@
   ],
   "scripts": {
     "prepublish": [ "npm install", "bower install", "gulp clean", "gulp min" ]
-  }
+  },
+  "userSecretsId": "aspnet-Alis.Site.Angular-20161014072212"
 }

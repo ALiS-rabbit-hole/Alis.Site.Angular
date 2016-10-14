@@ -2,11 +2,16 @@
 //http://jasonwatmore.com/post/2016/04/05/AngularJS-JWT-Authentication-Example-Tutorial.aspx
 //http://blog.ionic.io/angularjs-authentication/
 
+
 //https://github.com/fnakstad/angular-client-side-auth/blob/master/client/js/services.js
 var singleApp = angular.module('singleApp', ['ngCookies', 'ncy-angular-breadcrumb', 'templatescache', 'ui.router', 'rolesApp', 'usersApp', 'roomsApp','institutionsApp', 'notificationsApp', 'accountsApp', 'applicationsApp', 'configurationApp'])
     .config(function ($breadcrumbProvider, $stateProvider, $urlRouterProvider, $cookiesProvider, $httpProvider) {
+     
+
+       // $httpProvider.defaults.withCredentials = true;
+
         $cookiesProvider.defaults.path = '/';
-        $httpProvider.defaults.withCredentials = true;
+
         $breadcrumbProvider.setOptions({
             prefixStateName: 'users'
         });

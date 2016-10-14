@@ -29,6 +29,15 @@
         });
 
     mod.directive(
+        "userList", function () {
+            return ({
+                restrict: "E",
+                controller: "userListController",
+                templateUrl: "angularJs/Templates/_userList.html"
+            });
+        });
+
+    mod.directive(
         "angularAppMenu", function () {
             console.log("InMenu");
             return ({
@@ -70,6 +79,69 @@
 
                 $scope.info = toState.ncyBreadcrumbLabel;
         });
+
+    });
+
+    mod.controller("userListController", function ($scope, $userServices) {
+
+        $userServices.getQueryItem($scope.query).then(function (data) {
+            $scope.selectedUsers = [];
+            $scope.query = data.Results;
+
+            $userServices.getWithQuery($scope.query).then(function (data) {
+                $scope.users = data.Results;
+            }).catch(function (error) {
+                console.log(error);
+            });
+
+
+        }).catch(function (error) {
+            console.log(error);
+        });
+
+        $scope.pageChanged = function () {
+            $userServices.getWithQuery($scope.query).then(function (data) {
+                $scope.users = data.Results;
+            }).catch(function (error) {
+                console.log(error);
+            });
+        };
+
+        $scope.reorder = function (column) {
+
+            if (column === $scope.query.OrderBy) {
+                $scope.query.Direction === "Asc" ? $scope.query.Direction = "Desc" : $scope.query.Direction = "Asc";
+            } else {
+                $scope.query.Direction = "Asc";
+                $scope.query.OrderBy = column;
+            }
+
+            $userServices.getWithQuery($scope.query).then(function (data) {
+                $scope.users = data.Results;
+            }).catch(function (error) {
+                console.log(error);
+            });
+        };
+
+       
+
+        $scope.pushUser = function(user) {
+            $scope.selectedUsers.push(user);
+
+            console.log($scope.selectedUsers);
+        };
+
+        $scope.getGlyphClass = function (column) {
+
+            //<span ng-class="{'glyphicon glyphicon-triangle-bottom': vm.query.OrderBy!='username', 'glyphicon-triangle-top': vm.query.OrderBy==='username' && vm.query.Direction === 'Desc', 'glyphicon-triangle-bottom': vm.query.OrderBy==='username' && vm.query.Direction === 'Asc'}" aria-hidden="true"></span></a></th>
+            if ($scope.query === undefined || column !== $scope.query.OrderBy)
+                return "glyphicon glyphicon-triangle-bottom";
+
+            if (column === $scope.query.OrderBy && $scope.query.Direction === "Desc")
+                return "glyphicon glyphicon-triangle-top";
+            else
+                return "glyphicon glyphicon-triangle-bottom";
+        };
 
     });
 
