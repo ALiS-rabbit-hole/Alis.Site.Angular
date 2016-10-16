@@ -28,14 +28,7 @@
             });
         });
 
-    mod.directive(
-        "userList", function () {
-            return ({
-                restrict: "E",
-                controller: "userListController",
-                templateUrl: "angularJs/Templates/_userList.html"
-            });
-        });
+
 
     mod.directive(
         "angularAppMenu", function () {
@@ -82,10 +75,31 @@
 
     });
 
+    mod.directive(
+    "userList", function () {
+        return ({
+            restrict: "E",
+            controller: "userListController",
+            templateUrl: "angularJs/Templates/_userList.html",
+            scope: {
+                selectedUsers: "="
+            }//,
+          /*  link: function (scope, element, attrs) {
+                console.log(attrs.selectedUsers);
+                if (!!attrs.selectedUsers) {
+                    scope.selectedUsers = attrs.selectedUsers;
+                } else {
+                    scope.selectedUsers = [];
+                }*/
+           // }
+        });
+    });
+
+
     mod.controller("userListController", function ($scope, $userServices) {
 
         $userServices.getQueryItem($scope.query).then(function (data) {
-            $scope.selectedUsers = [];
+
             $scope.query = data.Results;
 
             $userServices.getWithQuery($scope.query).then(function (data) {

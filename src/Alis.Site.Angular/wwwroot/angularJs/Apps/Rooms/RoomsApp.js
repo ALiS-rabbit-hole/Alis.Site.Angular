@@ -1,4 +1,4 @@
-var rolesApp = angular.module('roomsApp', ['roomServices', 'accountServices','helpers', 'ui.bootstrap', 'ui.bootstrap.showErrors']);
+var rolesApp = angular.module('roomsApp', ['roomServices', 'accountServices','helpers', 'ui.bootstrap', 'ngTagsInput', 'ui.bootstrap.showErrors']);
 
 rolesApp.config(function ($stateProvider, $sceProvider, $compileProvider) {
 
@@ -44,10 +44,11 @@ rolesApp.controller("RoomsEditController", function ($roomServices, $stateParams
 
     $roomServices.get($stateParams.id).then(function (data) {
         vm.room = data.Results;
-        console.log(vm.room);
+
+        $roomServices.getTypes().then(function (roomData) {
+            vm.roomTypes = roomData.Results;
+        });
     });
 
-    $roomServices.getTypes().then(function (roomData) {
-        console.log(roomData);
-    });
+
 });

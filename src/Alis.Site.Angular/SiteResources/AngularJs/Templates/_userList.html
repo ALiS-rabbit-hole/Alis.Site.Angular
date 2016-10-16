@@ -1,12 +1,4 @@
-﻿<div class="row">
-    <div class="col-lg-6">
-        <div class="panel panel-default" id="selectUsers">
-            <div class="panel-heading">Select users <button type="button" class="close"
-        data-target="#selectUsers"
-        data-dismiss="alert">
-    <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-</button></div>
-            <div class="panel-body">
+﻿
                 <table class="table table-condensed table-responsive table-striped" ng-cloak>
                     <thead>
                         <tr>
@@ -25,7 +17,4 @@
                     </tr>
                 </table>
                 <uib-pagination total-items="query.TotalNumberOfResults" ng-model="query.StartAt" ng-change="pageChanged()" items-per-page="query.PageSize" class="pagination-sm" boundary-links="true"></uib-pagination>
-            </div>
-        </div>
-    </div>
-</div>
+          
