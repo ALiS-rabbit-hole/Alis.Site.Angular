@@ -36,8 +36,6 @@ institutionsApp.config(function ($stateProvider, $sceProvider, $compileProvider)
             ncyBreadcrumb: { label: "Create Institution", parent: 'institutions.home' },
             authenticate: true
         });
-
-
 });
 
 institutionsApp.controller("InstitutionsHomeController", function ($institutionServices) {
@@ -62,24 +60,43 @@ institutionsApp.controller("InstitutionsEditController", function ($stateParams,
     var vm = this;
 
     $institutionServices.get($stateParams.id).then(function (data) {
-        vm.institutionConfig = data.Results;
+        vm.institution = data.Results;
 
         $roomServices.getTypes().then(function (roomData) {
             vm.roomTypes = roomData.Results;
         });
     });
 
+    vm.addVariant = function(type) {
+       // console.log(type);
+
+        var index = vm.roomTypes.indexOf(type);
+
+        if (vm.roomTypes[index].RoomTypeVariant == undefined) {
+            vm.roomTypes[index].RoomTypeVariant = [];
+        }
+
+        vm.roomTypes[index].RoomTypeVariant.push({ Name: '', Abbreviation: '' });
+    }
+
+    vm.removeVariant = function(type, variant) {
+        var index = vm.roomTypes.indexOf(type);
+        
+
+        vm.roomTypes[index].RoomTypeVariant.splice(vm.roomTypes[index].RoomTypeVariant.indexOf(variant), 1);
+    }
+
     vm.Save = function () {
         
-        $institutionServices.update(vm.institutionConfig).then(function (data) {
-            if (data.Success) {
-
-                $scope.notifications.success.valid = true;
-                $scope.notifications.success.descriptions = ["sdsadasasdsa"];
-                //we can call this here to reset all errors and the form. if you redirect out on success, no need to call this.
-                $scope.$broadcast('show-errors-reset');
-            }
-        });
+        $institutionServices.update(vm.institution).then(function (data) {
+             if (data.Success) {
+ 
+                 $scope.notifications.success.valid = true;
+                 $scope.notifications.success.descriptions = ["sdsadasasdsa"];
+                 //we can call this here to reset all errors and the form. if you redirect out on success, no need to call this.
+                 $scope.$broadcast('show-errors-reset');
+             }
+         });
     };
 });
 
