@@ -101,8 +101,9 @@
         $userServices.getQueryItem($scope.query).then(function (data) {
 
             $scope.query = data.Results;
-
+          
             $userServices.getWithQuery($scope.query).then(function (data) {
+         
                 $scope.users = data.Results;
             }).catch(function (error) {
                 console.log(error);
@@ -217,6 +218,22 @@
             }
         });
     }]);
+
+
+    mod.directive(
+"groupForm", ['$state', function ($state) {
+    return ({
+        restrict: "E",
+        controller: "successMessageController",
+
+        templateUrl: "angularJs/Templates/_groupForm.html",
+        link: function (scope, element, attrs) {
+
+            scope.back = $state.href(attrs.backRoute);
+        }
+    });
+}]);
+
 
     mod.directive(
 "roomForm", ['$state', function ($state) {

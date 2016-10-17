@@ -4,7 +4,7 @@
 
 
 //https://github.com/fnakstad/angular-client-side-auth/blob/master/client/js/services.js
-var singleApp = angular.module('singleApp', ['ngCookies', 'ncy-angular-breadcrumb', 'templatescache', 'ui.router', 'rolesApp', 'usersApp', 'roomsApp','institutionsApp', 'notificationsApp', 'accountsApp', 'applicationsApp', 'configurationApp'])
+var singleApp = angular.module('singleApp', ['ngCookies', 'ncy-angular-breadcrumb', 'templatescache', 'ui.router', 'rolesApp', 'usersApp', 'roomsApp','institutionsApp', 'groupsApp', 'notificationsApp', 'accountsApp', 'applicationsApp', 'configurationApp'])
     .config(function ($breadcrumbProvider, $stateProvider, $urlRouterProvider, $cookiesProvider, $httpProvider) {
      
 

@@ -1,6 +1,6 @@
-var rolesApp = angular.module('roomsApp', ['roomServices', 'accountServices','helpers', 'ui.bootstrap', 'ui.bootstrap.showErrors']);
+var roomsApp = angular.module('roomsApp', ['roomServices', 'accountServices','helpers', 'ui.bootstrap', 'ui.bootstrap.showErrors']);
 
-rolesApp.config(function ($stateProvider, $sceProvider, $compileProvider) {
+roomsApp.config(function ($stateProvider, $sceProvider, $compileProvider) {
 
     $compileProvider.debugInfoEnabled(false);
 
@@ -38,7 +38,7 @@ rolesApp.config(function ($stateProvider, $sceProvider, $compileProvider) {
         });
 });
 
-rolesApp.controller("RoomsHomeController", function ($roomServices, $accountServices) {
+roomsApp.controller("RoomsHomeController", function ($roomServices, $accountServices) {
     var vm = this;
 
     $roomServices.getAll().then(function (data) {
@@ -47,7 +47,7 @@ rolesApp.controller("RoomsHomeController", function ($roomServices, $accountServ
     });
 });
 
-rolesApp.controller("RoomsCreateController", function ($roomServices, $scope, $accountServices) {
+roomsApp.controller("RoomsCreateController", function ($roomServices, $scope, $accountServices) {
     var vm = this;
 
     $roomServices.new().then(function (data) {
@@ -83,7 +83,7 @@ rolesApp.controller("RoomsCreateController", function ($roomServices, $scope, $a
     }
 });
 
-rolesApp.controller("RoomsEditController", function ($roomServices, $stateParams, $accountServices) {
+roomsApp.controller("RoomsEditController", function ($roomServices, $stateParams, $accountServices) {
     var vm = this;
 
     $roomServices.get($stateParams.id).then(function (data) {

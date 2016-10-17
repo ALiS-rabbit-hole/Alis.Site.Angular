@@ -1,0 +1,17 @@
+﻿<notifications></notifications>
+<a ui-sref="groups.create" class="btn btn-default">Create Group</a>
+<table class="table" show-errors-no-form>
+    <thead>
+    <tr>
+        <th></th>
+        <th></th>
+    </tr>
+    </thead>
+    <tr ng-repeat="group in vm.groups">
+        <td>{{::group.Name}}</td>
+        <td><a ui-sref="groups.edit({id:{{::group.ID}}})" class="btn btn-default">Edit</a></td>
+    </tr>
+</table>
+
+
+
