@@ -3,13 +3,17 @@
 <table class="table" show-errors-no-form>
     <thead>
     <tr>
+        <th>Group Name</th>
+        <th>Members</th>
         <th></th>
         <th></th>
     </tr>
     </thead>
     <tr ng-repeat="group in vm.groups">
         <td>{{::group.Name}}</td>
-        <td><a ui-sref="groups.edit({id:{{::group.ID}}})" class="btn btn-default">Edit</a></td>
+        <td>{{::group.Members.length}}</td>
+        <td><a ui-sref="groups.edit({id:{{::group.ID}}})" class="btn btn-default">Edit</a> </td>
+        <td><button ng-really-message="Are you sure?" ng-really-click="vm.reallyDelete(group)" class="btn btn-danger">Delete</button></td>
     </tr>
 </table>
 

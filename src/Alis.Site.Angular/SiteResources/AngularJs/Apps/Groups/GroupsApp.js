@@ -38,40 +38,75 @@ groupsApp.config(function ($stateProvider, $sceProvider, $compileProvider) {
         });
 });
 
-groupsApp.controller("GroupsHomeController", function ($groupServices) {
+groupsApp.controller("GroupsHomeController", function ($groupServices, $scope) {
     var vm = this;
 
     $groupServices.getAll().then(function (data) {
         vm.groups = data.Results;
     });
+
+    vm.reallyDelete = function (role) {
+
+        $groupServices.remove(role).then(function (data) {
+            if (data.Success) {
+
+                // vm.roles.splice(vm.roles.indexOf(role), 1);
+                $groupServices.getAll().then(function (data) {
+                    vm.groups = data.Results;
+                });
+            }
+        }, function (error) {
+            //todo: need some form of error mechanism to display errors outside of forms.
+        });
+    };
 });
 
 groupsApp.controller("GroupsCreateController", function ($groupServices, $scope) {
     var vm = this;
 
-    vm.group = {};
-    vm.group.Members = [];
+    $groupServices.new().then(function(data) {
+        vm.group = data.Results;
+        vm.group.Members = [];
+    });
+
+    vm.removeMember = function (member) {
+        vm.group.Members.splice(vm.group.Members.indexOf(member), 1);
+    };
 
     vm.Save = function () {
 
         $scope.$broadcast('show-errors-reset');
-        $groupServices.create(vm.room).then(function (data) {
+        $groupServices.create(vm.group).then(function (data) {
             if (data.Success) {
-                vm.room = data.Results;
+                vm.group = data.Results;
                 $scope.notifications.success.valid = true;
-                $scope.notifications.success.descriptions = ["The room '" + vm.room.Name + "' was successfully created."];
+                $scope.notifications.success.descriptions = ["The group '" + vm.group.Name + "' was successfully created."];
 
             }
         });
     }
 });
 
-groupsApp.controller("GroupsEditController", function ($groupServices, $stateParams) {
+groupsApp.controller("GroupsEditController", function ($groupServices, $stateParams, $scope) {
     var vm = this;
 
     $groupServices.get($stateParams.id).then(function (data) {
         vm.group = data.Results;
-
-        vm.selectedType = vm.room.Type;
     });
+
+    vm.removeMember = function (member) {
+        vm.group.Members.splice(vm.group.Members.indexOf(member), 1);
+    };
+
+    vm.Save = function () {
+
+        $scope.$broadcast('show-errors-reset');
+        $groupServices.update(vm.group).then(function (data) {
+            if (data.Success) {
+                $scope.notifications.success.valid = true;
+                $scope.notifications.success.descriptions = ["The group '" + vm.group.Name + "' was successfully updated."];
+
+            }
+        });
+    }
 });

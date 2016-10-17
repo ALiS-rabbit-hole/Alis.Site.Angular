@@ -6,10 +6,16 @@
 <a ui-sref="institutions.create" class="btn btn-default">Create Institution</a>
 <table class="table">
     <thead>
-    <tr></tr>
+    <tr>
+        <th>Name</th>
+        <th>Abbreviation</th>
+        <th></th>
+        <th></th>
+    </tr>
     </thead>
     <tr ng-repeat="institution in vm.institutions track by institution.ID">
         <td>{{::institution.Name}}</td>
+        <td>{{::institution.Abbreviation}}</td>
         <td><a ui-sref="institutions.edit({id:{{::institution.ID}}})" class="btn btn-default">Edit</a></td>
         <td><button ng-really-message="Are you sure?" ng-really-click="vm.delete(institution)" class="btn btn-danger">Delete</button></td>
     </tr>

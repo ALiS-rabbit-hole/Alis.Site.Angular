@@ -136,9 +136,7 @@
             }).catch(function (error) {
                 console.log(error);
             });
-        };
-
-       
+        };      
 
         $scope.pushUser = function(user) {
             $scope.selectedUsers.push(user);

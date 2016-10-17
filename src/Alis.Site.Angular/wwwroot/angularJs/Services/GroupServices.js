@@ -12,6 +12,10 @@ angular.module('groupServices', [])
             return $http.get(serviceRoot + "Get", { params: { Id: id } }).then(function (result) {
                 return result.data;
             });
+        }, new: function () {
+            return $http.get(serviceRoot + "Get/New").then(function (result) {
+                return result.data;
+            });
         },
         create: function (room) {
             return $http.post(serviceRoot + "Create", room).then(function (result) {

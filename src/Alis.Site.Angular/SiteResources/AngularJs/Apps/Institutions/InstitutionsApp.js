@@ -1,4 +1,4 @@
-﻿var institutionsApp = angular.module('institutionsApp', ['institutionServices', 'ui.bootstrap.showErrors', 'ui.bootstrap', 'helpers']);
+﻿var institutionsApp = angular.module('institutionsApp', ['institutionServices', 'roomServices', 'ui.bootstrap.showErrors', 'ui.bootstrap', 'helpers']);
 
 institutionsApp.config(function ($stateProvider, $sceProvider, $compileProvider) {
 
@@ -58,11 +58,15 @@ institutionsApp.controller("InstitutionsHomeController", function ($institutionS
 
 });
 
-institutionsApp.controller("InstitutionsEditController", function ($stateParams, $institutionServices, $scope) {
+institutionsApp.controller("InstitutionsEditController", function ($stateParams, $institutionServices, $roomServices, $scope) {
     var vm = this;
 
     $institutionServices.get($stateParams.id).then(function (data) {
         vm.institutionConfig = data.Results;
+
+        $roomServices.getTypes().then(function (roomData) {
+            vm.roomTypes = roomData.Results;
+        });
     });
 
     vm.Save = function () {
@@ -79,11 +83,15 @@ institutionsApp.controller("InstitutionsEditController", function ($stateParams,
     };
 });
 
-institutionsApp.controller("InstitutionsCreateController", function ($institutionServices, $scope) {
+institutionsApp.controller("InstitutionsCreateController", function ($institutionServices, $roomServices, $scope) {
     var vm = this;
 
     vm.institutionConfig = {};
     vm.institutionConfig.Institution = {};
+
+    $roomServices.getTypes().then(function (roomData) {
+        vm.roomTypes = roomData.Results;
+    });
 
     vm.Save = function () {
         $institutionServices.create(vm.institutionConfig).then(function (data) {

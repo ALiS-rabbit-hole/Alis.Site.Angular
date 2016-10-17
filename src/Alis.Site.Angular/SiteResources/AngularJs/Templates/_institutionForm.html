@@ -5,39 +5,70 @@
     <fieldset>
         <uib-tabset active="activeForm">
             <uib-tab index="0" heading="Details">
-                <h4>Details</h4>
                 <div class="form-group" show-errors>
-                    <label for="name" class="col-sm-2 control-label">Edit Institution</label>
+                    <label for="name" class="col-sm-2 control-label">Name</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" id="name" name="Name" placeholder="Institution Name" ng-required ng-model="vm.institutionConfig.Institution.Name">
                         <span class="help-block" ng-show="institutionForm.Name.$invalid">{{institutionForm.Name.$errorText}}</span>
                     </div>
                 </div>
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <button class="btn btn-default" ng-click="vm.Save()">Save</button> <a ng-href="{{back}}" class="btn btn-warning">Cancel</a>
+                <div class="form-group" show-errors>
+                    <label for="abbreviation" class="col-sm-2 control-label">Abbreviation</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="abbreviation" name="Abbreviation" placeholder="Abbreviation" ng-required ng-model="vm.institutionConfig.Institution.Abbreviation">
+                        <span class="help-block" ng-show="institutionForm.Abbreviation.$invalid">{{institutionForm.Abbreviation.$errorText}}</span>
                     </div>
                 </div>
+
             </uib-tab>
             <uib-tab index="1" heading="Configuration">
-                <div class="tab-pane" id="configuration">
-                    <h4>Configuration</h4>
-                    <div class="form-group" show-errors>
-                        <label for="UploadName" class="col-sm-2 control-label">Name</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="UploadName" name="UploadName" placeholder="Upload Location Name" ng-required ng-model="vm.institutionConfig.UploadLocation.Name">
-                            <span class="help-block" ng-show="institutionForm.UploadName.$invalid">{{institutionForm.UploadName.$errorText}}</span>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Room Types</div>
+                            <div class="panel-body">
+                                <label class="checkbox-inline" ng-repeat="type in ::vm.roomTypes track by type.ID">
+                                    <input type="checkbox" data-checklist-model="vm.institution.RoomTypes" data-checklist-value="type"> {{::type.Name}}
+                                </label>
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group" show-errors>
-                        <label for="UploadLocation" class="col-sm-2 control-label">Upload Location</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="UploadLocation" name="UploadLocation" placeholder="Upload Location" ng-required ng-model="vm.institutionConfig.UploadLocation.Location">
-                            <span class="help-block" ng-show="institutionForm.UploadLocation.$invalid">{{institutionForm.UploadLocation.$errorText}}</span>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <div class="panel panel-default">
+                            <div class="panel-heading clearfix">
+                                Room Type Variants
+                            </div>
+                            <div class="panel-body">
+                                <div class="well well-sm" ng-repeat="type in vm.institution.RoomTypes">
+                                    <h4>{{type.Name}} <button class="btn btn-xs btn-info pull-right">Add</button></h4> 
+                                    
+                                    <div>
+                                        <div class="form-group">
+                                            <label for="typeVariant" class="col-sm-2 control-label">Type Variant</label>
+                                            <div class="col-sm-5">
+                                                <input type="text" class="form-control" id="typeVariant" name="TypeVariant" placeholder="Variant Name" ng-model="type.Name">
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="typeVariantAbbrev" name="TypeVariantAbbrev" placeholder="Variant Abbreviation" ng-model="type.Abbreviation">
+                                            </div>
+                                            <div class="col-sm-2">
+                                                <button ng-click="" class="btn btn-danger btn-sm">Remove</button>
+                                            </div>
+                                        </div> 
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </uib-tab>
         </uib-tabset>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button class="btn btn-default" ng-click="vm.Save()">Save</button> <a ng-href="{{back}}" class="btn btn-warning">Cancel</a>
+            </div>
+        </div>
     </fieldset>
 </form>
