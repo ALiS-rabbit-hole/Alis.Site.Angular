@@ -179,7 +179,7 @@ usersApp.controller("UsersCreateController", function ($userServices, $roleServi
         $userServices.create(vm.user).then(function (data) {
 
             if (data.Success) {
-
+                vm.user = data.Results;
                 $scope.notifications.success.valid = true;
                 $scope.notifications.success.descriptions = ["The user '" + vm.user.Username + "' was successfully created."];
 

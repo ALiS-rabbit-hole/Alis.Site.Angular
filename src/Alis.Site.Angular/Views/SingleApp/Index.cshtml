@@ -5,13 +5,14 @@
     Layout = "~/Views/Shared/_LayoutNg.cshtml";
 }
 <div class="page-header">
-    <div class="container"><page-info></page-info>
+    <div class="container">
+        <page-info></page-info>
         <ol ncy-breadcrumb class="breadcrumb"></ol>
     </div>
 </div>
 <div class="page-content">
     <div class="container">
-        <div ui-view style="min-height: 500px;"></div>
+        <div ui-view style="min-height: 500px;" autoscroll="true"></div>
     </div>
 </div>
 <!-- inject:angularConfig:js -->
@@ -22,33 +23,32 @@
 {
 
     <!-- inject:singlePageApp:js -->
-
     <!-- endinject -->
- 
-<script src="~/angularJs/templates.js"></script>
-<script src="~/angularJs/Directives/helpers.js"></script>
-<script src="~/angularJs/Directives/showErrors.js"></script>
-<script src="~/angularJs/Modules/filterModules.js"></script>
-<script src="~/angularJs/Services/ApplicationServices.js"></script>
-<script src="~/angularJs/Services/EventServices.js"></script>
-<script src="~/angularJs/Services/InstitutionServices.js"></script>
-<script src="~/angularJs/Services/NotificationServices.js"></script>
-<script src="~/angularJs/Services/RoleServices.js"></script>
-<script src="~/angularJs/Services/SearchServices.js"></script>
-<script src="~/angularJs/Services/UserServices.js"></script>
+
+    <script src="~/angularJs/templates.js"></script>
+    <script src="~/angularJs/Directives/helpers.js"></script>
+    <script src="~/angularJs/Directives/showErrors.js"></script>
+    <script src="~/angularJs/Modules/filterModules.js"></script>
+    <script src="~/angularJs/Services/ApplicationServices.js"></script>
+    <script src="~/angularJs/Services/EventServices.js"></script>
+    <script src="~/angularJs/Services/InstitutionServices.js"></script>
+    <script src="~/angularJs/Services/NotificationServices.js"></script>
+    <script src="~/angularJs/Services/RoleServices.js"></script>
+    <script src="~/angularJs/Services/SearchServices.js"></script>
+    <script src="~/angularJs/Services/UserServices.js"></script>
     <script src="~/AngularJs/Services/AccountServices.js"></script>
-<script src="~/AngularJs/Services/RoomServices.js"></script>
+    <script src="~/AngularJs/Services/RoomServices.js"></script>
     <script src="~/AngularJs/services/searchservices.js"></script>
     <script src="~/AngularJs/Services/AuthenticationService.js"></script>
 
     <script src="~/angularJs/Apps/SingleApp/SingleApp.js"></script>
-<script src="~/angularJs/Apps/Users/UsersApp.js"></script>
-<script src="~/AngularJs/Apps/Rooms/RoomsApp.js"></script>
-<script src="~/angularJs/Apps/Roles/RolesApp.js"></script>
+    <script src="~/angularJs/Apps/Users/UsersApp.js"></script>
+    <script src="~/AngularJs/Apps/Rooms/RoomsApp.js"></script>
+    <script src="~/angularJs/Apps/Roles/RolesApp.js"></script>
     <script src="~/angularJs/Apps/Institutions/InstitutionsApp.js"></script>
-<script src="~/angularJs/Apps/Notifications/notificationsApp.js"></script>
+    <script src="~/angularJs/Apps/Notifications/notificationsApp.js"></script>
     <script src="~/AngularJs/Apps/Account/AccountsApp.js"></script>
-<script src="~/AngularJs/Apps/Applications/ApplicationsApp.js"></script>
-<script src="~/AngularJs/apps/configuration/configurationapp.js"></script>
-<script src="~/markitup/jquery.markitup.js"></script>
+    <script src="~/AngularJs/Apps/Applications/ApplicationsApp.js"></script>
+    <script src="~/AngularJs/apps/configuration/configurationapp.js"></script>
+    <script src="~/markitup/jquery.markitup.js"></script>
 }

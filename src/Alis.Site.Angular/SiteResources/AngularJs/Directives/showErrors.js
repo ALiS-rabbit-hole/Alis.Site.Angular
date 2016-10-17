@@ -67,15 +67,14 @@
                       scope.notifications = {};
                       scope.notifications.success = { valid: false };
 
-                 
-                         
                       if (args.ErrorFields[inputName] != null && formCtrl[inputName]) {
-                             
+                          
+
                           formCtrl[inputName].$setValidity(inputName, false);
                           formCtrl[inputName].$errorText = args.ErrorFields[inputName];
 
                           toggleClasses(formCtrl[inputName].$invalid);
-       
+                          
                       }
 
                       for (prop in args.ErrorFields) {
@@ -96,7 +95,7 @@
                           scope.notifications = {};
                           scope.notifications.success = {};
                           scope.notifications.errors = {};
-                          console.log(args);
+
                           if (args.Success == true) {
                               //scope.notifications.success = {};
                               scope.notifications.success.valid = true;
@@ -204,12 +203,13 @@
                         return $q.reject(response);  
 
                     if (data.ErrorFields && data.ErrorFields.length > 0) {
-
+                        console.log(data.ErrorFields);
                         var errors = [];
-                        for (item in data.ErrorFields) {
+                        for (var item in data.ErrorFields) {
+                            
                             if (data.ErrorFields.hasOwnProperty(item)) {
 
-                                console.log(item);
+                              
                                 errors[data.ErrorFields[item].Key] = data.ErrorFields[item].Value;
                             }
                         };

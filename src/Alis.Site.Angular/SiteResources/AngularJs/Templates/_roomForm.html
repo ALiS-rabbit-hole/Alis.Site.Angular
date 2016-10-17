@@ -27,20 +27,29 @@
             <span class="help-block" ng-show="roomForm.Password.$invalid">{{roomForm.Password.$errorText}}</span>
         </div>
     </div>
-    <div class="form-group">
-        <label for="name" class="col-sm-2 control-label">Type</label>
+    <div class="form-group" show-errors>
+        <label for="type" class="col-sm-2 control-label" ng-model="vm.selectedType">Type</label>
         <div class="col-sm-10">
-            <select class="form-control">
-                <option>Select a room Type</option>
-                <option ng-repeat="type in vm.roomTypes" value="{{type.ID}}">{{type.Name}}</option>
+            <select class="form-control" name="Type" id="type" ng-options="type as type.Name for type in vm.roomTypes track by type.ID" ng-required ng-model="vm.selectedType">
+                <option></option>
             </select>
+            <span class="help-block" ng-show="roomForm.Type.$invalid">{{roomForm.Type.$errorText}}</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="typeVariant" class="col-sm-2 control-label">Type Variant</label>
+        <div class="col-sm-7">
+            <input type="text" class="form-control" id="typeVariant" name="TypeVariant" placeholder="Variant Name" ng-model="vm.RoomTypeVariant.Name">
+        </div>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" id="typeVariantAbbrev" name="TypeVariantAbbrev" placeholder="Variant Abbreviation" ng-model="vm.RoomTypeVariant.Abbreviation">
         </div>
     </div>
     <div class="form-group">
         <label class="col-sm-2 control-label">Owners</label>
         <div class="col-sm-4">
             <ul class="list-group">
-                <li ng-repeat="user in vm.room.Owners" class="list-group-item">{{::user.Forename}} {{::user.Surname}} <button class="btn btn-xs btn-default pull-right">Remove</button></li>
+                <li ng-repeat="user in vm.room.Owners" class="list-group-item">{{::user.Forename}} {{::user.Surname}} <button ng-if="user.ID != vm.room.Creator.ID" class="btn btn-xs btn-default pull-right" ng-click="vm.removeOwner(user)">Remove</button></li>
             </ul>
         </div>
         <div class="col-sm-6">
