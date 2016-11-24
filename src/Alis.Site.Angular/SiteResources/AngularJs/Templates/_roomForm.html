@@ -36,13 +36,13 @@
             <span class="help-block" ng-show="roomForm.Type.$invalid">{{roomForm.Type.$errorText}}</span>
         </div>
     </div>
-    <div class="form-group">
-        <label for="typeVariant" class="col-sm-2 control-label">Type Variant</label>
-        <div class="col-sm-7">
-            <input type="text" class="form-control" id="typeVariant" name="TypeVariant" placeholder="Variant Name" ng-model="vm.RoomTypeVariant.Name">
-        </div>
-        <div class="col-sm-3">
-            <input type="text" class="form-control" id="typeVariantAbbrev" name="TypeVariantAbbrev" placeholder="Variant Abbreviation" ng-model="vm.RoomTypeVariant.Abbreviation">
+    <div class="form-group" show-errors ng-show="vm.selectedType">
+        <label for="type" class="col-sm-2 control-label" ng-model="vm.selectedTypeVariant">Type Variant</label>
+        <div class="col-sm-10">
+            <select class="form-control" name="Type" id="variantType" ng-options="variant as variant.Name for variant in vm.selectedType.RoomTypeVariant track by variant.ID" ng-required ng-model="vm.selectedTypeVariant">
+                <option></option>
+            </select>
+            <span class="help-block" ng-show="roomForm.Type.$invalid">{{roomForm.Type.$errorText}}</span>
         </div>
     </div>
     <div class="form-group">

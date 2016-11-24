@@ -12,6 +12,7 @@
     "bluebird": "3.4.1",
     "gulp-htmlmin": "2.0.0",
     "gulp-angular-templatecache": "2.0.0",
-    "gulp-ng-annotate": "2.0.0"
+    "gulp-ng-annotate": "2.0.0",
+    "jinq":  "1.6.1" 
   }
 }
