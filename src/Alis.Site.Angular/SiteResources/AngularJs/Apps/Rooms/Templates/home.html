@@ -7,6 +7,7 @@
         <th></th>
         <th></th>
         <th></th>
+        <th></th>
     </tr>
     </thead>
     <tr ng-repeat="room in vm.rooms">
@@ -16,6 +17,7 @@
         <td>{{::room.Name}}</td>
         <td>{{::room.Type.RoomTypeVariant.Name}}</td>
         <td><a ui-sref="rooms.edit({id:{{::room.ID}}})" class="btn btn-default">Edit</a></td>
+        <td><button ng-really-message="Are you sure?" ng-really-click="vm.reallyDelete(room)" class="btn btn-danger">Delete</button></td>
     </tr>
 </table>
 

@@ -45,6 +45,24 @@ roomsApp.controller("RoomsHomeController", function ($roomServices, $accountServ
         vm.rooms = data.Results;
         console.log(vm.rooms);
     });
+
+
+    vm.reallyDelete = function (role) {
+
+        $roomServices.remove(role).then(function (data) {
+            if (data.Success) {
+
+                // vm.roles.splice(vm.roles.indexOf(role), 1);
+
+                $roomServices.getAll().then(function (data) {
+                    vm.rooms = data.Results;
+                    console.log(vm.rooms);
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            }
+        });
+    };
 });
 
 roomsApp.controller("RoomsCreateController", function ($roomServices, $scope, $accountServices) {
@@ -83,7 +101,7 @@ roomsApp.controller("RoomsCreateController", function ($roomServices, $scope, $a
     }
 });
 
-roomsApp.controller("RoomsEditController", function ($roomServices, $stateParams, $accountServices) {
+roomsApp.controller("RoomsEditController", function ($roomServices, $stateParams, $scope, $accountServices) {
     var vm = this;
 
     $roomServices.get($stateParams.id).then(function (data) {
@@ -101,4 +119,23 @@ roomsApp.controller("RoomsEditController", function ($roomServices, $stateParams
     vm.removeOwner = function (owner) {
         vm.room.Owners.splice(vm.room.Owners.indexOf(owner), 1);
     };
+
+
+    vm.Save = function () {
+        console.log("in save();");
+        if (!!vm.selectedType) {
+            vm.room.Type = vm.selectedType;
+            vm.room.Type.RoomTypeVariant = vm.RoomTypeVariant;
+        }
+
+        $scope.$broadcast('show-errors-reset');
+        $roomServices.update(vm.room).then(function (data) {
+            if (data.Success) {
+               
+                $scope.notifications.success.valid = true;
+                $scope.notifications.success.descriptions = ["The room '" + vm.room.Name + "' was successfully updated."];
+
+            }
+        });
+    }
 });

@@ -33,5 +33,10 @@
                 return result.data;
             });
         },
+        remove: function (room) {
+            return $http.delete(serviceRoot + "Delete", { params: { ID: room.ID } }).then(function (result) {
+                return result.data;
+            });
+        }
     };
 });
