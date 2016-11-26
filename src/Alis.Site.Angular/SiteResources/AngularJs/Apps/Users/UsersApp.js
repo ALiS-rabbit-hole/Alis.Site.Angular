@@ -52,11 +52,12 @@ usersApp.controller("UsersHomeController", function ($userServices) {
             vm.users = data.Results;
         }).catch(function (error) {
             console.log(error);
+            alert(JSON.stringify(error));
         });
 
 
     }).catch(function (error) {
-        console.log(error);
+        console.log(error); alert(JSON.stringify(error));
     });
 
     vm.pageChanged = function() {

@@ -32,7 +32,8 @@ accountsApp.config(function ($stateProvider, $sceProvider, $compileProvider) {
             controller: 'LogoutController',
             controllerAs: "vm",
             templateUrl: "angularJs/Apps/Account/Templates/logout.html",
-            ncyBreadcrumb: { label: "Login" }
+            ncyBreadcrumb: { label: "Login" },
+            openOnly: true
         })
         .state('account.forgotPassword',
         {
@@ -40,20 +41,23 @@ accountsApp.config(function ($stateProvider, $sceProvider, $compileProvider) {
             controller: 'ForgotPasswordController',
             controllerAs: "vm",
             templateUrl: "angularJs/Apps/Account/Templates/forgotPassword.html",
-            ncyBreadcrumb: { label: "Forgot Password", parent: 'account.login' }
+            ncyBreadcrumb: { label: "Forgot Password", parent: 'account.login' },
+            openOnly: true
         }).state('account.resetPassword',
         {
             url: "/account/resetPassword/:token",
             controller: 'ResetPasswordController',
             controllerAs: "vm",
             templateUrl: "angularJs/Apps/Account/Templates/resetPassword.html",
-            ncyBreadcrumb: { label: "Reset Password", parent: 'account.login' }
+            ncyBreadcrumb: { label: "Reset Password", parent: 'account.login' },
+            openOnly: true
         }).state('account.whatisthis',
         {
             url: "/account/resetPassword/:token",
             controller: 'LogoutController',
             controllerAs: "vm",
-            ncyBreadcrumb: { label: "Reset Password", parent: 'account.login' }
+            ncyBreadcrumb: { label: "Reset Password", parent: 'account.login' },
+            openOnly: true
         });
 
 });
@@ -62,13 +66,15 @@ accountsApp.controller("LoginController", function ($authenticationService, $roo
     var vm = this;
 
 
-    vm.login = function() {
-        $authenticationService.login({ username: "chris.withers@gmail.com", password: "22bullseye22" }).then(function (result) {
-            console.log(result.SessionId);
+    vm.loginDetails = {};
+
+    vm.login = function () {
+        console.log(vm.loginDetails);
+        $authenticationService.login({ username: vm.loginDetails.username, password: vm.loginDetails.password }).then(function (result) {
 
             $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
-           // $scope.setCurrentUser(user);
-        }, function() {
+            // $scope.setCurrentUser(user);
+        }, function () {
             $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
         });
     }

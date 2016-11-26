@@ -8,7 +8,7 @@ var singleApp = angular.module('singleApp', ['ngCookies', 'ncy-angular-breadcrum
     .config(function ($breadcrumbProvider, $stateProvider, $urlRouterProvider, $cookiesProvider, $httpProvider) {
      
 
-       // $httpProvider.defaults.withCredentials = true;
+        $httpProvider.defaults.withCredentials = true;
 
         $cookiesProvider.defaults.path = '/';
 
@@ -17,7 +17,8 @@ var singleApp = angular.module('singleApp', ['ngCookies', 'ncy-angular-breadcrum
         });
 
         $urlRouterProvider.otherwise("account");
-    
+
+     //   alert($httpProvider.defaults.withCredentials);
 
     }).constant('AUTH_EVENTS', {
         loginSuccess: 'auth-login-success',
@@ -40,12 +41,21 @@ var singleApp = angular.module('singleApp', ['ngCookies', 'ncy-angular-breadcrum
 
         this.isAuthenticated = function () {
 
-            return true; //!!this.userId;
+            return this.id != null && this.userId != null; //!!this.userId;
         }
     }).run(function ($rootScope, $http, $state, Session) {
 
         $rootScope.$on("$stateChangeStart", function (event, toState, toParams, fromState, fromParams) {
+
+          //  alert(Session.isAuthenticated());
+
             $state.current = toState;
+
+            if (toState.openOnly && Session.isAuthenticated()) {
+                $state.go("users.home");
+                event.preventDefault();
+            }
+
             if (toState.authenticate && !Session.isAuthenticated()) {
                 // User isn’t authenticated
                 $state.go("account.login");
