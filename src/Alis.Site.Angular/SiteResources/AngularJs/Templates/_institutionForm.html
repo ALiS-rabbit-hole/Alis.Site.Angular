@@ -28,7 +28,7 @@
                             <div class="panel-heading">Room Types</div>
                             <div class="panel-body">
                                 <label class="checkbox-inline" ng-repeat="type in ::vm.roomTypes track by type.ID">
-                                    <input type="checkbox" data-checklist-model="vm.institution.RoomTypes" data-checklist-value="type"> {{::type.Name}}
+                                    <input type="checkbox" data-checklist-model="vm.institution.RoomTypes" data-checklist-value="type" ng-checked="isChecked(type.ID)"> {{::type.Name}}
                                 </label>
                             </div>
                         </div>

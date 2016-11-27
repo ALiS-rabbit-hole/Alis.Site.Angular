@@ -67,23 +67,32 @@ institutionsApp.controller("InstitutionsEditController", function ($stateParams,
         });
     });
 
+    $scope.isChecked = function (id) {
+
+        for (var i = 0; i < vm.institution.RoomTypes.length; i++) {
+            if (vm.institution.RoomTypes[i].ID == id) {
+                return true;
+            }
+        }
+        return false;
+    };
+
     vm.addVariant = function(type) {
-       // console.log(type);
 
-        var index = vm.roomTypes.indexOf(type);
-
-        if (vm.roomTypes[index].RoomTypeVariant == undefined) {
-            vm.roomTypes[index].RoomTypeVariant = [];
+        var index = vm.institution.RoomTypes.indexOf(type);
+        console.log(index);
+        if (vm.institution.RoomTypes[index].RoomTypeVariant == undefined) {
+            vm.institution.RoomTypes[index].RoomTypeVariant = [];
         }
 
-        vm.roomTypes[index].RoomTypeVariant.push({ Name: '', Abbreviation: '' });
+        vm.institution.RoomTypes[index].RoomTypeVariant.push({ Name: '', Abbreviation: '' });
     }
 
     vm.removeVariant = function(type, variant) {
-        var index = vm.roomTypes.indexOf(type);
+        var index = vm.institution.RoomTypes.indexOf(type);
         
 
-        vm.roomTypes[index].RoomTypeVariant.splice(vm.roomTypes[index].RoomTypeVariant.indexOf(variant), 1);
+        vm.institution.RoomTypes[index].RoomTypeVariant.splice(vm.institution.RoomTypes[index].RoomTypeVariant.indexOf(variant), 1);
     }
 
     vm.Save = function () {
@@ -103,18 +112,47 @@ institutionsApp.controller("InstitutionsEditController", function ($stateParams,
 institutionsApp.controller("InstitutionsCreateController", function ($institutionServices, $roomServices, $scope) {
     var vm = this;
 
-    vm.institutionConfig = {};
-    vm.institutionConfig.Institution = {};
+    vm.institution = {};
+    vm.institution.RoomTypes = {};
 
     $roomServices.getTypes().then(function (roomData) {
         vm.roomTypes = roomData.Results;
     });
 
+    $scope.isChecked = function (id) {
+
+        for (var i = 0; i < vm.institution.RoomTypes.length; i++) {
+            if (vm.institution.RoomTypes[i].ID == id) {
+                return true;
+            }
+        }
+        return false;
+    };
+
+    vm.addVariant = function (type) {
+
+        var index = vm.institution.RoomTypes.indexOf(type);
+        console.log(index);
+        if (vm.institution.RoomTypes[index].RoomTypeVariant == undefined) {
+            vm.institution.RoomTypes[index].RoomTypeVariant = [];
+        }
+
+        vm.institution.RoomTypes[index].RoomTypeVariant.push({ Name: '', Abbreviation: '' });
+    }
+
+    vm.removeVariant = function (type, variant) {
+        var index = vm.institution.RoomTypes.indexOf(type);
+
+
+        vm.institution.RoomTypes[index].RoomTypeVariant.splice(vm.institution.RoomTypes[index].RoomTypeVariant.indexOf(variant), 1);
+    }
+
+
     vm.Save = function () {
-        $institutionServices.create(vm.institutionConfig).then(function (data) {
+        $institutionServices.create(vm.institution).then(function (data) {
 
             if (data.Success) {
-                vm.institutionConfig = data.Results;
+                vm.institution = data.Results;
 
                 $scope.notifications.success.valid = true;
                 $scope.notifications.success.descriptions = ["sdsadasasdsa"];

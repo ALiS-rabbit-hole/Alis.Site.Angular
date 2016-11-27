@@ -3,19 +3,20 @@
 <table class="table" ng-cloak>
     <thead>
     <tr>
-        <th><a ng-click="vm.reorder('username')">username <span ng-class="vm.getGlyphClass('username')" aria-hidden="true"></span></a></th>
         <th><a ng-click="vm.reorder('forename')">forename</a> <span ng-class="vm.getGlyphClass('forename')" aria-hidden="true"></span></th>
         <th><a ng-click="vm.reorder('surname')">surname</a> <span ng-class="vm.getGlyphClass('surname')" aria-hidden="true"></span></th>
         <th><a ng-click="vm.reorder('email')">email</a> <span ng-class="vm.getGlyphClass('email')" aria-hidden="true"></span></th>
+        <th>institution</th>
         <th></th>
     </tr>
 
     </thead>
     <tr ng-repeat="user in vm.users track by user.Username">
-        <td>{{::user.Username}}</td>
         <td>{{::user.Forename}}</td>
         <td>{{::user.Surname}}</td>
         <td>{{::user.Email}}</td>
+        <td>
+            <div ng-repeat="institution in user.Institutions track by institution.ID"><span class="label label-info">{{::institution.Name}}</span></div></td>
         <td><a ui-sref="users.edit({id:{{::user.ID}}})" class="btn btn-default">Edit</a></td>
     </tr>
 </table>

@@ -7,15 +7,14 @@
         <th></th>
         <th></th>
         <th></th>
-        <th></th>
     </tr>
     </thead>
     <tr ng-repeat="room in vm.rooms">
         <td>
-            <span class="label label-info">{{::room.Type.Name}}</span>
+            <span class="label label-info">{{::room.Type.Name}}</span><br/>
+            <span class="label label-primary" ng-show="room.Type.RoomVariant[0]">{{::room.Type.RoomVariant[0].Name}}</span>
         </td>
         <td>{{::room.Name}}</td>
-        <td>{{::room.Type.RoomTypeVariant.Name}}</td>
         <td><a ui-sref="rooms.edit({id:{{::room.ID}}})" class="btn btn-default">Edit</a></td>
         <td><button ng-really-message="Are you sure?" ng-really-click="vm.reallyDelete(room)" class="btn btn-danger">Delete</button></td>
     </tr>

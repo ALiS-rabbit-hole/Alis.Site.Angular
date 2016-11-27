@@ -8,13 +8,6 @@
             <uib-tab index="0" heading="Details">
                 <h4>Details</h4>
                 <div class="form-group" show-errors>
-                    <label for="username" class="col-sm-2 control-label">Username</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="username" name="Username" placeholder="Username" ng-required ng-model="vm.user.Username">
-                        <span class="help-block" ng-show="userForm.Username.$invalid">{{userForm.Username.$errorText}}</span>
-                    </div>
-                </div>
-                <div class="form-group" show-errors>
                     <label for="forename" class="col-sm-2 control-label">Forename</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" id="forename" name="Forename" placeholder="Forename" ng-required ng-model="vm.user.Forename">
@@ -44,13 +37,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <button class="btn btn-default" ng-click="vm.Save()">Save</button> <a class="btn btn-warning" ng-href="{{back}}">Cancel</a>
-                    </div>
-                </div>
-
-
             </uib-tab>
 
 
@@ -104,5 +90,11 @@
 
 
         </uib-tabset>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button class="btn btn-default" ng-click="vm.Save()">Save</button> <a class="btn btn-warning" ng-href="{{back}}">Cancel</a>
+            </div>
+        </div>
+
     </fieldset>
 </form>

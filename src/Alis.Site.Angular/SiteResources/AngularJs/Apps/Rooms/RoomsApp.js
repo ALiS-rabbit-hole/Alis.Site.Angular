@@ -88,15 +88,8 @@ roomsApp.controller("RoomsCreateController", function ($roomServices, $scope, $a
     $roomServices.new().then(function (data) {
         vm.room = data.Results;
 
-       /* $roomServices.getTypes().then(function (roomData) {
-            vm.roomTypes = roomData.Results;
-            generateRoomAvailabilityList();
-        });*/
-
-        vm.selectedType = vm.room.Type;
-        vm.selectedTypeVariant = vm.room.Type.RoomTypeVariant;
-
         generateRoomAvailabilityList();
+
     });
 
     vm.removeOwner = function (owner) {
@@ -146,10 +139,27 @@ roomsApp.controller("RoomsEditController", function ($roomServices, $stateParams
     $roomServices.get($stateParams.id).then(function (data) {
         vm.room = data.Results;
 
-        vm.selectedType = vm.room.Type;
-        vm.selectedTypeVariant = vm.room.Type.RoomTypeVariant;
-
         generateRoomAvailabilityList();
+
+        if (vm.roomTypes != null && vm.roomTypes.length > 0) {
+            console.log(vm.RoomTypes);
+            for (var i = 0; i < vm.roomTypes.length; i++) {
+                if (vm.roomTypes[i].ID == vm.room.Type.ID) {
+
+                    vm.selectedType = vm.roomTypes[i];
+                }
+            }
+        }
+       // vm.selectedType = vm.room.Type;
+
+
+
+        if (vm.room.Type.RoomTypeVariant != null && vm.room.Type.RoomTypeVariant.length > 0) {
+            vm.selectedTypeVariant = vm.room.Type.RoomTypeVariant[0];
+        }
+
+      //  console.log(vm.selectedTypeVariant);
+      //  generateRoomAvailabilityList();
     });
 
     
