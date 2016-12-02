@@ -7,7 +7,8 @@ var gulp = require("gulp"),
     uglify = require("gulp-uglify"),
     inject = require("gulp-inject"),
     project = require("./project.json"),
-htmlmin = require('gulp-htmlmin'),
+    htmlmin = require('gulp-htmlmin'),
+    rev = require('gulp-rev-append'),
 templateCache = require('gulp-angular-templatecache');
 
 var paths = {
@@ -115,4 +116,10 @@ gulp.task('angularMinify', function () {
     return gulp.src(paths.webroot + "angularJs/**/*.html")
         .pipe(htmlmin({ collapseWhitespace: true }))
         .pipe(gulp.dest(paths.webroot + "angularJs"));
+});
+
+gulp.task('rev', function () {
+    gulp.src("./Views/**/*.cshtml")
+      .pipe(rev())
+      .pipe(gulp.dest('.'));
 });
