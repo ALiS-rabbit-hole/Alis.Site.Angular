@@ -9,7 +9,7 @@ var singleApp = angular.module('singleApp', ['ngCookies', 'ncy-angular-breadcrum
      
 
         $httpProvider.defaults.withCredentials = true;
-
+      //  $http.defaults.headers.common['X-Auth-Token'] = Session.id;//$cookiesProvider['AUTH-TOKEN'];
         $cookiesProvider.defaults.path = '/';
 
         $breadcrumbProvider.setOptions({
