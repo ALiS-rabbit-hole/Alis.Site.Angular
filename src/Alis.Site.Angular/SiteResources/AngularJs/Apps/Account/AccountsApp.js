@@ -69,13 +69,15 @@ accountsApp.controller("LoginController", function ($authenticationService, $roo
     vm.loginDetails = {};
 
     vm.login = function () {
-        console.log(vm.loginDetails);
+       
         $authenticationService.login({ username: vm.loginDetails.username, password: vm.loginDetails.password }).then(function (result) {
 
             $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
             // $scope.setCurrentUser(user);
         }, function () {
             $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
+        }).catch(function(error) {
+            console.log(error);
         });
     }
 });

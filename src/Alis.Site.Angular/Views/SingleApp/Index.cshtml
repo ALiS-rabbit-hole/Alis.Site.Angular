@@ -15,6 +15,7 @@
         <div ui-view style="min-height: 500px;"></div>
     </div>
 </div>
+<script src="https://rawgit.com/bahmutov/console-log-div/master/console-log-div.js"></script>
 <!-- inject:angularConfig:js -->
 <script src="/angularJs/config.js"></script>
 <!-- endinject -->
@@ -53,4 +54,28 @@
     <script src="~/AngularJs/Apps/Applications/ApplicationsApp.js?rev=@@hash"></script>
     <script src="~/AngularJs/apps/configuration/configurationapp.js?rev=@@hash"></script>
     <script src="~/markitup/jquery.markitup.js?rev=@@hash"></script>
+
+    <script>
+        (function () {
+            var httpInterceptor = function ($provide, $httpProvider) {
+                $provide.factory('httpInterceptor', function ($q) {
+                    return {
+                        response: function (response) {
+                            return response || $q.when(response);
+                        },
+                        responseError: function (rejection) {
+                            if (rejection.status === 401) {
+                                // you are not autorized
+                            }
+                            console.log(rejection);
+                            return $q.reject(rejection);
+                        }
+                    };
+                });
+                $httpProvider.interceptors.push('httpInterceptor');
+            };
+            angular.module("singleApp").config(httpInterceptor);
+        }());
+    </script>
+
 }

@@ -61,10 +61,8 @@ usersApp.controller("UsersHomeController", function ($userServices) {
     });
 
     vm.pageChanged = function() {
-        $userServices.getWithQuery(vm.query).then(function (data) {
+        $userServices.getWithQuery(vm.query).then(function(data) {
             vm.users = data.Results;
-        }).catch(function (error) {
-            console.log(error);
         });
     };
 
